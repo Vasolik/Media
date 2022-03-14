@@ -1,17 +1,9 @@
-﻿
+﻿namespace Vipl.Base.Extensions;
 
-// ReSharper disable UnusedMember.Global
-
-namespace Vipl.Base.Extensions;
-
-/// <summary>
-/// Extensions for <see cref="DateTime"/>.
-/// </summary>
+/// <summary> Extensions for <see cref="DateTime"/>. </summary>
 public static class DateExtension
 {
-    /// <summary>
-    /// Split period between <paramref name="start"/> and <paramref name="end"/> to monthly periods
-    /// </summary>
+    /// <summary> Split period between <paramref name="start"/> and <paramref name="end"/> to monthly periods </summary>
     /// <param name="start">Start of first period.</param>
     /// <param name="end">End of last period.</param>
     /// <param name="cal">Calendar used.</param>
@@ -33,9 +25,7 @@ public static class DateExtension
                 EndDate = endDate
             };
     }
-    /// <summary>
-    /// Calculate Percent of month is in this period. 1 is 100%.
-    /// </summary>
+    /// <summary> Calculate Percent of month is in this period. 1 is 100%. </summary>
     /// <param name="range">Period for calculation.</param>
     /// <param name="cal">Calendar used.</param>
     /// <returns>If <see cref="DateTimeRange.StartDate"/> and <see cref="DateTimeRange.EndDate"/> is in same month then returned percent is based of number of days in that month.
@@ -49,9 +39,7 @@ public static class DateExtension
         }
         return (range.EndDate.Day - range.StartDate.Day + 1d) / cal.GetDaysInMonth(range.StartDate.Year, range.StartDate.Month);
     }
-    /// <summary>
-    /// Calculate each day in given period between <paramref name="fromDateTime"/> and <paramref name="toDateTime"/>
-    /// </summary>
+    /// <summary> Calculate each day in given period between <paramref name="fromDateTime"/> and <paramref name="toDateTime"/> </summary>
     /// <param name="fromDateTime">Start date.</param>
     /// <param name="toDateTime">End date.</param>
     /// <returns><see cref="IEnumerable{T}"/> of <see cref="DateTime"/> for each day in given period.</returns>
@@ -61,18 +49,14 @@ public static class DateExtension
         for (var currentDateTime = fromDateTime.Date; currentDateTime <= toDateTime.Date; currentDateTime = currentDateTime.AddDays(1.0))
             yield return currentDateTime;
     }
-    /// <summary>
-    /// Calculate each day in given period in given period
-    /// </summary>
+    /// <summary> Calculate each day in given period in given period </summary>
     /// <param name="range">Start period.</param>
     /// <returns><see cref="IEnumerable{T}"/> of <see cref="DateTime"/> for each day in given period.</returns>
     public static IEnumerable<DateTime> EachDay(this DateTimeRange range)
     {
         return range.StartDate.EachDay(range.EndDate);
     }
-    /// <summary>
-    /// Generate <see cref="IEnumerable{T}"/> of <see cref="DateTime"/> between <paramref name="startTime"/> and <paramref name="endTime"/> in increments of <paramref name="stepInterval"/>
-    /// </summary>
+    /// <summary> Generate <see cref="IEnumerable{T}"/> of <see cref="DateTime"/> between <paramref name="startTime"/> and <paramref name="endTime"/> in increments of <paramref name="stepInterval"/> </summary>
     /// <param name="stepInterval">Incremental step.</param>
     /// <param name="startTime">Start time for generation</param>
     /// <param name="endTime">End time for generation.</param>

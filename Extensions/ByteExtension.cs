@@ -1,13 +1,9 @@
 namespace Vipl.Base.Extensions;
 
-/// <summary>
-/// Extend Byte and Byte array methods.
-/// </summary>
+/// <summary> Extend Byte and Byte array methods. </summary>
 public static class ByteExtension
 {
-    /// <summary>
-    ///    Contains values to use in CRC calculation.
-    /// </summary>
+    /// <summary> Contains values to use in CRC calculation. </summary>
     private static readonly uint[] CrcTable = {
         0x00000000, 0x04c11db7, 0x09823b6e, 0x0d4326d9,
         0x130476dc, 0x17c56b6b, 0x1a864db2, 0x1e475005,
@@ -74,12 +70,7 @@ public static class ByteExtension
         0xafb010b1, 0xab710d06, 0xa6322bdf, 0xa2f33668,
         0xbcb4666d, 0xb8757bda, 0xb5365d03, 0xb1f740b4
     };
-    /// <summary>
-    ///    Gets the CRC-32 checksum of the current instance.
-    /// </summary>
-    /// <value>
-    ///    A <see cref="int" /> value containing the CRC-32 checksum
-    ///    of the current instance.
-    /// </value>
+    /// <summary> Gets the CRC-32 checksum of the current instance. </summary>
+    /// <value> A <see cref="int" /> value containing the CRC-32 checksum of the current instance. </value>
     public static uint Checksum(this IEnumerable<byte> value) => value.Aggregate<byte, uint>(0, (current, b) =>  (current << 8) ^ CrcTable[((current >> 24) & 0xFF) ^ b]);
 }

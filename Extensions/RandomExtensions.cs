@@ -1,19 +1,11 @@
-﻿
+﻿namespace Vipl.Base.Extensions;
 
-// ReSharper disable UnusedMember.Global
-// ReSharper disable UnusedType.Global
-// ReSharper disable MemberCanBePrivate.Global
-namespace Vipl.Base.Extensions;
-
-/// <summary>
-/// Extensions for <see cref="Random"/>
-/// </summary>
+/// <summary> Extensions for <see cref="Random"/> </summary>
 public static class RandomExtensions
 {
-    /// <summary>
-    /// Make randomly distributed <see cref="IEnumerable{T}"/> of <see cref="decimal"/> with total sum of <paramref name="totalSum"/>. Number of returned decimal values is <paramref name="numberOfDecimals"/>
-    /// Number of decimals for each value is <paramref name="numberOfDecimals"/>
-    /// </summary>
+    /// <summary> Make randomly distributed <see cref="IEnumerable{T}"/> of <see cref="decimal"/>
+    /// with total sum of <paramref name="totalSum"/>. Number of returned decimal values is <paramref name="numberOfDecimals"/>
+    /// Number of decimals for each value is <paramref name="numberOfDecimals"/> </summary>
     /// <param name="randomGenerator">Random number generator used for randomness</param>
     /// <param name="totalSum">Total sum of all returned elements.</param>
     /// <param name="numberOfElements">Number of returned elements.</param>

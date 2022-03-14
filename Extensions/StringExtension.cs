@@ -3,19 +3,12 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 
-// ReSharper disable UnusedMember.Global
-// ReSharper disable MemberCanBePrivate.Global
-
 namespace Vipl.Base.Extensions;
 
-/// <summary>
-/// Extensions for <see cref="string"/>
-/// </summary>
+/// <summary> Extensions for <see cref="string"/> </summary>
 public static class StringExtension
 {
-    /// <summary>
-    /// Format <paramref name="text"/> with <paramref name="args"/> list of params.
-    /// </summary>
+    /// <summary> Format <paramref name="text"/> with <paramref name="args"/> list of params. </summary>
     /// <param name="text">Text to be formatted.</param>
     /// <param name="args">Args to format text.</param>
     /// <returns>Formatted text.</returns>
@@ -23,9 +16,7 @@ public static class StringExtension
     {
         return string.Format(text, args);
     }
-    /// <summary>
-    /// Check if <paramref name="value"/> is <c>null</c> or empty string
-    /// </summary>
+    /// <summary> Check if <paramref name="value"/> is <c>null</c> or empty string </summary>
     /// <param name="value">String to be checked.</param>
     /// <returns><c>true</c> if string is <c>null</c> or empty, <c>false</c> otherwise.</returns>
 
@@ -33,18 +24,14 @@ public static class StringExtension
     {
         return string.IsNullOrEmpty(value);
     }
-    /// <summary>
-    /// Check if <paramref name="value"/> is <c>null</c> or white spaced string
-    /// </summary>
+    /// <summary> Check if <paramref name="value"/> is <c>null</c> or white spaced string </summary>
     /// <param name="value">String to be checked.</param>
     /// <returns><c>true</c> if string is <c>null</c> or white space, <c>false</c> otherwise.</returns>
     public static bool IsNullOrWhiteSpace(this string? value)
     {
         return string.IsNullOrWhiteSpace(value);
     }
-    /// <summary>
-    /// Check if <paramref name="text"/> contains any of strings inside <paramref name="testMatches"/> array.
-    /// </summary>
+    /// <summary> Check if <paramref name="text"/> contains any of strings inside <paramref name="testMatches"/> array. </summary>
     /// <param name="text">string to be checked.</param>
     /// <param name="testMatches">Array of strings to find in <paramref name="text"/></param>
     /// <returns><c>true</c> if any match is found, <c>false</c> otherwise.</returns>
@@ -52,27 +39,21 @@ public static class StringExtension
     {
         return testMatches.Any(text.Contains);
     }
-    /// <summary>
-    /// Convert <paramref name="valueToNulInt"/> to int value, or null if converting is impossible.
-    /// </summary>
+    /// <summary> Convert <paramref name="valueToNulInt"/> to int value, or null if converting is impossible. </summary>
     /// <param name="valueToNulInt">String to be converted.</param>
     /// <returns>Value of string, or null.</returns>
     public static int? ToNullableInt(this string valueToNulInt)
     {
         return int.TryParse(valueToNulInt, out var i) ? i : default(int?);
     }
-    /// <summary>
-    /// Convert <see cref="Encoding.BigEndianUnicode"/> hex string to string
-    /// </summary>
+    /// <summary> Convert <see cref="Encoding.BigEndianUnicode"/> hex string to string </summary>
     /// <param name="text"><see cref="Encoding.BigEndianUnicode"/> encoded string.</param>
     /// <returns>Converted string.</returns>
     public static string ConvertUnicodeHexStringToText(this string text)
     {
         return Encoding.BigEndianUnicode.GetString(Enumerable.Range(0, text.Length / 2).Select(i => Convert.ToByte(text.Substring(i * 2, 2), 16)).ToArray());
     }
-    /// <summary>
-    /// Get Md5 hash bytes of <paramref name="inputString"/>.
-    /// </summary>
+    /// <summary> Get Md5 hash bytes of <paramref name="inputString"/>. </summary>
     /// <param name="inputString"><see cref="string"/> which needs to be converted</param>
     /// <returns>Md5 hash bytes of <paramref name="inputString"/></returns>
     public static byte[] ToMd5HashBytes(this string inputString)
@@ -80,9 +61,7 @@ public static class StringExtension
         using HashAlgorithm algorithm = MD5.Create();
         return algorithm.ComputeHash(Encoding.UTF8.GetBytes(inputString));
     }
-    /// <summary>
-    /// Convert <paramref name="inputString"/> to md5 hash.
-    /// </summary>
+    /// <summary> Convert <paramref name="inputString"/> to md5 hash. </summary>
     /// <param name="inputString">Value to be converted.</param>
     /// <returns>Md5 hash value of <paramref name="inputString"/></returns>
     public static string ToMd5Hash(this string inputString)
@@ -93,9 +72,7 @@ public static class StringExtension
 
         return sb.ToString();
     }
-    /// <summary>
-    /// Get SHA1 hash bytes of <paramref name="inputString"/>.
-    /// </summary>
+    /// <summary> Get SHA1 hash bytes of <paramref name="inputString"/>. </summary>
     /// <param name="inputString"><see cref="string"/> which needs to be converted</param>
     /// <returns>SHA1 hash bytes of <paramref name="inputString"/></returns>
     public static byte[] ToSha1HashBytes(this string inputString)
@@ -103,9 +80,7 @@ public static class StringExtension
         using HashAlgorithm algorithm = SHA1.Create();
         return algorithm.ComputeHash(Encoding.UTF8.GetBytes(inputString));
     }
-    /// <summary>
-    /// Convert <paramref name="inputString"/> to SHA1 hash.
-    /// </summary>
+    /// <summary> Convert <paramref name="inputString"/> to SHA1 hash. </summary>
     /// <param name="inputString">Value to be converted.</param>
     /// <returns>SHA1 hash value of <paramref name="inputString"/></returns>
     public static string ToSha1Hash(this string inputString)
@@ -116,9 +91,7 @@ public static class StringExtension
 
         return sb.ToString();
     }
-    /// <summary>
-    /// Remove characters from string witch are not supported by XML.
-    /// </summary>
+    /// <summary> Remove characters from string witch are not supported by XML. </summary>
     /// <param name="txt"><see cref="string"/> to be immunized.</param>
     /// <returns><see cref="string"/> without unsupported xml characters.</returns>
     public static string ImmunizeToXmlString(this string txt)
@@ -126,10 +99,8 @@ public static class StringExtension
         var r = "[\x00-\x08\x0B\x0C\x0E-\x1F\x26\xD800-\xDFFF\xFFFF]";
         return Regex.Replace(txt, r, string.Empty, RegexOptions.Compiled);
     }
-    /// <summary>
-    /// Move avery line of string (where line is detonated with <paramref name="separator"/>
-    /// for <paramref name="count"/> number of <paramref name="intendString"/> characters.
-    /// </summary>
+    /// <summary> Move avery line of string (where line is detonated with <paramref name="separator"/>
+    /// for <paramref name="count"/> number of <paramref name="intendString"/> characters. </summary>
     /// <param name="value">Value to be intended</param>
     /// <param name="count">Number of times string is intended</param>
     /// <param name="first">Does first line needs to be intended.</param>
@@ -141,9 +112,7 @@ public static class StringExtension
         var indent = string.Join("", Enumerable.Repeat(intendString, count));
         return (first ? indent: "") + value.Replace(separator, separator + indent);
     }
-    /// <summary>
-    /// Split string in string tokens.
-    /// </summary>
+    /// <summary> Split string in string tokens. </summary>
     /// <param name="value">Value to be split</param>
     /// <param name="allWhite">Should splitting by all white characters. If set to false <paramref name="separators"/> will be used.</param>
     /// <param name="separators">U</param>
@@ -159,9 +128,7 @@ public static class StringExtension
             .Where(l => !string.IsNullOrWhiteSpace(l))
             .ToArray();
     }
-    /// <summary>
-    /// Join enumeration of string to one string using separator <paramref name="separator"/> between them.
-    /// </summary>
+    /// <summary> Join enumeration of string to one string using separator <paramref name="separator"/> between them. </summary>
     /// <param name="values">Strings to be joined</param>
     /// <param name="separator">Separator between joined strings</param>
     /// <returns>Newly created string.</returns>
@@ -169,11 +136,9 @@ public static class StringExtension
     {
         return string.Join(separator, values.Where(v => v is not null));
     }
-    /// <summary>
-    /// Join enumeration of string to one string using separator <paramref name="separator"/> between them.
-    /// Move avery line of newly string (where line is detonated with <paramref name="separator"/>
-    /// for <paramref name="intendCount"/> number of <paramref name="intendString"/> characters.
-    /// </summary>
+    /// <summary> Join enumeration of string to one string using separator <paramref name="separator"/> between them.
+    /// Move avery line of newly string (where line is detonated with <paramref name="separator"/> for <paramref name="intendCount"/>
+    /// number of <paramref name="intendString"/> characters. </summary>
     /// <param name="values">Strings to be joined</param>
     /// <param name="separator">Separator between joined strings</param>
     /// <param name="intendCount">Number of times string is intended</param>

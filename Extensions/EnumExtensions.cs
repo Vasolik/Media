@@ -1,18 +1,11 @@
 ﻿using System.ComponentModel;
-
-// ReSharper disable UnusedMember.Global
-
 namespace Vipl.Base.Extensions;
 
-/// <summary>
-/// Extensions to enums
-/// </summary>
+/// <summary> Extensions to enums </summary>
 public static class EnumExtensions
 {
-    /// <summary>
-    /// Get an enum value based of <see cref="DescriptionAttribute.Description"/>. If enum value does not have <see cref="DescriptionAttribute.Description"/>
-    /// it is taking <![CDATA[enumValue.ToString("G")]]> value for search.
-    /// </summary>
+    /// <summary> Get an enum value based of <see cref="DescriptionAttribute.Description"/>.
+    /// If enum value does not have <see cref="DescriptionAttribute.Description"/> it is taking <![CDATA[enumValue.ToString("G")]]> value for search. </summary>
     /// <typeparam name="T">Type of the enum</typeparam>
     /// <param name="enumDescription">Description of this Enum</param>
     /// <returns>EnumValue with given description</returns>
@@ -21,9 +14,7 @@ public static class EnumExtensions
         return EnumExtensionHelper<T>.DescriptionToEnum.TryGetValue(enumDescription, out var value) ? value : null;
     }
 
-    /// <summary>
-    /// Get an enum value based of <![CDATA[enumValue.ToString("G")]]> value of given enum..
-    /// </summary>
+    /// <summary> Get an enum value based of <![CDATA[enumValue.ToString("G")]]> value of given enum.. </summary>
     /// <typeparam name="T">Type of the enum</typeparam>
     /// <param name="enumStringValue">Description of this Enum</param>
     /// <returns>EnumValue with given description</returns>
@@ -32,10 +23,8 @@ public static class EnumExtensions
         return EnumExtensionHelper<T>.StringValueToEnum.TryGetValue(enumStringValue, out var value) ? value : null;
     }
 
-    /// <summary>
-    /// Get <see cref="DescriptionAttribute.Description"/> for given <paramref name="enumValue"/>. If <paramref name="enumValue"/> value does not have <see cref="DescriptionAttribute.Description"/>
-    /// <![CDATA[enumValue.ToString("G")]]> returned.
-    /// </summary>
+    /// <summary> Get <see cref="DescriptionAttribute.Description"/> for given <paramref name="enumValue"/>.
+    /// If <paramref name="enumValue"/> value does not have <see cref="DescriptionAttribute.Description"/> <![CDATA[enumValue.ToString("G")]]> returned. </summary>
     /// <typeparam name="T">Type of the enum.</typeparam>
     /// <param name="enumValue">Enum value for which Description in needed.</param>
     /// <returns><see cref="String"/> description for given <paramref name="enumValue"/> value.</returns>
@@ -44,9 +33,7 @@ public static class EnumExtensions
         return EnumExtensionHelper<T>.EnumToDescription[enumValue];
     }
 
-    /// <summary>
-    /// Gets an attribute on an enum field value
-    /// </summary>
+    /// <summary> Gets an attribute on an enum field value </summary>
     /// <typeparam name="T">The type of the attribute you want to retrieve</typeparam>
     /// <param name="enumVal">The enum value</param>
     /// <returns>The attribute of type T that exists on the enum value</returns>

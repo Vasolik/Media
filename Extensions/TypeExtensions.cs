@@ -1,13 +1,9 @@
 ﻿namespace Vipl.Base.Extensions;
 
-/// <summary>
-/// Extension for <see cref="Type"/> class.
-/// </summary>
+/// <summary> Extension for <see cref="Type"/> class. </summary>
 public static class TypeExtensions
 {
-    /// <summary>
-    /// Check if type is simple type (Primitive, Enum, string, decimal, Guid, DateTime, Timespan) or nullable version of it.
-    /// </summary>
+    /// <summary> Check if type is simple type (Primitive, Enum, string, decimal, Guid, DateTime, Timespan) or nullable version of it. </summary>
     /// <param name="type">Type for checking.</param>
     /// <returns><![CDATA[true]]> if it is simple, false otherwise</returns>
     public static bool IsSimple(this Type type)
@@ -30,9 +26,7 @@ public static class TypeExtensions
                    || type == typeof(TimeSpan);
         }
     }
-    /// <summary>
-    /// Get generic type (with full specialization) of <paramref name="type"/> type.
-    /// </summary>
+    /// <summary> Get generic type (with full specialization) of <paramref name="type"/> type. </summary>
     /// <param name="type">Type to be searched.</param>
     /// <param name="genericBase">Generic type to be searched for.</param>
     /// <returns>Generic type (with full specialization)</returns>

@@ -1,9 +1,7 @@
-﻿// ReSharper disable MemberCanBePrivate.Global
-
-namespace Vipl.Base.Extensions;
+﻿namespace Vipl.Base.Extensions;
 
 /// <summary>
-/// 
+/// Static class for extending span of bytes.
 /// </summary>
 public static class ByteSpanExtensions
 {

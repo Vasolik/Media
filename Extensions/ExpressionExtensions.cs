@@ -1,18 +1,10 @@
 ﻿using System.Linq.Expressions;
-
-// ReSharper disable UnusedMember.Global
-// ReSharper disable UnusedType.Global
-
 namespace Vipl.Base.Extensions;
 
-/// <summary>
-///  Class containing extension methods to <see cref="Expression"/> class.
-/// </summary>
+/// <summary> Class containing extension methods to <see cref="Expression"/> class.</summary>
 public static class ExpressionExtensions
 {
-    /// <summary>
-    /// Generate lambda expression to accessing property of then object by path t.
-    /// </summary>
+    /// <summary>Generate lambda expression to accessing property of then object by path. </summary>
     /// <param name="propertyPath">Path to the property</param>
     /// <typeparam name="T">Type of the input parameter of produced expression.</typeparam>
     /// <typeparam name="TResult">Type of the result of produces expression.</typeparam>
@@ -51,7 +43,7 @@ public static class ExpressionExtensions
             throw new ArgumentException($"Invalid property path \"{path}\"");
 
         return next == null
-            ? (Expression.MakeMemberAccess(parent, child!), child.PropertyType)
+            ? (Expression.MakeMemberAccess(parent, child), child.PropertyType)
             : GeneratePropertyExpression(Expression.Property(parent, child), next);
     }
 

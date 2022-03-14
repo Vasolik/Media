@@ -2,14 +2,10 @@
 
 namespace Vipl.Base.Extensions;
 
-/// <summary>
-/// Extensions for <see cref="IQueryable"/>.
-/// </summary>
+/// <summary> Extensions for <see cref="IQueryable"/>. </summary>
 public static class QueryableExtensions
 {
-    /// <summary>
-    /// Applying order to specific property name.
-    /// </summary>
+    /// <summary> Applying order to specific property name. </summary>
     /// <typeparam name="T">Underline queryable type.</typeparam>
     /// <param name="source">An instance of <see cref="IQueryable{T}"/>.</param>
     /// <param name="propertyName">Property name for ordering.</param>

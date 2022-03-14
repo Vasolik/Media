@@ -2,25 +2,18 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
-// ReSharper disable UnusedMember.Global
 
 namespace Vipl.Base.Extensions;
 
-/// <summary>
-/// Extensions for any <see cref="object"/>.
-/// </summary>
+/// <summary> Extensions for any <see cref="object"/>. </summary>
 public static class ObjectExtensions
 {
-    /// <summary>
-    /// Check if <paramref name="obj"/> is equal to any value inside of <paramref name="values"/>
-    /// </summary>
+    /// <summary> Check if <paramref name="obj"/> is equal to any value inside of <paramref name="values"/> </summary>
     public static bool EqualsAny<T>(this T obj, params T[] values)
     {
         return Array.IndexOf(values, obj) != -1;
     }
-    /// <summary>
-    /// Check if <typeparamref name="T"/> contains property on <paramref name="path"/>.
-    /// </summary>
+    /// <summary> Check if <typeparamref name="T"/> contains property on <paramref name="path"/>. </summary>
     /// <typeparam name="T">Type for which we are doing a checking</typeparam>
     /// <param name="path">Path witch we are searching.</param>
     /// <returns>Returns true if path is found, throw <see cref="ArgumentException"/> if not found</returns>
@@ -39,9 +32,7 @@ public static class ObjectExtensions
         }
         return true;
     }
-    /// <summary>
-    /// Make <see cref="IEnumerable{T}"/> of type <typeparamref name="T"/> with just element <paramref name="item"/>
-    /// </summary>
+    /// <summary> Make <see cref="IEnumerable{T}"/> of type <typeparamref name="T"/> with just element <paramref name="item"/> </summary>
     /// <typeparam name="T">Type of <paramref name="item"/></typeparam>
     /// <param name="item">Only element in new <see cref="IEnumerable{T}"/></param>
     /// <returns><see cref="IEnumerable{T}"/> of type <typeparamref name="T"/> with just element <paramref name="item"/></returns>
@@ -49,14 +40,9 @@ public static class ObjectExtensions
     {
         yield return item;
     }
-
-
     private static readonly MethodInfo CloneMethod = typeof(object).GetMethod("MemberwiseClone", BindingFlags.NonPublic | BindingFlags.Instance)!;
-
-
-    /// <summary>
-    /// Deep clone <paramref  name="originalObject"/>. Does not work with <see cref="Delegate"/> inside an object. Be careful with more complex objects.
-    /// </summary>
+    
+    /// <summary> Deep clone <paramref  name="originalObject"/>. Does not work with <see cref="Delegate"/> inside an object. Be careful with more complex objects. </summary>
     /// <param name="originalObject">Object to be cloned</param>
     /// <typeparam name="T">Type of the cloned object</typeparam>
     /// <returns>Deep clone of <paramref name="originalObject"/> object</returns>

@@ -6,14 +6,10 @@ using System.Reflection.Emit;
 
 namespace Vipl.Base.Extensions;
 
-/// <summary>
-/// Extensions for <see cref="IEnumerable{T}"/>
-/// </summary>
+/// <summary> Extensions for <see cref="IEnumerable{T}"/> </summary>
 public static class EnumerableExtensions
 {
-    /// <summary>
-    /// Returns elements of <paramref name="target"/> which are not <c>null</c>.
-    /// </summary>
+    /// <summary> Returns elements of <paramref name="target"/> which are not <c>null</c>. </summary>
     /// <typeparam name="T">Type of elements of the <paramref name="target"/></typeparam>
     /// <param name="target"><see cref="IEnumerable{T}"/> of <typeparamref name="T"/> for which nulls should be ignored.</param>
     /// <returns>New <see cref="IEnumerable{T}"/> with all non <c>null</c> elements.</returns>
@@ -23,9 +19,7 @@ public static class EnumerableExtensions
         foreach (var obj in target.Where(item => item is not null))
             yield return obj;
     }
-    /// <summary>
-    /// On each element of <paramref name="values"/> perform action <paramref name="action"/>
-    /// </summary>
+    /// <summary> On each element of <paramref name="values"/> perform action <paramref name="action"/> </summary>
     /// <typeparam name="T">Type of elements of the <paramref name="values"/></typeparam>
     /// <param name="values"><see cref="IEnumerable{T}"/> of <typeparamref name="T"/> for which actions should be performed</param>
     /// <param name="action"><see cref="Delegate"/> to action which should be performed on each element. Argument of this action is element in <paramref name="values"/></param>
@@ -34,9 +28,7 @@ public static class EnumerableExtensions
         foreach (var obj in values)
             action(obj);
     }
-    /// <summary>
-    /// On each element of <paramref name="values"/> perform action async <paramref name="action"/>
-    /// </summary>
+    /// <summary> On each element of <paramref name="values"/> perform action async <paramref name="action"/> </summary>
     /// <typeparam name="T">Type of elements of the <paramref name="values"/></typeparam>
     /// <param name="values"><see cref="IEnumerable{T}"/> of <typeparamref name="T"/> for which actions should be performed</param>
     /// <param name="action"><see cref="Delegate"/> to action which should be performed on each element. Argument of this action is element in <paramref name="values"/></param>
@@ -46,9 +38,7 @@ public static class EnumerableExtensions
             await action(obj).ConfigureAwait(false);
     }
 
-    /// <summary>
-    /// On each element of <paramref name="values"/> perform action <paramref name="action"/>
-    /// </summary>
+    /// <summary> On each element of <paramref name="values"/> perform action <paramref name="action"/> </summary>
     /// <typeparam name="T">Type of elements of the <paramref name="values"/></typeparam>
     /// <param name="values"><see cref="IEnumerable{T}"/> of <typeparamref name="T"/> for which actions should be performed</param>
     /// <param name="action"><see cref="Delegate"/> to action which should be performed on each element.
@@ -59,9 +49,7 @@ public static class EnumerableExtensions
         foreach (var obj in values)
             action(obj, index++);
     }
-    /// <summary>
-    /// On each element of <paramref name="values"/> perform async action <paramref name="action"/>
-    /// </summary>
+    /// <summary> On each element of <paramref name="values"/> perform async action <paramref name="action"/> </summary>
     /// <typeparam name="T">Type of elements of the <paramref name="values"/></typeparam>
     /// <param name="values"><see cref="IEnumerable{T}"/> of <typeparamref name="T"/> for which actions should be performed</param>
     /// <param name="action"><see cref="Delegate"/> to action which should be performed on each element.
@@ -72,9 +60,7 @@ public static class EnumerableExtensions
         foreach (var obj in values)
             await action(obj, index++).ConfigureAwait(false);
     }
-    /// <summary>
-    /// Group elements of <paramref name="source"/> into batches sized at <paramref name="batchSize"/>
-    /// </summary>
+    /// <summary> Group elements of <paramref name="source"/> into batches sized at <paramref name="batchSize"/> </summary>
     /// <param name="source"><see cref="IEnumerable{T}"/> which needs to be spited.</param>
     /// <param name="batchSize">Size of each batch.</param>
     /// <typeparam name="T">Type of elements of the <paramref name="source"/></typeparam>
@@ -92,9 +78,7 @@ public static class EnumerableExtensions
             yield return source.Current;
     }
         
-    /// <summary>
-    /// Async copy elements from <paramref name="arrayIndex"/> to <paramref name="array"/>.
-    /// </summary>
+    /// <summary> Async copy elements from <paramref name="arrayIndex"/> to <paramref name="array"/>. </summary>
     /// <param name="enumerator">Input enumerator.</param>
     /// <param name="array">Output array. Array must have enough space to hold all values.</param>
     /// <param name="arrayIndex">Index from which elements should be copied.</param>
@@ -118,9 +102,7 @@ public static class EnumerableExtensions
         }
     }
         
-    /// <summary>
-    /// Copy elements from <paramref name="arrayIndex"/> to <paramref name="array"/>.
-    /// </summary>
+    /// <summary> Copy elements from <paramref name="arrayIndex"/> to <paramref name="array"/>. </summary>
     /// <param name="enumerator">Input enumerator.</param>
     /// <param name="array">Output array. Array must have enough space to hold all values.</param>
     /// <param name="arrayIndex">Index from which elements should be copied.</param>
@@ -144,9 +126,7 @@ public static class EnumerableExtensions
         }
     }
         
-    /// <summary>
-    /// Async copy elements from <paramref name="arrayIndex"/> to <paramref name="array"/>.
-    /// </summary>
+    /// <summary> Async copy elements from <paramref name="arrayIndex"/> to <paramref name="array"/>. </summary>
     /// <param name="enumerable">Input enumerable.</param>
     /// <param name="array">Output array. Array must have enough space to hold all values.</param>
     /// <param name="arrayIndex">Index from which elements should be copied.</param>
@@ -156,9 +136,7 @@ public static class EnumerableExtensions
         await enumerable.GetAsyncEnumerator().CopyToAsync(array, arrayIndex).ConfigureAwait(false);
     }
         
-    /// <summary>
-    /// Copy elements from <paramref name="arrayIndex"/> to <paramref name="array"/>.
-    /// </summary>
+    /// <summary> Copy elements from <paramref name="arrayIndex"/> to <paramref name="array"/>. </summary>
     /// <param name="enumerable">Input enumerable.</param>
     /// <param name="array">Output array. Array must have enough space to hold all values.</param>
     /// <param name="arrayIndex">Index from which elements should be copied.</param>
@@ -172,18 +150,7 @@ public static class EnumerableExtensions
         }
         enumerable.GetEnumerator().CopyTo(array, arrayIndex);
     }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="values"></param>
-    /// <returns></returns>
-    public static string? FirstNonDefaultOrEmpty(this IEnumerable<string> values)
-    {
-        return values.FirstOrDefault(str => !string.IsNullOrEmpty(str));
-    }
-    /// <summary>
-    /// Searches for first element of the sequence which is not equal to default value for <typeparamref name="T"/>
-    /// </summary>
+    /// <summary> Searches for first element of the sequence which is not equal to default value for <typeparamref name="T"/> </summary>
     /// <param name="values">Sequence to search</param>
     /// <typeparam name="T">Type of sequence elements.</typeparam>
     /// <returns> First element of the sequence which is not equal to default value for <typeparamref name="T"/></returns>
@@ -192,9 +159,7 @@ public static class EnumerableExtensions
         return values.FirstOrDefault(obj => !obj.IsDefault());
     }
 
-    /// <summary>
-    /// Find first element that match the predicate or default if such element is not found.
-    /// </summary>
+    /// <summary> Find first element that match the predicate or default if such element is not found. </summary>
     /// <param name="values">Sequence to search</param>
     /// <param name="predicateAsync">Async predicate to match.</param>
     /// <typeparam name="T">Type of sequence elements.</typeparam>
@@ -212,9 +177,7 @@ public static class EnumerableExtensions
         return default!;
     }
         
-    /// <summary>
-    /// Searches for first element of the sequence which is not equal to default value for <typeparamref name="T"/>
-    /// </summary>
+    /// <summary> Searches for first element of the sequence which is not equal to default value for <typeparamref name="T"/> </summary>
     /// <param name="values">Sequence to search</param>
     /// <typeparam name="T">Type of sequence elements.</typeparam>
     /// <returns> First element of the sequence which is not equal to default value for <typeparamref name="T"/></returns>
@@ -230,9 +193,7 @@ public static class EnumerableExtensions
         return default!;
     }
         
-    /// <summary>
-    /// Execute function <paramref name="function"/> on every element of <paramref name="enumerable"/> in parallel with level of parallelism of <paramref name="levelOfParallelism"/>
-    /// </summary>
+    /// <summary> Execute function <paramref name="function"/> on every element of <paramref name="enumerable"/> in parallel with level of parallelism of <paramref name="levelOfParallelism"/> </summary>
     /// <param name="enumerable">Enumeration of elements function <paramref name="function"/> should be executed</param>
     /// <param name="levelOfParallelism">How many task can be executed in parallel.  If set to 0 it will default to number of logical cores on machine. Default value is 0.</param>
     /// <param name="function">Function which should be executed on every element</param>
@@ -252,9 +213,7 @@ public static class EnumerableExtensions
         return result;
     }
         
-    /// <summary>
-    /// Execute action <paramref name="action"/> on every element of <paramref name="enumerable"/> in parallel with level of parallelism of <paramref name="levelOfParallelism"/>
-    /// </summary>
+    /// <summary> Execute action <paramref name="action"/> on every element of <paramref name="enumerable"/> in parallel with level of parallelism of <paramref name="levelOfParallelism"/> </summary>
     /// <param name="enumerable">Enumeration of elements action <paramref name="action"/> should be executed</param>
     /// <param name="levelOfParallelism">How many task can be executed in parallel.  If set to 0 it will default to number of logical cores on machine. Default value is 0.</param>
     /// <param name="action">Action which should be executed on every element</param>
@@ -298,9 +257,7 @@ public static class EnumerableExtensions
         
     }
 
-    /// <summary>
-    /// Get internal array of the list.
-    /// </summary>
+    /// <summary> Get internal array of the list. </summary>
     /// <param name="list">List from which to get internal array</param>
     /// <typeparam name="T">Type of array element</typeparam>
     /// <returns>Internal array of the given list.</returns>
@@ -309,16 +266,13 @@ public static class EnumerableExtensions
         return ListHelpers<T>.GetInternalArrayMethod(list);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="list"></param>
-    /// <param name="newSize"></param>
-    /// <typeparam name="T"></typeparam>
+    /// <summary> Resize list by changing the position of internal _size property.
+    /// This will allocate new size in needed, but it will not populate new entries with any data. </summary>
+    /// <param name="list">List to resize.</param>
+    /// <param name="newSize">New size of the list.</param>
+    /// <typeparam name="T">Type of list elements.</typeparam>
     public static void ResizeWithJunkInternal<T>(this List<T> list, int newSize)
     {
         ListHelpers<T>.ResizeInternalMethod(list, newSize);
     }
-
-    
 }
