@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Reflection.Emit;
-using System.Threading;
-using System.Threading.Tasks;
 
 // ReSharper disable UnusedMember.Global
 // ReSharper disable MemberCanBePrivate.Global
@@ -250,9 +245,9 @@ public static class EnumerableExtensions
         var elements = enumerable.Select((e, i) => (e, i)).ToArray();
         var result = new TResult[elements.Length];
         if(levelOfParallelism > 0)
-            await Parallel.ForEachAsync(elements, new ParallelOptions{MaxDegreeOfParallelism = levelOfParallelism, CancellationToken = token }, async (arg1, _) => result[arg1.i] = await function(arg1.e, token));
+            await Parallel.ForEachAsync(elements, new ParallelOptions{MaxDegreeOfParallelism = levelOfParallelism, CancellationToken = token }, async (arg1, _) => result[arg1.i] = await function(arg1.e, token).ConfigureAwait(false)).ConfigureAwait(false);
         else
-            await Parallel.ForEachAsync(elements, token, async (arg1, _) => result[arg1.i] = await function(arg1.e, token));
+            await Parallel.ForEachAsync(elements, token, async (arg1, _) => result[arg1.i] = await function(arg1.e, token).ConfigureAwait(false)).ConfigureAwait(false);
         
         return result;
     }

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Vipl.Base.Extensions;
+﻿namespace Vipl.Base.Extensions;
 
 /// <summary>
 /// Extension for <see cref="Type"/> class.

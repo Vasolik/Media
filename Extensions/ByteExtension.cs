@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
-
 namespace Vipl.Base.Extensions;
 
 /// <summary>
@@ -84,5 +81,5 @@ public static class ByteExtension
     ///    A <see cref="int" /> value containing the CRC-32 checksum
     ///    of the current instance.
     /// </value>
-    public static uint Checksum(this IEnumerable<byte> value) => value.Aggregate<byte, uint>(0, (current, b) => (current << 8) ^ CrcTable[((current >> 24) & 0xFF) ^ b]);
+    public static uint Checksum(this IEnumerable<byte> value) => value.Aggregate<byte, uint>(0, (current, b) =>  (current << 8) ^ CrcTable[((current >> 24) & 0xFF) ^ b]);
 }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.ComponentModel;
 
 // ReSharper disable UnusedMember.Global
 
@@ -21,7 +18,7 @@ public static class EnumExtensions
     /// <returns>EnumValue with given description</returns>
     public static T? GetEnumByDescription<T>(this string enumDescription) where T : struct, Enum
     {
-        return EnumExtensionHelper<T>.DescriptionToEnum.TryGetValue(enumDescription, out var value) ? value : (T?)null;
+        return EnumExtensionHelper<T>.DescriptionToEnum.TryGetValue(enumDescription, out var value) ? value : null;
     }
 
     /// <summary>
@@ -32,7 +29,7 @@ public static class EnumExtensions
     /// <returns>EnumValue with given description</returns>
     public static T? GetEnumByStringValue<T>(this string enumStringValue) where T : struct, Enum
     {
-        return EnumExtensionHelper<T>.StringValueToEnum.TryGetValue(enumStringValue, out var value) ? value : (T?)null;
+        return EnumExtensionHelper<T>.StringValueToEnum.TryGetValue(enumStringValue, out var value) ? value : null;
     }
 
     /// <summary>

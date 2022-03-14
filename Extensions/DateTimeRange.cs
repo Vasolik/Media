@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿// ReSharper disable PropertyCanBeMadeInitOnly.Global
 namespace Vipl.Base.Extensions;
 
 /// <summary>

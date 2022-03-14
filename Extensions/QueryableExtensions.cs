@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
 namespace Vipl.Base.Extensions;
 
@@ -31,12 +29,12 @@ public static class QueryableExtensions
             throw new MemberAccessException($"Property {propertyName} not found in {type.FullName}.");
 
         var parameter = Expression.Parameter(type, "p");
-        var propertyAccess = Expression.MakeMemberAccess(parameter, property!);
+        var propertyAccess = Expression.MakeMemberAccess(parameter, property);
         var keySelector = Expression.Lambda(propertyAccess, parameter);
         var expression = Expression.Call(
             typeof(Queryable),
             method,
-            new[] { type, property!.PropertyType },
+            new[] { type, property.PropertyType },
             source.Expression, Expression.Quote(keySelector));
 
         return (IOrderedQueryable<T>)source.Provider.CreateQuery<T>(expression);

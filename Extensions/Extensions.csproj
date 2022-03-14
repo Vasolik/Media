@@ -9,10 +9,10 @@
 	<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Description>Extension methods for common .Net classes.</Description>
-    <NoWarn>1701;1702</NoWarn>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Copyright>AGPL 3.0</Copyright>
     <Company>Vipl</Company>
     <Authors>Vaso Peras-Likodrić</Authors>
+    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 </Project>

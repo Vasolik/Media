@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -187,31 +184,29 @@ public static class StringExtension
     {
         return values.Join(separator).Intend(intendCount, first, separator, intendString);
     }
-    /// <summary>
-    /// Converts span of bytes to string using <paramref name="encoding"/> encoding.
-    /// </summary>
-    /// <param name="byteVector">Array of bytes to be converted</param>
+    /// <summary> Converts span of bytes to string using <paramref name="encoding"/> encoding. </summary>
+    /// <param name="value">Array of bytes to be converted</param>
     /// <param name="encoding">Encoding used in conversion.</param>
     /// <param name="offset">Starting offset from where characters will be taken</param>
     /// <param name="count">Number of byte which will be taken</param>
     /// <returns>Resulting string.</returns>
     /// <exception cref="ArgumentOutOfRangeException">If offset or count is out of range of value.</exception>
-    public static string ToString(this Span<byte> byteVector, Encoding encoding, int offset, int count)
+    public static string ToString(this Span<byte> value, Encoding encoding, int offset, int count)
     {
-        if (offset < 0 || offset > byteVector.Length)
+        if (offset < 0 || offset > value.Length)
             throw new ArgumentOutOfRangeException(nameof(offset));
 
-        if (count < 0 || count + offset >  byteVector.Length)
+        if (count < 0 || count + offset >  value.Length)
             throw new ArgumentOutOfRangeException(nameof(count));
 
         var bom = (Equals(encoding, Encoding.Unicode) || Equals(encoding, Encoding.BigEndianUnicode)) &&
-                  byteVector.Length - offset > 1
-            ?  byteVector.Slice(offset, 2)
+                  value.Length - offset > 1
+            ?  value.Slice(offset, 2)
             : null;
         
         encoding = Equals(Encoding.Unicode, encoding) ? GetBomEncoding(bom) : encoding;
 
-        var s = encoding.GetString(byteVector.ToArray(), offset, count);
+        var s = encoding.GetString(value.ToArray(), offset, count);
 
         // UTF16 BOM
         if (s.Length != 0 && (s[0] == 0xfffe || s[0] == 0xfeff))
@@ -219,34 +214,27 @@ public static class StringExtension
 
         return s;
     }
-    /// <summary>
-    /// Converts span of bytes to string using <paramref name="encoding"/> encoding.
-    /// </summary>
-    /// <param name="byteVector">Array of bytes to be converted</param>
+    /// <summary> Converts span of bytes to string using <paramref name="encoding"/> encoding. </summary>
+    /// <param name="value">Array of bytes to be converted</param>
     /// <param name="encoding">Encoding used in conversion.</param>
     /// <param name="offset">Starting offset from where characters will be taken</param>
     /// <returns>Resulting string.</returns>
     /// <exception cref="ArgumentOutOfRangeException">If offset is out of range of value.</exception>
-    public static string ToString(this Span<byte> byteVector, Encoding encoding, int offset)
+    public static string ToString(this Span<byte> value, Encoding encoding, int offset)
     {
-        return byteVector.ToString(encoding, offset, byteVector.Length - offset);
+        return value.ToString(encoding, offset, value.Length - offset);
     }
 
-    /// <summary>
-    /// Converts span of bytes to string using <paramref name="encoding"/> encoding.
-    /// </summary>
-    /// <param name="byteVector">Array of bytes to be converted</param>
+    /// <summary> Converts span of bytes to string using <paramref name="encoding"/> encoding. </summary>
+    /// <param name="value">Array of bytes to be converted</param>
     /// <param name="encoding">Encoding used in conversion.</param>
     /// <returns>Resulting string.</returns>
-
-    public static string ToString(this Span<byte> byteVector, Encoding encoding)
+    public static string ToString(this Span<byte> value, Encoding encoding)
     {
-        return byteVector.ToString(encoding, 0, byteVector.Length);
+        return value.ToString(encoding, 0, value.Length);
     }
     
-    /// <summary>
-    ///     Get encoding from bom bytes
-    /// </summary>
+    /// <summary> Get encoding from bom bytes </summary>
     /// <param name="bom">Bom bytes</param>
     /// <returns>Encoding written in bom bytes.</returns>
     private static Encoding GetBomEncoding(Span<byte> bom)

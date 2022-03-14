@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
 // ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedType.Global
@@ -16,7 +14,7 @@ public static class ExpressionExtensions
     /// Generate lambda expression to accessing property of then object by path t.
     /// </summary>
     /// <param name="propertyPath">Path to the property</param>
-    /// <typeparam name="T">Type of the input parameter of produced expresion.</typeparam>
+    /// <typeparam name="T">Type of the input parameter of produced expression.</typeparam>
     /// <typeparam name="TResult">Type of the result of produces expression.</typeparam>
     /// <returns>Expression returning specific property.</returns>
     /// <exception cref="ArgumentException">Thrown when <typeparamref name="T"/>  does not have specific property on give path.</exception>
@@ -53,8 +51,8 @@ public static class ExpressionExtensions
             throw new ArgumentException($"Invalid property path \"{path}\"");
 
         return next == null
-            ? (Expression.MakeMemberAccess(parent, child!), child!.PropertyType)
-            : GeneratePropertyExpression(Expression.Property(parent, child!), next);
+            ? (Expression.MakeMemberAccess(parent, child!), child.PropertyType)
+            : GeneratePropertyExpression(Expression.Property(parent, child), next);
     }
 
     private static (string, string?) Split(string value, char separator)
