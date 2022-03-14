@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <AssemblyName>Vipl.Media.Core</AssemblyName>
+        <RootNamespace>Vipl.Media.Core</RootNamespace>
+        <LangVersion>10</LangVersion>
+        <Nullable>enable</Nullable>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <Description>Core classed in in Vipl.Media.* libraries</Description>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Copyright>AGPL 3.0</Copyright>
+        <Company>Vipl</Company>
+        <Authors>Vaso Peras-Likodrić</Authors>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\Media.Abstraction\Media.Abstraction.csproj" />
+    </ItemGroup>
+</Project>
