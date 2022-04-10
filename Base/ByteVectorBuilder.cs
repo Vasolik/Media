@@ -194,6 +194,21 @@ public class ByteVectorBuilder: IEnumerable<byte>, IByteVectorBuilder
         return Add(value.BinaryRepresentation);
     }
     /// <inheritdoc />
+    public IByteVectorBuilder Add(UFixedPoint8_8 value)
+    {
+        return Add(value.BinaryRepresentation);
+    }
+    /// <inheritdoc />
+    public IByteVectorBuilder Add(UFixedPoint16_16 value)
+    {
+        return Add(value.BinaryRepresentation);
+    }
+    /// <inheritdoc />
+    public IByteVectorBuilder Add(UFixedPoint2_30 value)
+    {
+        return Add(value.BinaryRepresentation);
+    }
+    /// <inheritdoc />
     public IByteVectorBuilder Add(TransformationMatrix value)
     {
         Add(value.A); Add(value.B); Add(value.U);

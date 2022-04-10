@@ -100,6 +100,18 @@ public interface IByteVectorBuilder
     /// <param name="value"> A <see cref="FixedPoint2_30"/> value to convert into bytes.</param>
     /// <returns> <c>this</c> object to allow chaining. </returns>
     public IByteVectorBuilder Add(FixedPoint2_30 value);
+    /// <summary> Add <see cref="UFixedPoint8_8"/> to byte vector. </summary>
+    /// <param name="value"> A <see cref="UFixedPoint8_8"/> value to convert into bytes.</param>
+    /// <returns> <c>this</c> object to allow chaining. </returns>
+    public IByteVectorBuilder Add(UFixedPoint8_8 value);
+    /// <summary> Add <see cref="UFixedPoint16_16"/> to byte vector. </summary>
+    /// <param name="value"> A <see cref="FixedPoint16_16"/> value to convert into bytes.</param>
+    /// <returns> <c>this</c> object to allow chaining. </returns>
+    public IByteVectorBuilder Add(UFixedPoint16_16 value);
+    /// <summary> Add <see cref="UFixedPoint2_30"/> to byte vector. </summary>
+    /// <param name="value"> A <see cref="UFixedPoint2_30"/> value to convert into bytes.</param>
+    /// <returns> <c>this</c> object to allow chaining. </returns>
+    public IByteVectorBuilder Add(UFixedPoint2_30 value);
     /// <summary> Add <see cref="TransformationMatrix"/> to byte vector. </summary>
     /// <param name="value"> A <see cref="TransformationMatrix"/> value to convert into bytes.</param>
     /// <returns> <c>this</c> object to allow chaining. </returns>

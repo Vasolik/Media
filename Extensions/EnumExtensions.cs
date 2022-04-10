@@ -45,6 +45,49 @@ public static class EnumExtensions
         var attributes = memInfo[0].GetCustomAttributes(typeof(T), false);
         return (attributes.Length > 0) ? (T)attributes[0] : null;
     }
+
+    /// Set flag of given <paramref name="enumValue"/> to <paramref name="flagValue"/>.
+    /// <typeparam name="T">Type of the enum</typeparam>
+    /// <param name="enumValue">Enum value for which flag is needed to be set.</param>
+    /// <param name="flagValue">Flag value to be set.</param>
+    /// <param name="value">Value to set flat to.</param>
+    /// <returns>New enum value with given flag set.</returns>
+    public static T SetFlag<T>(this T enumValue, T flagValue, bool value) where T : struct, Enum
+    {
+        var enumIntValue = Convert.ToInt32(enumValue);
+        var flagIntValue = Convert.ToInt32(flagValue);
+        if (value)
+            enumIntValue |= flagIntValue;
+        else
+            enumIntValue &= ~flagIntValue;
+        return (T)Enum.ToObject(typeof(T), enumIntValue);
+    }
+     
+    /// Set flag of given <paramref name="enumValue"/> to <paramref name="flagValue"/>.
+    /// <typeparam name="T">Type of the enum</typeparam>
+    /// <param name="enumValue">Enum value for which flag is needed to be set.</param>
+    /// <param name="flagValue">Flag value to be set.</param>
+    /// <returns>New enum value with given flag set.</returns>
+    public static T SetFlag<T>(this T enumValue, T flagValue) where T : struct, Enum
+    {
+        var enumIntValue = Convert.ToInt32(enumValue);
+        var flagIntValue = Convert.ToInt32(flagValue);
+        enumIntValue |= flagIntValue;
+        return (T)Enum.ToObject(typeof(T), enumIntValue);
+    }
+    
+    /// Clear flag of given <paramref name="enumValue"/> to <paramref name="flagValue"/>.
+    /// <typeparam name="T">Type of the enum</typeparam>
+    /// <param name="enumValue">Enum value for which flag is needed to be set.</param>
+    /// <param name="flagValue">Flag value to be set.</param>
+    /// <returns>New enum value with given flag set.</returns>
+    public static T ClearFlag<T>(this T enumValue, T flagValue) where T : struct, Enum
+    {
+        var enumIntValue = Convert.ToInt32(enumValue);
+        var flagIntValue = Convert.ToInt32(flagValue);
+        enumIntValue &= ~flagIntValue;
+        return (T)Enum.ToObject(typeof(T), enumIntValue);
+    }
 }
 
 internal static class EnumExtensionHelper<T>

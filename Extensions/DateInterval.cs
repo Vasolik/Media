@@ -8,5 +8,6 @@ public enum DateInterval
     /// <summary> Hours </summary>
     Hour = 2,
     /// <summary> Seconds. </summary>
-    Day = 3
+    Day = 3,
+    
 }

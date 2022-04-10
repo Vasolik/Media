@@ -80,7 +80,7 @@ public static class ByteVectorConverterExtensions
     /// <summary> Converts an value into a big-endian or little-endian data representation. </summary>
     /// <param name="value"> A <see cref="ulong"/> value to convert into bytes.</param>
     /// <returns> A <see cref="ByteVector"/> object containing the encoded representation of <paramref name="value" />. </returns>
-    public static ByteVector ToByteVector(Span<byte> value)
+    public static ByteVector ToByteVector(this Span<byte> value)
     {
         return new ByteVector(value);
     }
@@ -102,7 +102,7 @@ public static class ByteVectorConverterExtensions
     /// <see langword="false"/> if the least significant byte is to appear first (little endian format).
     /// </param>
     /// <returns> A <see cref="uint"/> value containing the value read from the current instance. </returns>
-    public static uint ToUInt (this ByteVector value, bool mostSignificantByteFirst = true)
+    public static uint ToUInt(this ByteVector value, bool mostSignificantByteFirst = true)
     {
         return value.Data.ToUInt(mostSignificantByteFirst);
     }
@@ -124,7 +124,7 @@ public static class ByteVectorConverterExtensions
     /// <see langword="false"/> if the least significant byte is to appear first (little endian format).
     /// </param>
     /// <returns> A <see cref="ushort"/> value containing the value read from the current instance. </returns>
-    public static  ushort ToUShort (this ByteVector value, bool mostSignificantByteFirst = true)
+    public static  ushort ToUShort(this ByteVector value, bool mostSignificantByteFirst = true)
     {
         return value.Data.ToUShort(mostSignificantByteFirst);
     }
@@ -135,7 +135,7 @@ public static class ByteVectorConverterExtensions
     /// <see langword="false"/> if the least significant byte is to appear first (little endian format).
     /// </param>
     /// <returns> A <see cref="long"/> value containing the value read from the current instance. </returns>
-    public static  long ToLong (this ByteVector value, bool mostSignificantByteFirst = true)
+    public static  long ToLong(this ByteVector value, bool mostSignificantByteFirst = true)
     {
         return value.Data.ToLong(mostSignificantByteFirst);
     }
