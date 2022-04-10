@@ -49,7 +49,6 @@ public abstract class TrackGroupTypeBox : BoxWithData
     /// <inheritdoc />
     public override IByteVectorBuilder RenderData(IByteVectorBuilder builder)
     {
-
         builder.Add(TrackGroupId);
         return builder;
     }

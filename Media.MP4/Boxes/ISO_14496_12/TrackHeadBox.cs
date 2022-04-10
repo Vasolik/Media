@@ -194,4 +194,10 @@ public class TrackHeaderBox : FullBoxWithData, IBoxWithMovieHeaderScalableProper
     
     /// <inheritdoc />
     public override ulong ActualDataSize => Version == 1 ? 92UL : 80UL;
+    
+    
+    /// <inheritdoc />
+    public override string DebugDisplay(int level)
+        => $"{base.DebugDisplay(level)} (v{Version}, F={Flags}, ID={TrackId}, D={Duration}, L={Layer}, AG={AlternateGroup}, V={Volume.Value}, W={Width.Value}, H={Height.Value} C={CreationTime}, M={ModificationTime})";
+    
 }

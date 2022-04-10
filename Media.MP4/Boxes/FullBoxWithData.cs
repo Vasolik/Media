@@ -25,6 +25,7 @@ public abstract class FullBoxWithData : FullBox
     /// <inheritdoc />
     protected override async Task<Box> InitAsync(MP4 file)
     {
+        await base.InitAsync(file);
         file.Seek((long)DataPosition, SeekOrigin.Begin);
         Data = await file.ReadBlockAsync((uint) DataSize);
         Debug.Assert(Size == ActualSize);

@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -212,5 +213,25 @@ public static class StringExtension
 
         return Encoding.Unicode;
     }
+
+    /// <summary> Makes string representation of size in bytes. </summary>
+    /// <param name="byteCount">Counts of bytes</param>
+    /// <param name="decimalPlaces">Number places for calculation.</param>
+    /// <returns>String representing number of B or KB or MB etc...</returns>
+    public static string BytesToString(this IConvertible byteCount, byte decimalPlaces = 4)
+
+    {
+        var count = byteCount.ToInt64(null);
+        string[] suf = { "B", "KB", "MB", "GB", "TB", "PB", "EB" }; //Longs run out around EB
+        if (count == 0)
+            return "0" + suf[0];
+        long bytes = Math.Abs(count);
+        int place = Convert.ToInt32(Math.Floor(Math.Log(bytes, 1024)));
+        double num = Math.Round(bytes / Math.Pow(1024, place), decimalPlaces);
+        return (Math.Sign(count) * num).ToString(CultureInfo.InvariantCulture) + " " + suf[place];
+    }
+
+
+
     
 }

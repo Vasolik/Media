@@ -136,4 +136,8 @@ public class MovieHeaderBox : FullBoxWithData
 	/// <inheritdoc />
 	public override ulong ActualDataSize => Version == 1 ? 108UL : 96UL;
 	
+	/// <inheritdoc />
+	public override string DebugDisplay(int level)
+		=> $"{base.DebugDisplay(level)}  TS:{Timescale} D:{Duration} R:{Rate.Value} V:{Volume.Value} NextTrackId: {NextTrackId} C:{CreationTime} M:{ModificationTime}";
+	
 }

@@ -10,7 +10,7 @@ namespace Vipl.Media.MP4;
 ///<para>Boxes start with a header which gives both size and type. The header permits compact or extended size
 /// (32 or 64 bits) and compact or extended types (32 bits or full universal unique identifiers, i.e. UUIDs).
 /// The standard boxes all use compact types (32-bit) and most boxes will use the compact (32-bit) size.
-/// Typically, only the <see cref="MediaBox"/>  needs the 64-bit size.</para>
+/// Typically, only the <see cref="MediaDataBox"/>  needs the 64-bit size.</para>
 /// <para>  To permit ease of identification, the 32-bit compact type can be expressed as four characters from the
 /// range 0020 to 007E, inclusive, of ASCII.  The four individual byte values of the field are placed in order in the file. </para> 
 /// <para> The size is the entire size of the box, including the size and type header, fields, and all contained boxes.</para>

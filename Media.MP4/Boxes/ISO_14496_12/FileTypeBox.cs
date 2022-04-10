@@ -88,4 +88,9 @@ public class FileTypeBox : BoxWithData
     }
     /// <inheritdoc />
     public override ulong ActualDataSize => (ulong) (8 + CompatibleBrands.Count * 4);
+    
+    /// <inheritdoc />
+    public override string DebugDisplay(int level)
+        => $"{base.DebugDisplay(level)} {MajorBrandAsString}:{MinorVersion}, CompatibleBrands: {string.Join(", ", CompatibleBrandsAsString)}";
+    
 }

@@ -83,7 +83,7 @@ public class MediaHeaderBox : FullBoxWithData
         get => _timescale;
         set
         {
-            Duration = Duration * _timescale / value;
+            Duration = Duration * _timescale / (value == 0 ? 1 : value);
             UpdateScaling(Header.File?.Boxes ?? new List<Box>(), _timescale, value );
             _timescale = value;
         }
@@ -121,9 +121,9 @@ public class MediaHeaderBox : FullBoxWithData
         get
         {
             var lang = new char[3];
-            lang[2] = (char)((LanguageAsPacked3LetterCode & 0x1F) - 0x60);
-            lang[1] = (char)(((LanguageAsPacked3LetterCode >> 5) & 0x1F) - 0x60);
-            lang[0] = (char)(((LanguageAsPacked3LetterCode >> 10) & 0x1F) - 0x60);
+            lang[2] = (char)((LanguageAsPacked3LetterCode & 0x1F) + 0x60);
+            lang[1] = (char)(((LanguageAsPacked3LetterCode >> 5) & 0x1F) + 0x60);
+            lang[0] = (char)(((LanguageAsPacked3LetterCode >> 10) & 0x1F) + 0x60);
             return CultureInfo
                 .GetCultures(CultureTypes.NeutralCultures)
                 .FirstOrDefault(ci => string.Equals(ci.ThreeLetterISOLanguageName, new string(lang), StringComparison.OrdinalIgnoreCase));
@@ -139,4 +139,9 @@ public class MediaHeaderBox : FullBoxWithData
                                                   ((value.ThreeLetterISOLanguageName[0] - 0x60) << 10));
         }
     }
+    
+    /// <inheritdoc />
+    public override string DebugDisplay(int level)
+       => $"{base.DebugDisplay(level)} L: {Language?.ThreeLetterISOLanguageName ?? ""}, D: {Duration}, T: {Timescale}  C={CreationTime}, M={ModificationTime}";
+
 }

@@ -98,8 +98,7 @@ public static class ObjectExtensions
     {
         return Equals(obj, default(T));
     }
-#nullable restore        
-
+#nullable restore
 }
 internal class ReferenceEqualityComparer : EqualityComparer<object>
 {

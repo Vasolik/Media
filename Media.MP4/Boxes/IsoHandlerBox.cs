@@ -9,7 +9,7 @@ namespace Vipl.Media.MP4.Boxes;
 /// <para>This class extends <see cref="FullBox" /> to provide an
 /// implementation of a ISO/IEC 14496-12 FullBox.</para>
 /// 
-/// <para>This box within a MediaBox declares media type of the track, and thus the process by which the media-
+/// <para>This box within a <see cref="MediaBox"/> declares media type of the track, and thus the process by which the media-
 /// data in the track is presented. For example, a format for which the decoder delivers video would be
 /// stored in a video track, identified by being handled by a video handler. The documentation of the
 /// storage of a media format identifies the media type which that format uses.</para>
@@ -47,7 +47,7 @@ public class IsoHandlerBox : FullBoxWithData
 		set
 		{
 			HandlerType = value[4..8].ToByteVector();
-			Name = value[..8].ToString(Encoding.UTF8);
+			Name = value[20..].ToString(Encoding.UTF8);
 		}
 	}
 	/// <inheritdoc/>
@@ -55,10 +55,11 @@ public class IsoHandlerBox : FullBoxWithData
 	{
 		return builder.Skip(4)
 			.Add(HandlerType)
+			.Clear(12)
 			.Add(Name);
 	}
 
-	/// <summary><para> When present in a <see cref="MediaBox"/>, contains a value as defined in Clause 12, or a value from
+	/// <summary><para> When present in a <see cref="MediaDataBox"/>, contains a value as defined in Clause 12, or a value from
 	/// a derived specification, or registration. </para>
 	/// <para>When present in a <see cref="MetaBox"/>, contains an appropriate value to indicate the format of the
 	/// <see cref="MetaBox"/> contents. The value 'null' can be used in the primary MetaBox to indicate that it is
@@ -70,5 +71,9 @@ public class IsoHandlerBox : FullBoxWithData
 	public string Name { get; private set; }
 
 	/// <inheritdoc/>
-	public override ulong ActualDataSize => (ulong)(8 + Encoding.UTF8.GetByteCount(Name));
+	public override ulong ActualDataSize => (ulong)(20 + Encoding.UTF8.GetByteCount(Name));
+	
+	/// <inheritdoc />
+	public override string DebugDisplay(int level)
+		=> $"{base.DebugDisplay(level)} HandlerType: {HandlerType} Name: {Name}";
 }

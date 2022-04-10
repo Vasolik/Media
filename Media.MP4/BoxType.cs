@@ -58,7 +58,7 @@ public sealed class BoxType : SmartEnum<BoxType>
     public static readonly BoxType MovieHeader = new("mvhd", 5);
     
     /// <summary><para>This is a container box for a single track of a presentation. A presentation consists of one or more tracks.
-    /// Each track carries its own temporal and spatial information. Each track will contain its associated <see cref="MediaBox"/> .</para>
+    /// Each track carries its own temporal and spatial information. Each track will contain its associated <see cref="MediaDataBox"/> .</para>
     /// <para>Tracks are used for a number of purposes, including: (a) to contain media data (media tracks) and (b) to
     /// contain packetization information for streaming protocols (hint tracks).</para>
     /// <para>There shall be at least one media track within a MovieBox, and all the media tracks that contributed to
@@ -211,18 +211,21 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// <para>Links a shadow sync track to a main track.</para></summary>
     public static readonly BoxType ShadowSyncTrackReference = new("shsc", 19);
     
+    /// <summary>The media declaration container contains all the objects that declare information about the media data within a track.</summary>
+    public static readonly BoxType Media = new("mdia", 20);
+    
     /// <summary> <para>The media header declares overall information that is media-independent, and relevant to
     /// characteristics of the media in a track.</para>  </summary>
-    public static readonly BoxType MediaHeader = new("mdhd", 20);
+    public static readonly BoxType MediaHeader = new("mdhd", 25);
     
-    /// <summary> <para>This box within a <see cref="MediaBox"/>  declares media type of the track, and thus the process by which the media-
+    /// <summary> <para>This box within a <see cref="MediaDataBox"/>  declares media type of the track, and thus the process by which the media-
     /// data in the track is presented. For example, a format for which the decoder delivers video would be
     /// stored in a video track, identified by being handled by a video handler. The documentation of the
     /// storage of a media format identifies the media type which that format uses.</para>
     /// <para> This box when present within a <see cref="MetaBox"/> , declares the structure or format of the <see cref="MetaBox"/> contents.</para>
     /// <para> There is a general handler for metadata streams of any type; the specific format is identified by the
     /// sample entry, as for video or audio, for example.</para> </summary>
-    public static readonly BoxType Handler = new("hdlr", 21);
+    public static readonly BoxType Handler = new("hdlr", 26);
     
     /// <summary> <para> An EditBox maps the presentation timeline to the media timeline as it is stored
     /// in the file. The EditBox is a container for the edit lists. </para>
@@ -254,6 +257,10 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// such as one defined in Clause 12, or defined in a derived specification, or registration.</para>
     /// <para>Multiple descriptions may be used within a track.</para> </summary>
     public static readonly BoxType SampleDescription = new("stsd", 130);
+    
+    /// <summary><para>An optional <see cref="BitRateBox"/> may be present in any <see cref="SampleEntryBox"/> to signal
+    /// the bit rate information of a stream. This can be used for buffer configuration.</para></summary>
+    public static readonly BoxType BitRate = new("btrt", 131);
 
     /// <summary> </summary>
     public static readonly BoxType Aart = new("aART", 500);
@@ -296,8 +303,8 @@ public sealed class BoxType : SmartEnum<BoxType>
 
     /// <summary> </summary>
     public static readonly BoxType Lyr = new("lyr", 521);
-    /// <summary> </summary>
-    public static readonly BoxType Mdia = new("mdia", 523);
+    
+
 
     /// <summary> </summary>
     public static readonly BoxType Mean = new("mean", 525);

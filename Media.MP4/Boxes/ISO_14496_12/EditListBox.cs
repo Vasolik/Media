@@ -96,6 +96,11 @@ public class EditListBox  : FullBoxWithData, IBoxWithMovieHeaderScalableProperti
         /// for the edit_duration </summary>
         // ReSharper disable once PropertyCanBeMadeInitOnly.Global
         public FixedPoint16_16 MediaRate { get; set; }
+        
+        /// <summary> Debug string use to print during debug. </summary>
+        /// <returns>Debug string</returns>
+        public  string DebugDisplay()
+            => $"D: {SegmentDuration}, T: {MediaTime}, R: {MediaRate.Value}";
     }
 
     /// <summary> Segment entries in the Edit List Box. </summary>
@@ -111,4 +116,9 @@ public class EditListBox  : FullBoxWithData, IBoxWithMovieHeaderScalableProperti
     }
     /// <inheritdoc />
     public override ulong ActualDataSize => 4UL + (ulong) (EntryCount * (Version == 1 ? 20 : 12));
+    
+    /// <inheritdoc />
+    public override string DebugDisplay(int level)
+        => $"{base.DebugDisplay(level)} ({Entries.Select(e=> e.DebugDisplay()).Join("), (")})";
+
 }

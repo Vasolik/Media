@@ -1,4 +1,5 @@
 using Vipl.Base;
+using Vipl.Base.Extensions;
 
 namespace Vipl.Media.MP4.Boxes.ISO_14496_12;
 
@@ -51,5 +52,9 @@ public class FreeSpaceBox : BoxWithData
 
 	/// <inheritdoc />
 	public override ulong ActualDataSize => PaddingSize;
+	
+	/// <inheritdoc />
+	public override string DebugDisplay(int level)
+		=> $"{base.DebugDisplay(level)} : {PaddingSize.BytesToString()}";
 
 }

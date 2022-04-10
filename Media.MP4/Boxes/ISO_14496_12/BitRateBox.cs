@@ -7,6 +7,7 @@ namespace Vipl.Media.MP4.Boxes.ISO_14496_12;
 /// <summary>This class extends <see cref="Box" /> to provide an implementation of a ISO/IEC 14496-12 BitRateBox.
 ///<para>An optional <see cref="BitRateBox"/> may be present in any <see cref="SampleEntryBox"/> to signal
 /// the bit rate information of a stream. This can be used for buffer configuration.</para></summary>
+[HasBoxFactory("btrt")]
 public class BitRateBox : BoxWithData
 {
     private BitRateBox (BoxHeader header,  IsoHandlerBox? handler)

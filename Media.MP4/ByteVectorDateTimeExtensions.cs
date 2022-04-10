@@ -92,7 +92,7 @@ public static class ByteVectorDateTimeExtensions
     /// <returns>A <see cref="TimeSpan"/> object with time interpretation of bytes in <see cref="Span{Byte}"/>. </returns>
     public static TimeSpan ToTimeSpan(this Span<byte> value, uint scale)
     {
-        return (value.Length == 8 ? TimeSpan.FromSeconds((long)value.ToULong()) : TimeSpan.FromSeconds(value.ToUInt()) ) / scale;
+        return (value.Length == 8 ? TimeSpan.FromSeconds((long)value.ToULong()) : TimeSpan.FromSeconds(value.ToUInt()) ) / (scale == 0 ? 1 : scale);
     }
 
     /// <summary> Converts <see cref="TimeSpan"/> to <see cref="ByteVector"/>.
