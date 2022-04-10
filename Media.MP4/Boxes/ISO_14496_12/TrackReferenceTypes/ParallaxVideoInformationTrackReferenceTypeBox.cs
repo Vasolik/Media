@@ -1,4 +1,4 @@
-namespace Vipl.Media.MP4.Boxes.ISO_14496_12;
+namespace Vipl.Media.MP4.Boxes.ISO_14496_12.TrackReferenceTypes;
 
 /// <summary>  This class extends <see cref="Box" /> to provide an implementation of a ISO/IEC 14496-12 TrackReferenceTypeBox.
 /// <para>This box includes a set of <see cref="TrackReferenceTypeBox"/>es, each of which indicates, by its type, that the
@@ -8,15 +8,11 @@ namespace Vipl.Media.MP4.Boxes.ISO_14496_12;
 /// <para>Exactly one <see cref="TrackReferenceBox"/> can be contained within the <see cref="TrackBox"/> .</para>
 /// <para>If this box is not present, the track is not referencing any other track in any way. The reference array is
 /// sized to fill the reference type box.</para>
-/// <para>Indicates that the referenced track(s) may contain media data required for decoding
-/// of the track containing the track reference, i.e., it should only be used if the referenced
-/// hint track is used. The referenced tracks shall be hint tracks. The 'hind'
-/// dependency can, for example, be used for indicating the dependencies between
-/// hint tracks documenting layered IP multicast over RTP.</para></summary>
-[HasBoxFactory("hind")]
-public abstract class DecodingTrackReferenceTypeBox : TrackReferenceTypeBox
+/// <para>This track contains auxiliary parallax video information for the referenced video track.</para></summary>
+[HasBoxFactory("vplx",  typeof(TrackReferenceBox))]
+public class ParallaxVideoInformationTrackReferenceTypeBox : TrackReferenceTypeBox
 {
-    private DecodingTrackReferenceTypeBox (BoxHeader header,  IsoHandlerBox? handler)
+    private ParallaxVideoInformationTrackReferenceTypeBox (BoxHeader header,  IsoHandlerBox? handler)
         : base (header, handler)
     {
     }

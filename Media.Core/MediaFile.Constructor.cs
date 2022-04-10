@@ -1,4 +1,3 @@
-using Vipl.Base;
 using Vipl.Media.Abstraction;
 
 namespace Vipl.Media.Core;

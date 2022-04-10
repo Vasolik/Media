@@ -1,4 +1,4 @@
-namespace Vipl.Media.MP4.Boxes.ISO_14496_12;
+namespace Vipl.Media.MP4.Boxes.ISO_14496_12.TrackReferenceTypes;
 
 /// <summary>  This class extends <see cref="Box" /> to provide an implementation of a ISO/IEC 14496-12 TrackReferenceTypeBox.
 /// <para>This box includes a set of <see cref="TrackReferenceTypeBox"/>es, each of which indicates, by its type, that the
@@ -9,8 +9,8 @@ namespace Vipl.Media.MP4.Boxes.ISO_14496_12;
 /// <para>If this box is not present, the track is not referencing any other track in any way. The reference array is
 /// sized to fill the reference type box.</para>
 /// <para>This track uses fonts carried/defined in the referenced track.</para></summary>
-[HasBoxFactory("font")]
-public abstract class FontTrackReferenceTypeBox : TrackReferenceTypeBox
+[HasBoxFactory("font",  typeof(TrackReferenceBox))]
+public class FontTrackReferenceTypeBox : TrackReferenceTypeBox
 {
     private FontTrackReferenceTypeBox (BoxHeader header,  IsoHandlerBox? handler)
         : base (header, handler)

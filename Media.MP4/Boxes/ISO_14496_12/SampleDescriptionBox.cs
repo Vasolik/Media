@@ -26,7 +26,7 @@ public class SampleDescriptionBox : FullContainerBox
     protected override async Task<Box> InitAsync(MP4 file)
     {
         EntryCount = (await file.ReadBlockAsync (4)).ToUInt();
-        await LoadChildrenAsync (file);
+        await this.LoadChildrenAsync (file);
         return this;
     }
 

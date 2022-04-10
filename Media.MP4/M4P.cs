@@ -52,7 +52,7 @@ public class MP4 : MediaFile
     public MovieHeaderBox? MovieHeaderBox
     {
         get => _movieHeaderBox ??= (Boxes
-                .OfType<ContainerBox>()
+                .OfType<IContainerBox>()
                 .Select(b => b.GetChildRecursively(BoxType.MovieHeader))
                 .FirstOrDefault(b => b is MovieHeaderBox) as MovieHeaderBox);
         set => _movieHeaderBox = value;

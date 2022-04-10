@@ -1,5 +1,3 @@
-using Vipl.Base;
-
 namespace Vipl.Media.Core;
 /// <summary>
 /// Base class of all media files.

@@ -1,4 +1,4 @@
-namespace Vipl.Media.MP4.Boxes.ISO_14496_12;
+namespace Vipl.Media.MP4.Boxes.ISO_14496_12.TrackReferenceTypes;
 
 /// <summary>  This class extends <see cref="Box" /> to provide an implementation of a ISO/IEC 14496-12 TrackReferenceTypeBox.
 /// <para>This box includes a set of <see cref="TrackReferenceTypeBox"/>es, each of which indicates, by its type, that the
@@ -8,11 +8,12 @@ namespace Vipl.Media.MP4.Boxes.ISO_14496_12;
 /// <para>Exactly one <see cref="TrackReferenceBox"/> can be contained within the <see cref="TrackBox"/> .</para>
 /// <para>If this box is not present, the track is not referencing any other track in any way. The reference array is
 /// sized to fill the reference type box.</para>
-/// <para>This track contains auxiliary depth video information for the referenced video track.</para></summary>
-[HasBoxFactory("vdep")]
-public abstract class DeptVideoInformationTrackReferenceTypeBox : TrackReferenceTypeBox
+/// <para>This track contains subtitle, timed text or overlay graphical information for the referenced
+/// track or any track in the alternate group to which the track belongs, if any.</para></summary>
+[HasBoxFactory("subt",  typeof(TrackReferenceBox))]
+public class SubtitleTrackReferenceTypeBox : TrackReferenceTypeBox
 {
-    private DeptVideoInformationTrackReferenceTypeBox (BoxHeader header,  IsoHandlerBox? handler)
+    private SubtitleTrackReferenceTypeBox (BoxHeader header,  IsoHandlerBox? handler)
         : base (header, handler)
     {
     }
