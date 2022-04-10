@@ -62,4 +62,8 @@ public abstract class TrackReferenceTypeBox : BoxWithData
     
     /// <inheritdoc />
     public override ulong ActualDataSize => (ulong) (TrackIds.Count * 4);
+    
+    /// <inheritdoc />
+    public override string DebugDisplay(int level)
+        => $"{base.DebugDisplay(level)} TrackIds: {string.Join(", ", TrackIds)}";
 }

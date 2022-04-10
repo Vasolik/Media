@@ -92,7 +92,7 @@ public static class ByteVectorDateTimeExtensions
     /// <returns>A <see cref="TimeSpan"/> object with time interpretation of bytes in <see cref="Span{Byte}"/>. </returns>
     public static TimeSpan ToTimeSpan(this Span<byte> value, uint scale)
     {
-        return (value.Length == 8 ? TimeSpan.FromSeconds((long)value.ToULong()) : TimeSpan.FromSeconds(value.ToUInt()) ) / (scale == 0 ? 1 : scale);
+        return (value.Length == 8 ? TimeSpan.FromTicks((long)value.ToULong() * TimeSpan.TicksPerSecond / (scale == 0 ? 1 : scale)) : TimeSpan.FromTicks((long)value.ToUInt()  * TimeSpan.TicksPerSecond / (scale == 0 ? 1 : scale)) ) ;
     }
 
     /// <summary> Converts <see cref="TimeSpan"/> to <see cref="ByteVector"/>.
@@ -127,7 +127,10 @@ public static class ByteVectorDateTimeExtensions
     /// <remarks>If 64 bit representation is needed use <see cref="AddLong(IByteVectorBuilder, TimeSpan, uint)"/> method.</remarks>
     public static IByteVectorBuilder Add(this IByteVectorBuilder builder,  TimeSpan value, uint scale)
     {
-        return builder.Add((uint)(value.Ticks * scale / TimeSpan.TicksPerSecond ));
+        var scaledTicks = value.Ticks * scale;
+        var seconds = (int)(scaledTicks / TimeSpan.TicksPerSecond);
+        seconds += (int)Math.Round((scaledTicks - seconds * TimeSpan.TicksPerSecond) / (double)TimeSpan.TicksPerSecond, MidpointRounding.ToEven);
+        return builder.Add(seconds );
     }
     /// <summary> Add <see cref="TimeSpan"/> to <see cref="IByteVectorBuilder"/>.
     /// <paramref name="value"/> is transformed to big-endian representation of 64 bits unsigned integer value
@@ -139,6 +142,9 @@ public static class ByteVectorDateTimeExtensions
     /// <remarks>If 32 bit representation is needed use <see cref="Add(IByteVectorBuilder, TimeSpan, uint)"/> method.</remarks>
     public static IByteVectorBuilder AddLong(this IByteVectorBuilder builder,  TimeSpan value, uint scale)
     {
-        return builder.Add((ulong)(value.Ticks * scale / TimeSpan.TicksPerSecond ));
+        var scaledTicks = (value.Ticks * scale);
+        var seconds = (long)(scaledTicks / TimeSpan.TicksPerSecond);
+        seconds += (int)Math.Round((scaledTicks - seconds * TimeSpan.TicksPerSecond) / (double)TimeSpan.TicksPerSecond, MidpointRounding.ToEven);
+        return builder.Add(seconds);
     }
 }

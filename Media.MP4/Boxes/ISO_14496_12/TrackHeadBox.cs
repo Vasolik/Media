@@ -56,8 +56,8 @@ public class TrackHeaderBox : FullBoxWithData, IBoxWithMovieHeaderScalableProper
             AlternateGroup = value.Mid(offset + 10, 2).ToShort();
             Volume = value.Mid(offset + 12, 2);
             TransformationMatrix = value.Mid(offset + 16, 36);
-            Width = value.Mid(offset + 52, 4).ToInt();
-            Height = value.Mid(offset + 56, 4).ToInt();
+            Width = value.Mid(offset + 52, 4);
+            Height = value.Mid(offset + 56, 4);
             Debug.Assert(Data == value);
         } 
     }

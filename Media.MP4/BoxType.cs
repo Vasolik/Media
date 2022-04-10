@@ -262,6 +262,9 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// the bit rate information of a stream. This can be used for buffer configuration.</para></summary>
     public static readonly BoxType BitRate = new("btrt", 131);
 
+    /// <summary>Chapter or scene list. Usually references a text track.</summary>
+    public static readonly BoxType ChapterTrackReference = new("chap", 1000);
+    
     /// <summary> </summary>
     public static readonly BoxType Aart = new("aART", 500);
     /// <summary> </summary>

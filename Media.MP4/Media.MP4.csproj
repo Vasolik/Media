@@ -28,5 +28,9 @@
     <ItemGroup>
       <ProjectReference Include="..\Media.Core\Media.Core.csproj" />
     </ItemGroup>
+    
+    <ItemGroup>
+      <Folder Include="Boxes\AppleAtom\SampleEntries" />
+    </ItemGroup>
 
 </Project>
