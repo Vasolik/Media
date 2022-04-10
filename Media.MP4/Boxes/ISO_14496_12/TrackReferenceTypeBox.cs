@@ -59,6 +59,7 @@ public abstract class TrackReferenceTypeBox : BoxWithData
         TrackIds.ForEach(c => builder.Add(c));
         return builder;
     }
+    
     /// <inheritdoc />
     public override ulong ActualDataSize => (ulong) (TrackIds.Count * 4);
 }

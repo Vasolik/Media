@@ -112,7 +112,7 @@ public abstract class ContainerBox : Box
     
     /// <inheritdoc />
     public override string DebugDisplay(int level)
-        => Header.BoxType.Header.ToString().Intend(level) 
+        => base.DebugDisplay(level) 
            + "\n" + Children.Select(c => c.DebugDisplay(level + 1)).Join();
 }
 
@@ -191,12 +191,9 @@ public abstract class FullContainerBox : FullBox
     /// enumerating the boxes read from the file. </returns>
     public async Task LoadChildrenAsync(MP4 file)
     {
-        if (file == null)
-            throw new ArgumentNullException(nameof(file));
         Children.Clear();
         var position = (long)DataPosition;
         var end = position + (long)DataSize;
-
         
         while (position < end)
         {
@@ -210,6 +207,7 @@ public abstract class FullContainerBox : FullBox
             position += (long)child.Size;
         }
     }
+    
     /// <inheritdoc />
     public override IByteVectorBuilder Render(IByteVectorBuilder builder)
     {
@@ -225,6 +223,6 @@ public abstract class FullContainerBox : FullBox
     
     /// <inheritdoc />
     public override string DebugDisplay(int level)
-        => Header.BoxType.Header.ToString().Intend(level) 
+        => base.DebugDisplay(level) 
            + "\n" + Children.Select(c => c.DebugDisplay(level + 1)).Join();
 }

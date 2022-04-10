@@ -61,6 +61,7 @@ public class TrackHeaderBox : FullBoxWithData, IBoxWithMovieHeaderScalableProper
             Debug.Assert(Data == value);
         } 
     }
+    
     /// <inheritdoc />
     public override IByteVectorBuilder RenderData(IByteVectorBuilder builder)
     {
@@ -151,13 +152,16 @@ public class TrackHeaderBox : FullBoxWithData, IBoxWithMovieHeaderScalableProper
     /// and shall be distinguishable from other tracks in the group via attributes such as bitrate,codec,
     /// language, packet size etc. A group may have only one member. </summary>
     public short AlternateGroup { get; set; }
+    
     /// <summary> The track's relative audio volume. Full volume is 1.0 (0x0100) and is the normal value.
     /// Its value is irrelevant for a purely visual track. Tracks may be composed by combining them according
     /// to their volume, and then using the overall <see cref="MovieHeaderBox"/>
     /// volume setting; or more complex audio composition (e.g. MPEG-4 BIFS) may be used. </summary>
     public FixedPoint8_8 Volume { get; set; }
+    
     /// <summary> Transformation matrix for the video; (u,v,w) are restricted here to (0,0,1), hex(0,0,0x40000000) </summary>
     public TransformationMatrix TransformationMatrix { get; set; } = new();
+    
     /// <summary> The width of the visual presentation.
     /// <para>For text and subtitle tracks, they may, depending on the coding format, describe the suggested size of the rendering area.
     /// For such tracks, the value 0x0 may also be used to indicate that the data maybe rendered at any size,
@@ -169,6 +173,7 @@ public class TrackHeaderBox : FullBoxWithData, IBoxWithMovieHeaderScalableProper
     /// sequence are scaled to this size, before any overall transformation of the track represented by the
     /// matrix. The pixel dimensions of the images are the default values.</para> </summary>
     public UFixedPoint16_16 Width { get; set; }
+    
     /// <summary> The height of the visual presentation.
     /// <para>For text and subtitle tracks, they may, depending on the coding format, describe the suggested size of the rendering area.
     /// For such tracks, the value 0x0 may also be used to indicate that the data maybe rendered at any size,
@@ -186,6 +191,7 @@ public class TrackHeaderBox : FullBoxWithData, IBoxWithMovieHeaderScalableProper
     {
         Duration = Duration * oldTimeScale / newTimescale;
     }
+    
     /// <inheritdoc />
-    public override ulong ActualDataSize => Version == 0 ? 92UL : 80UL;
+    public override ulong ActualDataSize => Version == 1 ? 92UL : 80UL;
 }

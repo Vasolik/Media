@@ -4,7 +4,7 @@ using Vipl.Base;
 namespace Vipl.Media.MP4.Boxes;
 
 /// <summary> Box with Data. </summary>
-public abstract class BoxWithData : FullBox
+public abstract class BoxWithData : Box
 {
     /// <summary> Constructs and initializes a new instance of <see cref="BoxWithData" />
     /// with a specified header and handler.</summary>
@@ -50,7 +50,7 @@ public abstract class BoxWithData : FullBox
     }
 
     /// <inheritdoc />
-    public override ulong ActualSize => Header.HeaderSize + 4 + ActualDataSize;
+    public override ulong ActualSize => Header.HeaderSize + ActualDataSize;
     
     /// <summary> Actual size of the box in the file. This is the size of the header plus the size of the data.
     /// Compared to <see cref="Box.DataSize"/>, this value is calculated after every change of data. </summary>

@@ -46,7 +46,7 @@ public abstract class FullBoxWithData : FullBox
     public abstract IByteVectorBuilder RenderData(IByteVectorBuilder builder);
     
     /// <inheritdoc />
-    public override ulong ActualSize => Header.HeaderSize + ActualDataSize;
+    public override ulong ActualSize => Header.HeaderSize + 4 + ActualDataSize;
     
     /// <summary> Actual size of the box in the file. This is the size of the header plus the size of the data.
     /// Compared to <see cref="Box.DataSize"/>, this value is calculated after every change of data. </summary>

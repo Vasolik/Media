@@ -1,3 +1,4 @@
+using Vipl.Base.Extensions;
 using Vipl.Media.Abstraction;
 using Vipl.Media.Core;
 using Vipl.Media.MP4.Boxes;
@@ -61,4 +62,7 @@ public class MP4 : MediaFile
     /// time units that pass in one second. For example, a time coordinate system that measures time in
     /// sixtieths of a second has a time scale of 60. </summary>
     public uint Timescale => MovieHeaderBox?.Timescale ?? 1;
+
+    /// <summary> Debug string use to print during debug. </summary>
+    public string DebugDisplay => Boxes.Select(b => b.DebugDisplay(0)).Join();
 }

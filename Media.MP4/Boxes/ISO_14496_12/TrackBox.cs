@@ -83,8 +83,7 @@ public abstract class TrackGroupTypeBox : BoxWithData
             Debug.Assert(Data == value);
         } 
     }
-
-
+    
     /// <summary>  The pair of <see cref="TrackGroupId"/> and <see cref="BoxHeader.BoxType"/> (of this box) identifies a track group within the file. The tracks
     /// that contain a particular TrackGroupTypeBox having the same value of <see cref="TrackGroupId"/> and <see cref="BoxHeader.BoxType"/> (of this box) belong to the same track group. </summary>
     public uint TrackGroupId { get; set; }

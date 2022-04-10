@@ -2,10 +2,10 @@ using Vipl.Base;
 
 namespace Vipl.Media.MP4.Boxes.ISO_14496_12;
 
-/// <summary>
-///    This class extends <see cref="Box" /> to provide an
-///    implementation of a ISO/IEC 14496-12 FreeSpaceBox.
-/// </summary>
+/// <summary> This class extends <see cref="Box" /> to provide an implementation of a ISO/IEC 14496-12 FreeSpaceBox.
+/// <para>The contents of a <see cref="FreeSpaceBox"/>  are irrelevant and may be ignored, or the box deleted, without affecting
+/// the presentation. (Care should be exercised when deleting the box, as this may invalidate offsets used
+/// to refer to other data, unless this box is after all the media data).</para> </summary>
 [HasBoxFactory("free"), HasBoxFactory("skip")]
 public class FreeSpaceBox : BoxWithData
 {

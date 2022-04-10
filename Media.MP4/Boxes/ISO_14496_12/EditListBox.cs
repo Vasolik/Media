@@ -16,11 +16,10 @@ public class EditListBox  : FullBoxWithData, IBoxWithMovieHeaderScalableProperti
         : base (header, handler)
     {
     }
-
-
+    
     /// <inheritdoc />
     public override ByteVector Data {
-        get => RenderData(new ByteVectorBuilder((int)DataSize)).Build();
+        get => RenderData(new ByteVectorBuilder((int)ActualDataSize)).Build();
         set
         {
             int offset = 0;

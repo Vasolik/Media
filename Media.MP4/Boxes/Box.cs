@@ -103,7 +103,7 @@ public abstract class Box
     /// <param name="level">Level on which this element has been found</param>
     /// <returns>Debug string</returns>
     public virtual string DebugDisplay(int level)
-        => Header.BoxType.Header.ToString().Intend(level);
+        => $"{Header.BoxType.Header.ToString().Intend(level, true)} - {GetType().Name}";
     /// <summary> Location relative to start of the box where data is starting. </summary>
     public uint RelativeDataPosition => (uint)(DataPosition - (ulong)Header.Position);
 }

@@ -18,7 +18,7 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// <summary> Four bytes header found in start of box. Size of string must be 3 or 4
     /// characters and every character must be between 0x20 and 0x7E included.</summary>
     public ByteVector Header { get; }
-    private BoxType(string name, int value) : this(FixId((ByteVector)name), name, value) { }
+    private BoxType(string name, int value) : this(CreateFourCharacterCode((ByteVector)name), name, value) { }
     
     private BoxType(ByteVector header, string name, int value) : base(name, value)
     {
@@ -43,9 +43,19 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// its structure is described by the structure-data</para> </summary>
     public static readonly BoxType MediaData = new("mdat", 2);
     
+    /// <summary> <para>The contents of a <see cref="FreeSpaceBox"/>  are irrelevant and may be ignored, or the box deleted, without affecting
+    /// the presentation. (Care should be exercised when deleting the box, as this may invalidate offsets used
+    /// to refer to other data, unless this box is after all the media data).</para> </summary>
+    public static readonly BoxType Skip = new("skip", 3);
+    
+    /// <summary> <para>The contents of a <see cref="FreeSpaceBox"/>  are irrelevant and may be ignored, or the box deleted, without affecting
+    /// the presentation. (Care should be exercised when deleting the box, as this may invalidate offsets used
+    /// to refer to other data, unless this box is after all the media data).</para> </summary>
+    public static readonly BoxType Free = new("free", 4);
+    
     /// <summary>This box defines overall information which is media-independent, and relevant to the entire
     /// presentation considered as a whole.</summary>
-    public static readonly BoxType MovieHeader = new("mvhd", 3);
+    public static readonly BoxType MovieHeader = new("mvhd", 5);
     
     /// <summary><para>This is a container box for a single track of a presentation. A presentation consists of one or more tracks.
     /// Each track carries its own temporal and spatial information. Each track will contain its associated <see cref="MediaBox"/> .</para>
@@ -54,7 +64,7 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// <para>There shall be at least one media track within a MovieBox, and all the media tracks that contributed to
     /// the hint tracks shall remain in the file, even if the media data within them is not referenced by the hint
     /// tracks; after deleting all hint tracks, the entire un-hinted presentation shall remain.</para> </summary>
-    public static readonly BoxType Track = new("trak", 4);
+    public static readonly BoxType Track = new("trak", 6);
     
     /// <summary>  <para>This box specifies the characteristics of a single track. Exactly one <see cref="TrackHeaderBox"/>  is contained in track.</para>
     /// <para>In the absence of an edit list, the presentation of a track starts at the beginning of the overall
@@ -73,7 +83,7 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// a player may enable a track from each group for presentation; derived specifications can give further guidance and/or restrictions.</para>
     /// <para>Tracks that are marked as not enabled (<see cref="TrackHeaderBox.TrackHeaderFlags.Enabled"/> set to 0) shall be ignored and treated as if not present.
     /// Application environments may offer a way to enable/disable tracks at run-time and dynamically alter the state of this flag.</para> </summary>
-    public static readonly BoxType TrackHeader = new("tkhd", 5);
+    public static readonly BoxType TrackHeader = new("tkhd", 7);
     
     /// <summary><para>This box includes a set of <see cref="TrackReferenceTypeBox"/>es, each of which indicates, by its type, that the
     /// enclosing track has one of more references of that type. Each reference type shall occur at most once.
@@ -82,7 +92,7 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// <para>Exactly one <see cref="TrackReferenceBox"/> can be contained within the <see cref="TrackBox"/> .</para>
     /// <para>If this box is not present, the track is not referencing any other track in any way. The reference array is
     /// sized to fill the reference type box.</para>  </summary>
-    public static readonly BoxType TrackReference = new("tref", 6);
+    public static readonly BoxType TrackReference = new("tref", 8);
     
     /// <summary>  <para>This box includes a set of <see cref="TrackReferenceTypeBox"/>es, each of which indicates, by its type, that the
     /// enclosing track has one of more references of that type. Each reference type shall occur at most once.
@@ -92,7 +102,7 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// <para>If this box is not present, the track is not referencing any other track in any way. The reference array is
     /// sized to fill the reference type box.</para>
     /// <para>The referenced track(s) contain the original media for this hint track.</para></summary>
-    public static readonly BoxType HintTrackReference = new("hint", 7);
+    public static readonly BoxType HintTrackReference = new("hint", 9);
     
     /// <summary>  <para>This box includes a set of <see cref="TrackReferenceTypeBox"/>es, each of which indicates, by its type, that the
     /// enclosing track has one of more references of that type. Each reference type shall occur at most once.
@@ -102,7 +112,7 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// <para>If this box is not present, the track is not referencing any other track in any way. The reference array is
     /// sized to fill the reference type box.</para>
     /// <para>Links a descriptive or metadata track to the content which it describes.</para></summary>
-    public static readonly BoxType MetadataTrackReference = new("cdsc", 8);
+    public static readonly BoxType MetadataTrackReference = new("cdsc", 10);
     
     /// <summary>  <para>This box includes a set of <see cref="TrackReferenceTypeBox"/>es, each of which indicates, by its type, that the
     /// enclosing track has one of more references of that type. Each reference type shall occur at most once.
@@ -112,7 +122,7 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// <para>If this box is not present, the track is not referencing any other track in any way. The reference array is
     /// sized to fill the reference type box.</para>
     /// <para>This track uses fonts carried/defined in the referenced track.</para></summary>
-    public static readonly BoxType FontTrackReference = new("font", 9);
+    public static readonly BoxType FontTrackReference = new("font", 11);
     
     /// <summary>  <para>This box includes a set of <see cref="TrackReferenceTypeBox"/>es, each of which indicates, by its type, that the
     /// enclosing track has one of more references of that type. Each reference type shall occur at most once.
@@ -126,7 +136,7 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// hint track is used. The referenced tracks shall be hint tracks. The 'hind'
     /// dependency can, for example, be used for indicating the dependencies between
     /// hint tracks documenting layered IP multicast over RTP.</para></summary>
-    public static readonly BoxType DecodingTrackReference = new("hind", 10);
+    public static readonly BoxType DecodingTrackReference = new("hind", 12);
     
     /// <summary>  <para>This box includes a set of <see cref="TrackReferenceTypeBox"/>es, each of which indicates, by its type, that the
     /// enclosing track has one of more references of that type. Each reference type shall occur at most once.
@@ -136,7 +146,7 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// <para>If this box is not present, the track is not referencing any other track in any way. The reference array is
     /// sized to fill the reference type box.</para>
     /// <para>This track contains auxiliary depth video information for the referenced video track.</para></summary>
-    public static readonly BoxType DeptVideoInformationTrackReference = new("vdep", 11);
+    public static readonly BoxType DeptVideoInformationTrackReference = new("vdep", 13);
     
     /// <summary>  <para>This box includes a set of <see cref="TrackReferenceTypeBox"/>es, each of which indicates, by its type, that the
     /// enclosing track has one of more references of that type. Each reference type shall occur at most once.
@@ -146,7 +156,7 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// <para>If this box is not present, the track is not referencing any other track in any way. The reference array is
     /// sized to fill the reference type box.</para>
     /// <para>This track contains auxiliary parallax video information for the referenced video track.</para></summary>
-    public static readonly BoxType ParallaxVideoInformationTrackReference = new("vplx", 12);
+    public static readonly BoxType ParallaxVideoInformationTrackReference = new("vplx", 14);
     
     /// <summary>  <para>This box includes a set of <see cref="TrackReferenceTypeBox"/>es, each of which indicates, by its type, that the
     /// enclosing track has one of more references of that type. Each reference type shall occur at most once.
@@ -157,7 +167,7 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// sized to fill the reference type box.</para>
     /// <para>This track contains subtitle, timed text or overlay graphical information for the referenced
     /// track or any track in the alternate group to which the track belongs, if any.</para></summary>
-    public static readonly BoxType SubtitleTrackReference = new("subt", 13);
+    public static readonly BoxType SubtitleTrackReference = new("subt", 15);
     
     /// <summary>  <para>This box includes a set of <see cref="TrackReferenceTypeBox"/>es, each of which indicates, by its type, that the
     /// enclosing track has one of more references of that type. Each reference type shall occur at most once.
@@ -168,7 +178,7 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// sized to fill the reference type box.</para>
     /// <para>This track contains thumbnail images for the referenced track. A thumbnail track
     /// shall not be linked to another thumbnail track with the 'thmb' item reference.</para></summary>
-    public static readonly BoxType ThumbnailTrackReference = new("thmb", 14);
+    public static readonly BoxType ThumbnailTrackReference = new("thmb", 16);
     
     /// <summary>  <para>This box includes a set of <see cref="TrackReferenceTypeBox"/>es, each of which indicates, by its type, that the
     /// enclosing track has one of more references of that type. Each reference type shall occur at most once.
@@ -178,7 +188,7 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// <para>If this box is not present, the track is not referencing any other track in any way. The reference array is
     /// sized to fill the reference type box.</para>
     /// <para>This track contains auxiliary media for the indicated track (e.g. depth map or alpha plane for video).</para></summary>
-    public static readonly BoxType AuxiliaryMediaTrackReference = new("auxl", 15);
+    public static readonly BoxType AuxiliaryMediaTrackReference = new("auxl", 17);
     
     /// <summary>  <para>This box includes a set of <see cref="TrackReferenceTypeBox"/>es, each of which indicates, by its type, that the
     /// enclosing track has one of more references of that type. Each reference type shall occur at most once.
@@ -189,7 +199,7 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// sized to fill the reference type box.</para>
     /// <para>Describes the referenced media tracks and track groups collectively; the 'cdtg'
     /// track reference shall only be present in timed metadata tracks.</para></summary>
-    public static readonly BoxType GroupTrackReference = new("cdtg", 16);
+    public static readonly BoxType GroupTrackReference = new("cdtg", 18);
     
     /// <summary>  <para>This box includes a set of <see cref="TrackReferenceTypeBox"/>es, each of which indicates, by its type, that the
     /// enclosing track has one of more references of that type. Each reference type shall occur at most once.
@@ -199,11 +209,11 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// <para>If this box is not present, the track is not referencing any other track in any way. The reference array is
     /// sized to fill the reference type box.</para>
     /// <para>Links a shadow sync track to a main track.</para></summary>
-    public static readonly BoxType ShadowSyncTrackReference = new("shsc", 17);
+    public static readonly BoxType ShadowSyncTrackReference = new("shsc", 19);
     
     /// <summary> <para>The media header declares overall information that is media-independent, and relevant to
     /// characteristics of the media in a track.</para>  </summary>
-    public static readonly BoxType MediaHeader = new("mdhd", 19);
+    public static readonly BoxType MediaHeader = new("mdhd", 20);
     
     /// <summary> <para>This box within a <see cref="MediaBox"/>  declares media type of the track, and thus the process by which the media-
     /// data in the track is presented. For example, a format for which the decoder delivers video would be
@@ -212,7 +222,7 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// <para> This box when present within a <see cref="MetaBox"/> , declares the structure or format of the <see cref="MetaBox"/> contents.</para>
     /// <para> There is a general handler for metadata streams of any type; the specific format is identified by the
     /// sample entry, as for video or audio, for example.</para> </summary>
-    public static readonly BoxType Handler = new("hdlr", 20);
+    public static readonly BoxType Handler = new("hdlr", 21);
     
     /// <summary> <para> An EditBox maps the presentation timeline to the media timeline as it is stored
     /// in the file. The EditBox is a container for the edit lists. </para>
@@ -220,6 +230,7 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// mapping of these timelines, and the presentation of a track starts at the beginning of the
     /// presentation. An empty edit is used to offset the start time of a track.</para>  </summary>
     public static readonly BoxType Edit = new("edts", 50);
+    
     /// <summary> <para>The length of the whole track in an EditListBox might be the overall duration of the
     /// whole movie excluding fragments of a fragment movie. Since edit lists cannot occur in movie fragments, there is
     /// an implied edit at the end of the current explicit or implied edit list, that inserts the new media material and the
@@ -232,12 +243,18 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// especially when present at ‘file level’.</para>
     /// <para>The MetaBox is required to contain a HandlerBox indicating the structure or format of the MetaBox contents.</para> </summary>
     public static readonly BoxType Meta = new("meta", 100);
-   
-    /// <summary> </summary>
-    public static readonly BoxType Skip = new("skip", 532);
-    /// <summary> </summary>
-    public static readonly BoxType Free = new("free", 516);
     
+    /// <summary><para>The sample description table gives detailed information about the coding type used, and any
+    /// initialization information needed for that coding. The syntax of the sample entry used is determined by
+    /// both the format field and the media handler type.</para>
+    /// <para>The information stored in the <see cref="SampleDescriptionBox"/>  after the entry-count is both track-type specific
+    /// as documented here, and can also have variants within a track type (e.g. different codings may use
+    /// different specific information after some common fields, even within a video track).</para>
+    /// <para>Which type of sample entry form is used is determined by the media handler, using a suitable form,
+    /// such as one defined in Clause 12, or defined in a derived specification, or registration.</para>
+    /// <para>Multiple descriptions may be used within a track.</para> </summary>
+    public static readonly BoxType SampleDescription = new("stsd", 130);
+
     /// <summary> </summary>
     public static readonly BoxType Aart = new("aART", 500);
     /// <summary> </summary>
@@ -307,8 +324,7 @@ public sealed class BoxType : SmartEnum<BoxType>
     public static readonly BoxType IsoSampleTable = new("stbl", 538);
     /// <summary> </summary>
     public static readonly BoxType IsoChunkOffset = new("stco", 539);
-    /// <summary> </summary>
-    public static readonly BoxType IsoSampleDescription = new("stsd", 540);
+
     /// <summary> </summary>
     public static readonly BoxType Subt = new("Subt", 541);
     /// <summary> </summary>
@@ -384,18 +400,28 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// any of byte does not have value between 0x20 and 0x7E included.</exception>
     public static BoxType FromString(string type)
     {
-        return FromByteVector( FixId((ByteVector)type));
+        return FromByteVector( CreateFourCharacterCode((ByteVector)type));
     }
     
     /// <summary> Converts the provided ID into a readonly ID and fixes a 3 byte ID.</summary>
-    /// <param name="id">A <see cref="ByteVector" /> object containing an ID to fix. </param><returns>
-    /// A fixed <see cref="ByteVector" /> or empty <see cref="ByteVector" /> if the ID could not be fixed.</returns>
-    internal static ByteVector FixId (ByteVector id)
+    /// <param name="id">A <see cref="ByteVector" /> object containing an ID to fix. </param>
+    /// <returns> A fixed <see cref="ByteVector" /> or empty <see cref="ByteVector" /> if the ID could not be fixed.</returns>
+    internal static ByteVector CreateFourCharacterCode (ByteVector id)
     {
         if (id.Count != 4)
             return id.Count == 3
-                ? new ByteVectorBuilder(4){0xa9, id}.Build()
+                ? new ByteVectorBuilder(4){(byte)0xa9, id}.Build()
                 : new ByteVector();
         return id;
+    }
+    
+    /// <summary> Convert 4CC (four character code) as <see cref="ByteVector"/> to string representation.</summary>
+    /// <param name="id">A <see cref="ByteVector" /> object containing an ID to convert to string. </param>
+    /// <returns> <see cref="string"/> representation of four character code.</returns>
+    internal static string ReadFourCharacterCode (ByteVector id)
+    {
+        return id[0] == 0xa9 ?
+            id.ToString(Encoding.UTF8, 1, 3) 
+            : id.ToString(Encoding.UTF8);
     }
 }

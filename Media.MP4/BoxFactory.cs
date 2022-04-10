@@ -2,6 +2,7 @@ using System.Reflection;
 using Vipl.Base;
 using Vipl.Media.Core;
 using Vipl.Media.MP4.Boxes;
+using Vipl.Media.MP4.Boxes.ISO_14496_12;
 
 namespace Vipl.Media.MP4;
 
@@ -101,13 +102,13 @@ public static class BoxFactory
 		int index)
 	{
 
-		// The first few children of an IsoSampleDescriptionBox are sample
+		// The first few children of an SampleDescriptionBox are sample
 		// entries.
-		//if (parent?.BoxType == BoxType.IsoSampleDescription && parent.Box is IsoSampleDescriptionBox box && index < box.EntryCount)
-		//{
-		//	return await GetConcreteFactoryForAppleSample(header.BoxType, parent.BoxType, handler?.HandlerType)(header, file, handler);
-		//}
-		if (parent?.BoxType == BoxType.IsoSampleDescription)
+		if (parent?.BoxType == BoxType.SampleDescription && parent.Box is SampleDescriptionBox box && index < box.EntryCount)
+		{
+			return await GetConcreteFactoryForAppleSample(header.BoxType, parent.BoxType, handler?.HandlerType)(header, file, handler);
+		}
+		if (parent?.BoxType == BoxType.SampleDescription)
 		{
 			parent = null;
 		}

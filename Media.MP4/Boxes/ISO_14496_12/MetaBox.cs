@@ -11,8 +11,6 @@ public class MetaBox : FullContainerBox
 {
 	private MetaBox (BoxHeader header, IsoHandlerBox? handler)
 		: base (header, handler)
-	{
-	
-	}
+	{ }
 
 }

@@ -39,14 +39,14 @@ public class FileTypeBox : BoxWithData
     /// <summary>Brand identifier as string. </summary>
     public string MajorBrandAsString
     {
-        get => MajorBrand.ToByteVector().ToString(Encoding.UTF8).Trim();
+        get => BoxType.ReadFourCharacterCode(MajorBrand.ToByteVector());
         set
         {
             if (value.Length != 3 || value.Length != 4)
             {
                 throw new ArgumentException("Brand must be 3 or 4 bytes");
             }
-            MajorBrand = BoxType.FixId(value.ToByteVector(Encoding.UTF8)).ToInt();
+            MajorBrand = BoxType.CreateFourCharacterCode(value.ToByteVector(Encoding.UTF8)).ToInt();
         }
     }
     /// <summary>An informative integer for the minor version of the major brand. </summary>
@@ -58,7 +58,7 @@ public class FileTypeBox : BoxWithData
     {
         get =>
             new ListTypeConversionWrapper<int, string>(CompatibleBrands, 
-                i => i.ToByteVector().ToString(Encoding.UTF8).Trim(), 
+                i =>  BoxType.ReadFourCharacterCode(i.ToByteVector()), 
                 s =>
                 {
                     if (s.Length != 3 || s.Length != 4)
@@ -66,7 +66,7 @@ public class FileTypeBox : BoxWithData
                         throw new ArgumentException("Brand must be 3 or 4 bytes");
                     }
                         
-                    return BoxType.FixId(s.ToByteVector(Encoding.UTF8)).ToInt();
+                    return BoxType.CreateFourCharacterCode(s.ToByteVector(Encoding.UTF8)).ToInt();
                 });
         set
         {
@@ -75,7 +75,7 @@ public class FileTypeBox : BoxWithData
                 throw new ArgumentException("Brand must be 3 or 4 bytes");
             }
 
-            CompatibleBrands = value.Select(b => BoxType.FixId(b.ToByteVector(Encoding.UTF8)).ToInt()).ToArray();
+            CompatibleBrands = value.Select(b => BoxType.CreateFourCharacterCode(b.ToByteVector(Encoding.UTF8)).ToInt()).ToArray();
         }
     }
     /// <inheritdoc />
