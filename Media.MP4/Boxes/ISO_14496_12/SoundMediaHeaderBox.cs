@@ -3,7 +3,7 @@ using Vipl.Base;
 
 namespace Vipl.Media.MP4.Boxes.ISO_14496_12;
 
-/// <summary>  This class extends <see cref="Box" /> to provide an implementation of a ISO/IEC 14496-12 SoundMediaHeaderBox.
+/// <summary>  This class extends <see cref="FullBox" /> to provide an implementation of a ISO/IEC 14496-12 SoundMediaHeaderBox.
 /// <para>Audio tracks use the <see cref="SoundMediaHeaderBox"/>  in the MediaInformationBox as defined in 8.4.5. The sound
 /// media header contains general presentation information, independent of the coding, for audio media.
 /// This header is used for all tracks containing audio.</para> </summary>

@@ -230,6 +230,13 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// <summary> This box contains all the objects that declare characteristic information of the media in the track.</summary>
     public static readonly BoxType MediaInformation = new("minf", 27);
     
+    /// <summary><para>The sample table contains all the time and data indexing of the media samples in a track. Using the tables
+    /// here, it is possible to locate samples in time, determine their type (e.g. I-frame or not), and determine
+    /// their size, container, and offset into that container.</para>
+    /// <para>If the track that contains the <see cref="SampleTableBox"/>  references no data, then the <see cref="SampleTableBox"/>  does not
+    /// need to contain any sub-boxes (this is not a very useful media track).</para> </summary>
+    public static readonly BoxType SampleTable = new("stbl", 538);
+    
     /// <summary> <para> An EditBox maps the presentation timeline to the media timeline as it is stored
     /// in the file. The EditBox is a container for the edit lists. </para>
     /// <para> The EditBox is optional. In the absence of this box, there is an implicit one-to-one
@@ -285,6 +292,12 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// <summary> Url data box. Misspelled</summary>  
     public static readonly BoxType DataEntryUrlMisspelledBox = new("url ", 271);
     
+    /// <summary><para>This box contains objects that declare user information about the containing box and its data (presentation or track).</para>
+    /// <para>The User Data Box is a container box for informative user-data. This user data is formatted as a set of
+    /// boxes with more specific box types, which declare more precisely their content. The contained boxes
+    /// are normal boxes, using a defined, registered, or UUID extension box type.</para> </summary>
+    public static readonly BoxType UserDataBox = new("udta", 546);
+    
     /// <summary> <para>Audio tracks use the <see cref="SoundMediaHeaderBox"/>  in the MediaInformationBox as defined in 8.4.5. The sound
     /// media header contains general presentation information, independent of the coding, for audio media.
     /// This header is used for all tracks containing audio.</para> </summary>
@@ -292,6 +305,18 @@ public sealed class BoxType : SmartEnum<BoxType>
 
     /// <summary>Chapter or scene list. Usually references a text track.</summary>
     public static readonly BoxType ChapterTrackReference = new("chap", 1000);
+    
+    /// <summary> Apple QuickTime UserDataBox.
+    /// <para>he metadata item list atom holds a list of actual metadata values that are present in the metadata atom.
+    /// The metadata items are formatted as a list of items. The metadata item list atom is of type ‘ilst’ and contains
+    /// a number of metadata items, each of which is an atom.</para> </summary>
+    public static readonly BoxType MetadataItemList = new("ilst", 1100);
+    
+    /// <summary>  Adobe FLV ChapterBox.
+    /// <para>The optional chpl box allows an F4V file to specify individual chapters along the main
+    /// timeline of an F4V file. The information in this box is provided to ActionScript. The chpl box
+    /// occurs within a moov box.</para></summary>
+    public static readonly BoxType Chapters = new("chpl", 2000);
     
     /// <summary> </summary>
     public static readonly BoxType Aart = new("aART", 500);
@@ -323,8 +348,7 @@ public sealed class BoxType : SmartEnum<BoxType>
     public static readonly BoxType Dtag = new("dtag", 513);
     /// <summary> </summary>
     public static readonly BoxType Esds = new("esds", 514);
-    /// <summary> </summary>
-    public static readonly BoxType AppleItemList = new("ilst", 515);
+
     /// <summary> </summary>
     public static readonly BoxType Gen = new("gen", 517);
     /// <summary> </summary>
@@ -357,8 +381,7 @@ public sealed class BoxType : SmartEnum<BoxType>
     public static readonly BoxType Sonm = new("sonm", 536); // Track Title Sort
     /// <summary> </summary>
     public static readonly BoxType Soal = new("soal", 537); // Album Title Sort
-    /// <summary> </summary>
-    public static readonly BoxType IsoSampleTable = new("stbl", 538);
+
     /// <summary> </summary>
     public static readonly BoxType IsoChunkOffset = new("stco", 539);
 
@@ -370,8 +393,7 @@ public sealed class BoxType : SmartEnum<BoxType>
     public static readonly BoxType Tmpo = new("tmpo", 543);
     /// <summary> </summary>
     public static readonly BoxType Trkn = new("trkn", 545);
-    /// <summary> </summary>
-    public static readonly BoxType IsoUserData = new("udta", 546);
+
 
     /// <summary> </summary>
     public static readonly BoxType Uuid = new("uuid", 548);
@@ -387,8 +409,7 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// <summary> </summary>
     // Another handler typeBoxType audio 
     public static readonly BoxType Alis = new("alis", 553);
-    /// <summary> </summary>
-    public static readonly BoxType Chapterype = new("chpl", 556);
+
     
     private static int ValueCounter { get; set; } = 557;
     /// <summary> Convert box type to <see cref="ByteVector"/> representation. </summary>
