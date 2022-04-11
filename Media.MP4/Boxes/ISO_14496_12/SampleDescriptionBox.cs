@@ -25,6 +25,7 @@ public class SampleDescriptionBox : FullContainerBox
     /// <inheritdoc />
     protected override async Task<Box> InitAsync(MP4 file)
     {
+        file.Seek((long)DataPosition, SeekOrigin.Begin);
         EntryCount = (await file.ReadBlockAsync (4)).ToUInt();
         await this.LoadChildrenAsync (file);
         return this;
@@ -49,4 +50,7 @@ public class SampleDescriptionBox : FullContainerBox
 
     /// <inheritdoc />
     public override ulong DataSize => base.DataSize - 4;
+    
+    /// <inheritdoc />
+    public override ulong ActualSize => base.ActualSize + 4;   
 }

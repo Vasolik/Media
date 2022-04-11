@@ -5,7 +5,7 @@ using Vipl.Base.Extensions;
 
 namespace Vipl.Media.MP4.Boxes.ISO_14496_12;
 
-/// <summary>This class extends <see cref="FullBox" /> to provide an implementation of a ISO/IEC 14496-12 MovieHeaderBox.
+/// <summary>This class extends <see cref="FullBox" /> to provide an implementation of a ISO/IEC 14496-12 MediaHeaderBox.
 /// <para>The media header declares overall information that is media-independent, and relevant to
 /// characteristics of the media in a track.</para> </summary>
 [HasBoxFactory("mdhd")]

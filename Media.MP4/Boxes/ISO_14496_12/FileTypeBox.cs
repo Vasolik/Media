@@ -7,8 +7,8 @@ using Vipl.Media.Core;
 namespace Vipl.Media.MP4.Boxes.ISO_14496_12;
 
 /// <summary>  This class extends <see cref="Box" /> to provide an implementation of a ISO/IEC 14496-12 FileTypeBox.
-/// The FileTypeBox contains a major brand and minor version number. It also contains a list of compatible brands.
-/// The compatible brands are used to identify compatible renderers.   </summary>
+/// <para>The FileTypeBox contains a major brand and minor version number. It also contains a list of compatible brands.
+/// The compatible brands are used to identify compatible renderers.</para>  </summary>
 [HasBoxFactory("ftyp")]
 public class FileTypeBox : BoxWithData
 {

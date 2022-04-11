@@ -227,6 +227,9 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// sample entry, as for video or audio, for example.</para> </summary>
     public static readonly BoxType Handler = new("hdlr", 26);
     
+    /// <summary> This box contains all the objects that declare characteristic information of the media in the track.</summary>
+    public static readonly BoxType MediaInformation = new("minf", 27);
+    
     /// <summary> <para> An EditBox maps the presentation timeline to the media timeline as it is stored
     /// in the file. The EditBox is a container for the edit lists. </para>
     /// <para> The EditBox is optional. In the absence of this box, there is an implicit one-to-one
@@ -261,6 +264,31 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// <summary><para>An optional <see cref="BitRateBox"/> may be present in any <see cref="SampleEntryBox"/> to signal
     /// the bit rate information of a stream. This can be used for buffer configuration.</para></summary>
     public static readonly BoxType BitRate = new("btrt", 131);
+    
+    /// <summary>The <see cref="DataInformationBox"/> contains objects that declare the location of the media information in a track. </summary>
+    public static readonly BoxType DataInformation = new("dinf", 250);
+    
+    /// <summary> <para>The data reference object contains a table of data references (normally URLs) that declare the location(s)
+    /// of the media data used within the presentation. The data reference index in the sample description ties
+    /// entries in this table to the samples in the track. A track may be split over several sources in this way.</para>
+    /// <para>If the flag is set indicating that the data is in the same file as this box, then no string (not even an empty
+    /// one) shall be supplied in the entry field.</para>
+    /// <para>The <see cref="DataReferenceBox.EntryCount"/> in the DataReferenceBox shall be 1 or greater.</para>
+    /// <para>When a file that has data entries with the flag set indicating that the media data is in the same file,
+    /// is split into segments for transport, the value of this flag does not change, as the file is (logically)
+    /// reassembled after the transport operation.</para> </summary>
+    public static readonly BoxType DataReference = new("dref", 270);
+    
+    /// <summary> Url data box.</summary>  
+    public static readonly BoxType DataEntryUrlBox = new("url", 271);
+    
+    /// <summary> Url data box. Misspelled</summary>  
+    public static readonly BoxType DataEntryUrlMisspelledBox = new("url ", 271);
+    
+    /// <summary> <para>Audio tracks use the <see cref="SoundMediaHeaderBox"/>  in the MediaInformationBox as defined in 8.4.5. The sound
+    /// media header contains general presentation information, independent of the coding, for audio media.
+    /// This header is used for all tracks containing audio.</para> </summary>
+    public static readonly BoxType SoundMediaHeader = new("smhd", 300);
 
     /// <summary>Chapter or scene list. Usually references a text track.</summary>
     public static readonly BoxType ChapterTrackReference = new("chap", 1000);
@@ -311,8 +339,7 @@ public sealed class BoxType : SmartEnum<BoxType>
 
     /// <summary> </summary>
     public static readonly BoxType Mean = new("mean", 525);
-    /// <summary> </summary>
-    public static readonly BoxType Minf = new("minf", 526);
+
     
     /// <summary> </summary>
     public static readonly BoxType Nam = new("nam", 529);
@@ -345,8 +372,7 @@ public sealed class BoxType : SmartEnum<BoxType>
     public static readonly BoxType Trkn = new("trkn", 545);
     /// <summary> </summary>
     public static readonly BoxType IsoUserData = new("udta", 546);
-    /// <summary> </summary>
-    public static readonly BoxType Url = new("url", 547);
+
     /// <summary> </summary>
     public static readonly BoxType Uuid = new("uuid", 548);
     /// <summary> </summary>
@@ -395,7 +421,7 @@ public sealed class BoxType : SmartEnum<BoxType>
         if (type.Count != 4)
             throw new ArgumentException("Type must be four-character code.");
         
-        if(type.Any(c => c < 0x20 || c > 0x7E))
+        if(type.Any(c => c < 0x20 || c > 0x7E && c != 0xa9))
             throw new ArgumentException("Every character in type must have value between 0x20 and 0x7E.");
         
         return !All.ContainsKey(type) 
