@@ -277,14 +277,14 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// number. Other tables give sample sizes and pointers, from the sample number. Each entry in the table
     /// gives the number of consecutive samples with the same sample duration, and that sample duration. By
     /// adding the sample durations a complete time-to-sample map may be built.</para>
-    /// <para>The TimeToSampleBox contains sample durations, the differences in decoding timestamps (DT):</para>
+    /// <para>The <see cref="TimeToSampleBox"/> contains sample durations, the differences in decoding timestamps (DT):</para>
     /// <c>DT[n+1] = DT[n] + sample_delta[n]</c>
     /// <para>The sample entries are ordered by decoding timestamps; therefore all the values of sample_delta shall
     /// be non-negative.</para>
     /// <para>The DT axis has a zero origin; DT[i] = SUM[for j=0 to i-1 of sample_delta[j]], and in the absence of
     /// composition offsets, the sum of all sample durations gives the duration of the media in the track (not
     /// mapped to the overall timescale, and not considering any edit list).</para> </summary>
-    public static readonly BoxType TimeToSample = new("stts", 250);
+    public static readonly BoxType TimeToSample = new("stts", 132);
 
     /// <summary>The <see cref="DataInformationBox"/> contains objects that declare the location of the media information in a track. </summary>
     public static readonly BoxType DataInformation = new("dinf", 250);
@@ -306,6 +306,20 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// <summary> Url data box. Misspelled</summary>  
     public static readonly BoxType DataEntryUrlMisspelled = new("url ", 271);
     
+    /// <summary> <para>Samples within the media data are grouped into chunks. Chunks can be of different sizes, and the
+    /// samples within a chunk can have different sizes. This table can be used to find the chunk that contains
+    /// a sample, its position, and the associated sample description.</para>
+    /// <para>The table is compactly coded. Each entry gives the index of the first chunk of a run of chunks with the
+    /// same characteristics. By subtracting one entry here from the previous one, it is possible to compute how
+    /// many chunks are in this run. This can be converted to a sample count by multiplying by the appropriate
+    /// samples-per-chunk.</para></summary>
+    public static readonly BoxType SampleToChunk = new("stsc", 280);
+    
+    /// <summary> <para>Audio tracks use the <see cref="SoundMediaHeaderBox"/>  in the MediaInformationBox as defined in 8.4.5. The sound
+    /// media header contains general presentation information, independent of the coding, for audio media.
+    /// This header is used for all tracks containing audio.</para> </summary>
+    public static readonly BoxType SoundMediaHeader = new("smhd", 300);
+    
     /// <summary><para>This box contains objects that declare user information about the containing box and its data (presentation or track).</para>
     /// <para>The User Data Box is a container box for informative user-data. This user data is formatted as a set of
     /// boxes with more specific box types, which declare more precisely their content. The contained boxes
@@ -319,10 +333,7 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// elementary stream and has three major parts.</summary>
     public static readonly BoxType ElementaryStreamDescription = new("esds", 701);
     
-    /// <summary> <para>Audio tracks use the <see cref="SoundMediaHeaderBox"/>  in the MediaInformationBox as defined in 8.4.5. The sound
-    /// media header contains general presentation information, independent of the coding, for audio media.
-    /// This header is used for all tracks containing audio.</para> </summary>
-    public static readonly BoxType SoundMediaHeader = new("smhd", 300);
+
 
     /// <summary>Chapter or scene list. Usually references a text track.</summary>
     public static readonly BoxType ChapterTrackReference = new("chap", 1000);
