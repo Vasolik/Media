@@ -272,6 +272,19 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// <summary><para>An optional <see cref="BitRateBox"/> may be present in any <see cref="SampleEntryBox"/> to signal
     /// the bit rate information of a stream. This can be used for buffer configuration.</para></summary>
     public static readonly BoxType BitRate = new("btrt", 131);
+    
+    /// <summary>  <para>This box contains a compact version of a table that allows indexing from decoding timestamp to sample
+    /// number. Other tables give sample sizes and pointers, from the sample number. Each entry in the table
+    /// gives the number of consecutive samples with the same sample duration, and that sample duration. By
+    /// adding the sample durations a complete time-to-sample map may be built.</para>
+    /// <para>The TimeToSampleBox contains sample durations, the differences in decoding timestamps (DT):</para>
+    /// <c>DT[n+1] = DT[n] + sample_delta[n]</c>
+    /// <para>The sample entries are ordered by decoding timestamps; therefore all the values of sample_delta shall
+    /// be non-negative.</para>
+    /// <para>The DT axis has a zero origin; DT[i] = SUM[for j=0 to i-1 of sample_delta[j]], and in the absence of
+    /// composition offsets, the sum of all sample durations gives the duration of the media in the track (not
+    /// mapped to the overall timescale, and not considering any edit list).</para> </summary>
+    public static readonly BoxType TimeToSample = new("stts", 250);
 
     /// <summary>The <see cref="DataInformationBox"/> contains objects that declare the location of the media information in a track. </summary>
     public static readonly BoxType DataInformation = new("dinf", 250);
@@ -298,7 +311,7 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// boxes with more specific box types, which declare more precisely their content. The contained boxes
     /// are normal boxes, using a defined, registered, or UUID extension box type.</para> </summary>
     public static readonly BoxType UserData = new("udta", 400);
-    
+
     /// <summary>Sample entry for audio streams.</summary>
     public static readonly BoxType AudioSampleEntry = new("mp4a", 700);
     
