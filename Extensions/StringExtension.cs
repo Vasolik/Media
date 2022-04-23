@@ -110,8 +110,8 @@ public static class StringExtension
     /// <returns>Sting in which all lines are moved with intend text.</returns>
     public static string Intend(this string value, int count, bool first = false, string separator = "\n", string intendString = "    ")
     {
-        var indent = string.Join("", Enumerable.Repeat(intendString, count));
-        return (first ? indent: "") + value.Replace(separator, separator + indent);
+        var intend = string.Join("", Enumerable.Repeat(intendString, count));
+        return (first ? intend: "") + value.Replace(separator, separator + intend);
     }
     /// <summary> Split string in string tokens. </summary>
     /// <param name="value">Value to be split</param>

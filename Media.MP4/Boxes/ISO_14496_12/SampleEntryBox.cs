@@ -41,12 +41,16 @@ public abstract class SampleEntryBox : BoxWithData, IContainerBox
 		: base(header, handler)
 	{
 	}
+	
+	private bool _childrenLoaded ;
 
 	/// <inheritdoc />
 	protected sealed override async Task<Box> InitAsync(MP4 file)
 	{
+		_childrenLoaded = false;
 		await base.InitAsync(file);
 		await this.LoadChildrenAsync(file);
+		_childrenLoaded = true;
 		Debug.Assert(Size == ActualSize);
 		return this;
 	}
@@ -82,19 +86,29 @@ public abstract class SampleEntryBox : BoxWithData, IContainerBox
 	public IList<Box> Children { get; } = new List<Box>();
 
 	/// <inheritdoc />
-	ulong IContainerBox.ChildrenPosition => DataPosition + 8;
+	public virtual ulong ChildrenPosition => DataPosition + 8;
 
 	/// <inheritdoc />
-	ulong IContainerBox.ChildrenSize => 0;
+	public virtual ulong  ChildrenSize => 0;
 
 	/// <summary> An integer that contains the index of the DataEntry to use to retrieve
 	/// data associated with samples that use this sample description. Data entries are stored in
 	/// DataReferenceBoxes. The index ranges from 1 to the number of data entries. </summary>
+	// ReSharper disable once MemberCanBePrivate.Global
 	public ushort DataReferenceIndex { get; set; }
 
 	/// <inheritdoc />
 	public override ulong ActualSize => Header.HeaderSize 
         + ActualDataSize
-        + Children.Aggregate(0UL, (sum, box) => sum + box.ActualSize);
+        + (_childrenLoaded ? Children.Aggregate(0UL, (sum, box) => sum + box.ActualSize) : ChildrenSize);
+	
+	/// <inheritdoc />
+	public override string DebugDisplay(int level)
+		=> $"{base.DebugDisplay(level)} DRI: {DataReferenceIndex} " + DebugDisplayMoreData()
+		   + (Children.Any() ? "\n": "") + Children.Select(c => c.DebugDisplay(level + 1)).Join();
+
+	/// <summary>Additional debug information from derived boxes. </summary>
+	/// <returns>Additional Debug information.</returns>
+	protected virtual string DebugDisplayMoreData() => "";
 }
 

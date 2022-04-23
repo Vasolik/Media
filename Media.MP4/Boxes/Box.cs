@@ -84,7 +84,7 @@ public abstract class Box
     /// <returns>Builder instance for chaining.</returns>
     public IByteVectorBuilder Render()
     {
-        return Render(new ByteVectorBuilder((int)Size));
+        return Render(new ByteVectorBuilder((int)ActualSize));
     }
 
     /// <summary> Renders the current instance as a byte vector to byte vector builder. </summary>

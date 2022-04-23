@@ -2,6 +2,7 @@ using System.Collections.Concurrent;
 using System.Text;
 using Ardalis.SmartEnum;
 using Vipl.Base;
+using Vipl.Media.MP4.Boxes.ISO_14496_1;
 using Vipl.Media.MP4.Boxes.ISO_14496_12;
 
 // ReSharper disable IdentifierTypo
@@ -271,7 +272,7 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// <summary><para>An optional <see cref="BitRateBox"/> may be present in any <see cref="SampleEntryBox"/> to signal
     /// the bit rate information of a stream. This can be used for buffer configuration.</para></summary>
     public static readonly BoxType BitRate = new("btrt", 131);
-    
+
     /// <summary>The <see cref="DataInformationBox"/> contains objects that declare the location of the media information in a track. </summary>
     public static readonly BoxType DataInformation = new("dinf", 250);
     
@@ -287,16 +288,23 @@ public sealed class BoxType : SmartEnum<BoxType>
     public static readonly BoxType DataReference = new("dref", 270);
     
     /// <summary> Url data box.</summary>  
-    public static readonly BoxType DataEntryUrlBox = new("url", 271);
+    public static readonly BoxType DataEntryUrl = new("url", 271);
     
     /// <summary> Url data box. Misspelled</summary>  
-    public static readonly BoxType DataEntryUrlMisspelledBox = new("url ", 271);
+    public static readonly BoxType DataEntryUrlMisspelled = new("url ", 271);
     
     /// <summary><para>This box contains objects that declare user information about the containing box and its data (presentation or track).</para>
     /// <para>The User Data Box is a container box for informative user-data. This user data is formatted as a set of
     /// boxes with more specific box types, which declare more precisely their content. The contained boxes
     /// are normal boxes, using a defined, registered, or UUID extension box type.</para> </summary>
-    public static readonly BoxType UserDataBox = new("udta", 546);
+    public static readonly BoxType UserData = new("udta", 400);
+    
+    /// <summary>Sample entry for audio streams.</summary>
+    public static readonly BoxType AudioSampleEntry = new("mp4a", 700);
+    
+    /// <summary>The <see cref="ElementaryStreamDescriptionBox"/> conveys all information related to a particular
+    /// elementary stream and has three major parts.</summary>
+    public static readonly BoxType ElementaryStreamDescription = new("esds", 701);
     
     /// <summary> <para>Audio tracks use the <see cref="SoundMediaHeaderBox"/>  in the MediaInformationBox as defined in 8.4.5. The sound
     /// media header contains general presentation information, independent of the coding, for audio media.
@@ -346,8 +354,7 @@ public sealed class BoxType : SmartEnum<BoxType>
     public static readonly BoxType Disk = new("disk", 512);
     /// <summary> </summary>
     public static readonly BoxType Dtag = new("dtag", 513);
-    /// <summary> </summary>
-    public static readonly BoxType Esds = new("esds", 514);
+
 
     /// <summary> </summary>
     public static readonly BoxType Gen = new("gen", 517);
@@ -411,7 +418,7 @@ public sealed class BoxType : SmartEnum<BoxType>
     public static readonly BoxType Alis = new("alis", 553);
 
     
-    private static int ValueCounter { get; set; } = 557;
+    private static int ValueCounter { get; set; } = 5000;
     /// <summary> Convert box type to <see cref="ByteVector"/> representation. </summary>
     /// <param name="type"><see cref="BoxType"/> representing type of the box.</param>
     /// <returns><see cref="ByteVector"/> representation of type.</returns>

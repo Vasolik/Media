@@ -16,16 +16,19 @@ public class BitRateBox : BoxWithData
     }
 
     /// <summary>  Size of the decoding buffer for the elementary stream in bytes. </summary>
+    // ReSharper disable once MemberCanBePrivate.Global
     public uint BufferSizeDecodingBuffer { get; set; }
     
     /// <summary> Gives the maximum rate in bits/second over any window of one second; this is a measured
     /// value for stored content, or a value that a stream is configured not to exceed; the stream shall not
     /// exceed this bitrate. </summary>
+    // ReSharper disable once MemberCanBePrivate.Global
     public uint MaxBitRate { get; set; }
     
     /// <summary> Gives the average rate in bits/second over any window of one second; this is a measured value
     /// for stored content, or a value that a stream is configured not to exceed; the stream shall not exceed
     ///  this bitrate. </summary>
+    // ReSharper disable once MemberCanBePrivate.Global
     public uint AvgBitRate { get; set; }
     
     /// <inheritdoc />
@@ -52,4 +55,9 @@ public class BitRateBox : BoxWithData
     
     /// <inheritdoc />
     public override ulong ActualDataSize => Header.HeaderSize + 12;
+    
+    /// <inheritdoc />
+    public override string DebugDisplay(int level)
+        => $"{base.DebugDisplay(level)} BS: {BufferSizeDecodingBuffer} MBR: {MaxBitRate} ABR: {AvgBitRate}";
+    
 }

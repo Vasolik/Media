@@ -27,7 +27,9 @@ public abstract class BoxWithData : Box
     protected override async Task<Box> InitAsync(MP4 file)
     {
         file.Seek((long)DataPosition, SeekOrigin.Begin);
-        Data = await file.ReadBlockAsync((uint) DataSize);
+        var dataValue = await file.ReadBlockAsync((uint) DataSize);
+        Data = dataValue;
+        Debug.Assert(Data == dataValue);
         Debug.Assert(Size == ActualSize);
         return this;
     }

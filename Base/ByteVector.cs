@@ -11,7 +11,7 @@ public sealed partial class ByteVector: IEquatable<ByteVector>, IComparable<Byte
 
     /// <summary> Gets the data stored in the current instance as Span of bytes. </summary>
     /// <value> A <see cref="Span{Byte}"/> containing the data stored in the current instance. </value>
-    public Span<byte> Data => _data.GetInternalArray();
+    public Span<byte> Data => ((Span<byte>)_data.GetInternalArray())[..Count];
     
     /// <summary> Gets the data stored in the current instance. </summary>
     /// <value> A <see cref="T:byte[]" /> containing the data stored in the  current instance. </value>
@@ -86,7 +86,7 @@ public sealed partial class ByteVector: IEquatable<ByteVector>, IComparable<Byte
     /// <value> A <see cref="bool" /> value indicating whether or not the current instance is empty. </value>
     public bool IsEmpty => Data.Length == 0;
     /// <summary> Number of bytes in <see cref="ByteVector"/> </summary>
-    public int Count => Data.Length;
+    public int Count => _data.Count;
     
     /// <summary> Get part of <see cref="ByteVector"/> starting from <paramref name="index"/> to end.  </summary>
     /// <param name="index">Index from where part was taken.</param>

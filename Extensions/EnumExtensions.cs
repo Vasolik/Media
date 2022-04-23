@@ -93,8 +93,8 @@ public static class EnumExtensions
 internal static class EnumExtensionHelper<T>
     where T : Enum
 {
-    internal static IDictionary<T, string> EnumToDescription =>
-        typeof(T).GetEnumValues().OfType<T>().ToDictionary(e => e,
+    internal static IDictionary<T, string> EnumToDescription { get; } =
+        new HashSet<T>(typeof(T).GetEnumValues().OfType<T>()).ToDictionary(e => e,
             e => e.GetAttributeOfType<DescriptionAttribute>()?.Description ?? e.ToString("G"));
 
     internal static IDictionary<string, T> DescriptionToEnum =>
