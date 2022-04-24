@@ -339,6 +339,30 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// reference entry. This permits reordering file-level boxes and receiving a subset of file-level boxes but
     /// could require traversing the file-level boxes until the referenced IdentifiedMediaDataBox is found.</para></summary>
     public static readonly BoxType ChunkOffset = new("stco", 282);
+    
+    /// <summary> <para>This table can be used to find the group that a sample belongs to and the associated description of that
+    /// sample group. The table is compactly coded with each entry giving the index of the first sample of a run
+    /// of samples with the same sample group descriptor. The sample group description ID is an index that
+    /// refers to a  SampleGroupDescriptionBox, which contains entries describing the characteristics of each
+    /// sample group.</para>
+    /// <para>TThere may be multiple instances of this box if there is more than one sample grouping for the samples in
+    /// a track or track fragment. Each instance of the SampleToGroup box has a type that distinguishes different
+    /// sample groupings. Within a track, whether declared in the SampleTableBox or in TrackFragmentBox,
+    /// there shall be at most one instance of this box with a particular grouping_type, and, if present, a
+    /// grouping_type_parameter. The associated SampleGroupDescriptionBox shall indicate the same
+    /// value for the grouping_type. When there are multiple SampleToGroupBoxes with a particular value
+    /// of grouping_type in a container box, the version of all the SampleToGroupBoxes shall be 1. When the
+    /// version of a SampleToGroupBox is 0, there shall be only one occurrence of SampleToGroupBox with this
+    /// grouping_type in a container box.</para>
+    /// <para>Version 1 of this box should only be used if a grouping_type_parameter is needed. When the
+    /// grouping_ type_parameter is not explicitly defined in this standard, its semantics may be overridden by derived
+    /// specifications.</para>
+    /// <para>For a SampleGroupDescriptionBox with a given grouping_type, there may be more than one
+    /// SampleToGroupBox with the same grouping_type if and only if each SampleToGroupBox has a different
+    /// value of grouping_type_parameter; there may also be no SampleToGroupBox with the given grouping_type
+    /// if no samples are mapped to a description of that grouping_type, or if all samples are mapped to
+    /// the default entry identified by the SampleGroupDescriptionBox.</para></summary>
+    public static readonly BoxType SampleToGroup = new("sbgp", 283);
 
 
     /// <summary> <para>Audio tracks use the <see cref="SoundMediaHeaderBox"/>  in the MediaInformationBox as defined in 8.4.5. The sound
