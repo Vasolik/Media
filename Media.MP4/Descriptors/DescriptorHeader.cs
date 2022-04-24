@@ -1,4 +1,4 @@
-using Vipl.Base.Extensions;
+using Vipl.Base;
 
 namespace Vipl.Media.MP4.Descriptors;
 
@@ -685,24 +685,40 @@ public class DescriptorHeader
     /// <exception cref="ArgumentException">If there is not enough data in provided data.</exception>
     public DescriptorHeader(Span<byte> data)
     {     
-        if (data.Length < 5)
-        {
-            throw new ArgumentException("Descriptor header must be at least 5 bytes long");
-        }
-
         Tag = (DescriptorTag)data[0];
-        Length = data[4..5].ToUShort();
+        SizeOfLength = 0;
+        Length = 0;
+        do 
+        {
+            SizeOfLength++;
+            Length = (Length << 7) + (data[SizeOfLength] & 0x7F);
+        } while ((data[SizeOfLength] & 0x80) != 0);
+        
     }
 
     /// <summary> Each descriptor constitutes a self-describing class, identified by a unique class tag. </summary>
     public DescriptorTag Tag { get; set; }
     /// <summary> Size of the descriptor in bytes. </summary>
-    public ushort Length { get; set; }
+    public int Length { get; set; }
 
-    /// <summary> The descriptor length. </summary>
-    protected DescriptorHeader(DescriptorTag tag, ushort length)
+    /// <summary> Size of length field in bytes. </summary>
+    public int SizeOfLength { get; set; }
+    
+    /// <summary> Size of header in bytes. </summary>
+    public int SizeOfHeader=> SizeOfLength + 1;
+    
+    /// <summary> Renders the current instance as a byte vector to byte vector builder. </summary>
+    /// <param name="builder">Builder to store current instance.</param>
+    /// <returns>Builder instance for chaining.</returns>
+    public virtual IByteVectorBuilder Render(IByteVectorBuilder builder)
     {
-        Tag = tag;
-        Length = length;
+        builder.Add((byte)Tag);
+        for (var i = 0; i < SizeOfLength; i++)
+        {
+            var mask = 0x7F << (8 * (SizeOfLength - i - 1));
+            var sizeByte = (byte)( Length & mask | (i < SizeOfLength - 1 ? 0x80: 0x00));
+            builder.Add(sizeByte);
+        }
+        return builder;
     }
 }

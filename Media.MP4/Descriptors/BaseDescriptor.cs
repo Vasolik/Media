@@ -21,7 +21,6 @@ public abstract class BaseDescriptor
     /// <summary> Header of the descriptor. </summary>
     // ReSharper disable once MemberCanBeProtected.Global
     public DescriptorHeader Header { get; set; }
-
     
     /// <summary>Descriptor as <see cref="ByteVector"/>. </summary>
     // ReSharper disable once MemberCanBeProtected.Global
@@ -39,9 +38,7 @@ public abstract class BaseDescriptor
     /// <returns>Builder instance for chaining.</returns>
     public virtual IByteVectorBuilder Render(IByteVectorBuilder builder)
     {
-        builder.Add((byte)Header.Tag)
-            .Add((byte)0x80).Add((byte)0x80).Add((byte)0x80)
-            .Add((byte)Header.Length);
+        Header.Render(builder);
         return RenderData(builder);
     }
     
@@ -57,7 +54,7 @@ public abstract class BaseDescriptor
 
     /// <summary> Actual size of the descriptor in the file. This is the size of the header plus the size of the data.
     /// Compared to <see cref="DescriptorHeader.Length"/>, this value is calculated after every change of data. </summary>
-    public virtual ulong ActualSize => 5 + ActualDataSize;
+    public virtual ulong ActualSize => (ulong)Header.SizeOfHeader + ActualDataSize;
     
     /// <summary> Actual size of data in description. </summary>
     // ReSharper disable once MemberCanBePrivate.Global
@@ -71,5 +68,5 @@ public abstract class BaseDescriptor
         => $"{Header.Tag.GetDescription()} ({Header.Length.BytesToString()})".Intend(level, true);
     
     /// <summary> Total Size of the descriptor in the file. This is the size of the header plus the size of the data. </summary>
-    public int TotalSize => Header.Length + 5;
+    public int TotalSize =>  Header.Length + Header.SizeOfHeader;
 }

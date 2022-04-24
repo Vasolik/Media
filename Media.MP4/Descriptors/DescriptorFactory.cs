@@ -13,10 +13,10 @@ public static class DescriptorFactory
         {
             DescriptorHeader.DescriptorTag.Forbidden1 => throw new ArgumentException("Forbidden1 tag is not allowed."),
             DescriptorHeader.DescriptorTag.Forbidden2 => throw new ArgumentException("Forbidden2 tag is not allowed."),
-            DescriptorHeader.DescriptorTag.ProfileLevelIndicationIndexDescriptorTag => new ProfileLevelIndicationIndexDescriptor(header, data[5..(5+ header.Length)]),
-            DescriptorHeader.DescriptorTag.ElementaryStreamDescriptorTag => new ElementaryStreamDescriptor(header, data[5..(5+ header.Length)]),
-            DescriptorHeader.DescriptorTag.DecoderConfigDescriptorTag => new DecoderConfigDescriptor(header, data[5..(5+ header.Length)]),
-            _ => new UnknownDescriptor(header, data[5..(5+ header.Length)])
+            DescriptorHeader.DescriptorTag.ProfileLevelIndicationIndexDescriptorTag => new ProfileLevelIndicationIndexDescriptor(header, data[header.SizeOfHeader..(header.SizeOfHeader+ header.Length)]),
+            DescriptorHeader.DescriptorTag.ElementaryStreamDescriptorTag => new ElementaryStreamDescriptor(header, data[header.SizeOfHeader..(header.SizeOfHeader+ header.Length)]),
+            DescriptorHeader.DescriptorTag.DecoderConfigDescriptorTag => new DecoderConfigDescriptor(header, data[header.SizeOfHeader..(header.SizeOfHeader+ header.Length)]),
+            _ => new UnknownDescriptor(header, data[header.SizeOfHeader..(header.SizeOfHeader+ header.Length)])
         };
     }
     
