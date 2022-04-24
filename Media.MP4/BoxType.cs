@@ -383,10 +383,11 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// elementary stream and has three major parts.</summary>
     public static readonly BoxType ElementaryStreamDescription = new("esds", 701);
     
-
-
     /// <summary>Chapter or scene list. Usually references a text track.</summary>
     public static readonly BoxType ChapterTrackReference = new("chap", 1000);
+    
+    /// <summary> The text sample description contains information that defines how to interpret text media data.</summary>
+    public static readonly BoxType TextSampleEntryAtom = new("text", 1001);
     
     /// <summary> Apple QuickTime UserDataBox.
     /// <para>he metadata item list atom holds a list of actual metadata values that are present in the metadata atom.
@@ -465,8 +466,7 @@ public sealed class BoxType : SmartEnum<BoxType>
     
     /// <summary> </summary>
     public static readonly BoxType Subt = new("Subt", 541);
-    /// <summary> </summary>
-    public static readonly BoxType Text = new("text", 542);
+
     /// <summary> </summary>
     public static readonly BoxType Tmpo = new("tmpo", 543);
     /// <summary> </summary>
@@ -487,7 +487,6 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// <summary> </summary>
     // Another handler typeBoxType audio 
     public static readonly BoxType Alis = new("alis", 553);
-
     
     private static int ValueCounter { get; set; } = 5000;
     /// <summary> Convert box type to <see cref="ByteVector"/> representation. </summary>
