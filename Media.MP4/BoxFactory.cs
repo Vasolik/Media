@@ -2,6 +2,7 @@ using System.Reflection;
 using Vipl.Base;
 using Vipl.Media.Core;
 using Vipl.Media.MP4.Boxes;
+using Vipl.Media.MP4.Boxes.ISO_14496_12.DataEntries;
 
 namespace Vipl.Media.MP4;
 
@@ -28,6 +29,9 @@ public class HasBoxFactoryAttribute : Attribute
 		{
 			HandleType = ByteVector.FromString(handlerType);
 		}
+		
+		
+		
 	}
 	/// <summary>Type used to indicate factory.</summary>
 	public BoxType? Type { get; }
@@ -47,19 +51,22 @@ public static class BoxFactory
 	static BoxFactory()
 	{
 		foreach (var type in typeof(Box).Assembly.GetTypes()
-			         .Where(myType => myType.IsClass && !myType.IsAbstract && typeof(Box).IsAssignableFrom(myType)))
+			         .Where(myType => myType.IsClass && typeof(Box).IsAssignableFrom(myType)))
 		{
 			var attributes = type.GetCustomAttributes().OfType<HasBoxFactoryAttribute>().ToArray();
 			if(!attributes.Any())
 				continue;
-			var method = type.GetMethod(nameof( Box.CreateAsync), BindingFlags.Static | BindingFlags.Public) 
-			             ?? typeof(Box).GetMethod(nameof(Box.CreateAsync))!.MakeGenericMethod(type);
 			
+			var method = type.GetMethod(nameof( DataAtom.CreateAsync), BindingFlags.Static | BindingFlags.Public) ??
+			             typeof(Box).GetMethod(nameof(Box.CreateAsync));
+
 			var factory = (Func<BoxHeader, MP4, IsoHandlerBox?, Task<Box>>) Delegate.CreateDelegate(
-				typeof(Func<BoxHeader, MP4, IsoHandlerBox?, Task<Box>>), null, method);
+				typeof(Func<BoxHeader, MP4, IsoHandlerBox?, Task<Box>>), null, method!.MakeGenericMethod(type));
+			
 			foreach (var attribute in attributes)
 			{
 				ConcreteAsyncFactories[(attribute.Type, attribute.Parent, attribute.HandleType)] = factory;
+				
 			}
 		}
 	}
@@ -112,6 +119,7 @@ public static class BoxFactory
 	/// <param name="position"> A <see cref="long" /> value specifying at what seek position in <paramref name="file" /> to start reading. </param>
 	/// <param name="handler"> A <see cref="IsoHandlerBox" /> object containing the handler that applies to the new box. </param>
 	/// <returns> A newly created subtype <see cref="Box" /> object. </returns>
+	// ReSharper disable once MemberCanBePrivate.Global
 	public static async Task<Box> CreateBoxAsync(MP4 file, long position, IsoHandlerBox? handler)
 	{
 		return await CreateBoxAsync (file, position, null, handler);

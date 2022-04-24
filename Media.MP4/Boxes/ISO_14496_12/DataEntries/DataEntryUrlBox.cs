@@ -25,10 +25,11 @@ public class DataEntryUrlBox : BoxWithData
 		} 
 	}
 
-	/// <summary> is a URL, and is required in a URL entry and optional in a URN entry, where it gives a location
+	/// <summary> A URL, and is required in a URL entry and optional in a URN entry, where it gives a location
 	/// to find the resource with the given name. The URL type should be of a service that delivers a file
 	/// (e.g. URLs of type file, http, ftp etc.), and which services ideally also permit random access. Relative
 	/// URLs are permissible and are relative to the file that contains this data reference. </summary>
+	// ReSharper disable once MemberCanBePrivate.Global
 	public string Location { get; set; } = "";
 
 	/// <inheritdoc />

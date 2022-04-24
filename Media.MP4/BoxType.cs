@@ -19,7 +19,7 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// <summary> Four bytes header found in start of box. Size of string must be 3 or 4
     /// characters and every character must be between 0x20 and 0x7E included.</summary>
     public ByteVector Header { get; }
-    private BoxType(string name, int value) : this(CreateFourCharacterCode((ByteVector)name), name, value) { }
+    private BoxType(string name, int value) : this(CreateFourCharacterCode(name.ToCharArray().Select(c => (byte)c).ToArray()), name, value) { }
     
     private BoxType(ByteVector header, string name, int value) : base(name, value)
     {
@@ -398,6 +398,12 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// a number of metadata items, each of which is an atom.</para> </summary>
     public static readonly BoxType MetadataItemList = new("ilst", 1100);
     
+    /// <summary>Data box can have multiply types of data, including text and images. </summary>
+    public static readonly BoxType Data = new("data", 1101);
+    
+    /// <summary> Title of the content.</summary>  
+    public static readonly BoxType ContentTitle = new("©nam", 1102);
+
     /// <summary>  Adobe FLV ChapterBox.
     /// <para>The optional chpl box allows an F4V file to specify individual chapters along the main
     /// timeline of an F4V file. The information in this box is provided to ActionScript. The chpl box
@@ -422,8 +428,7 @@ public sealed class BoxType : SmartEnum<BoxType>
     public static readonly BoxType Cpil = new("cpil", 507);
     /// <summary> </summary>
     public static readonly BoxType Cprt = new("cprt", 508);
-    /// <summary> </summary>
-    public static readonly BoxType AppleData = new("data", 509);
+
     /// <summary> </summary>
     public static readonly BoxType Day = new("day", 510);
     /// <summary> </summary>
@@ -450,8 +455,7 @@ public sealed class BoxType : SmartEnum<BoxType>
     public static readonly BoxType Mean = new("mean", 525);
 
     
-    /// <summary> </summary>
-    public static readonly BoxType Nam = new("nam", 529);
+
     /// <summary> </summary>
     public new static readonly BoxType Name = new("name", 530);
     /// <summary> </summary>
@@ -524,9 +528,9 @@ public sealed class BoxType : SmartEnum<BoxType>
         
         if(type.Any(c => c < 0x20 || c > 0x7E && c != 0xa9))
             throw new ArgumentException("Every character in type must have value between 0x20 and 0x7E.");
-        
+
         return !All.ContainsKey(type) 
-            ? new BoxType(type,type.ToString(Encoding.UTF8), ValueCounter++) 
+            ? new BoxType(type, type.ToString(Encoding.UTF8), ValueCounter++) 
             : All[type];
     }
     /// <summary> Get box type from string name. </summary>
@@ -537,7 +541,7 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// any of byte does not have value between 0x20 and 0x7E included.</exception>
     public static BoxType FromString(string type)
     {
-        return FromByteVector( CreateFourCharacterCode((ByteVector)type));
+        return FromByteVector( CreateFourCharacterCode(type.ToCharArray().Select(c => (byte)c).ToArray()) );
     }
     
     /// <summary> Converts the provided ID into a readonly ID and fixes a 3 byte ID.</summary>
