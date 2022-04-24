@@ -387,7 +387,10 @@ public sealed class BoxType : SmartEnum<BoxType>
     public static readonly BoxType ChapterTrackReference = new("chap", 1000);
     
     /// <summary> The text sample description contains information that defines how to interpret text media data.</summary>
-    public static readonly BoxType TextSampleEntryAtom = new("text", 1001);
+    public static readonly BoxType TextSampleEntry = new("text", 1001);
+    /// <summary>This atom specifies the font used to display the subtitle.</summary>
+    public static readonly BoxType FontTable = new("ftab", 1002);
+
     
     /// <summary> Apple QuickTime UserDataBox.
     /// <para>he metadata item list atom holds a list of actual metadata values that are present in the metadata atom.
