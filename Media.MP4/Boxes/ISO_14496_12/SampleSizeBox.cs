@@ -39,6 +39,10 @@ public class SampleSizeBox  : FullBoxWithData
                     offset += 4;
                 }
             }
+            else
+            {
+                _sampleCountIfSampleSizeIsNotZero = count;
+            }
 
             Debug.Assert(Data == value);
         } 
@@ -49,9 +53,11 @@ public class SampleSizeBox  : FullBoxWithData
     {
         builder.Add(SampleSize);
         builder.Add(SampleCount);
-        foreach (var entry in EntrySizes)
+        if (SampleSize != 0) return builder;
+        
+        foreach(var size in EntrySizes)
         {
-            builder.Add(entry);
+            builder.Add(size);
         }
         return builder;
     }
@@ -61,21 +67,22 @@ public class SampleSizeBox  : FullBoxWithData
     /// array follows. </summary>
     // ReSharper disable once MemberCanBePrivate.Global
     public uint SampleSize { get; set; }
+    
+    private uint _sampleCountIfSampleSizeIsNotZero;
 
     /// <summary> An integer that gives the number of samples in the track; if sample-size is 0, then it is
     /// also the number of entries in the following table. </summary>
     // ReSharper disable once MemberCanBePrivate.Global
-    public uint SampleCount => (uint)EntrySizes.Count;
+    public uint SampleCount => SampleSize ==0 ? (uint)EntrySizes.Count: _sampleCountIfSampleSizeIsNotZero;
     
     /// <summary> Integers specifying the size of a sample, indexed by its number. </summary>
     // ReSharper disable once MemberCanBePrivate.Global
     public List<uint> EntrySizes { get;  } = new ();
     
     /// <inheritdoc />
-    public override ulong ActualDataSize => 8UL + SampleCount * 4;
+    public override ulong ActualDataSize => 8UL + (ulong)EntrySizes.Count * 4;
     
     /// <inheritdoc />
     public override string DebugDisplay(int level)
-        => $"{base.DebugDisplay(level)} C: {SampleCount} ({new string(EntrySizes.Select(e=> e.ToString()).Join(", ").Take(50).ToArray())}...)";
-
+        => $"{base.DebugDisplay(level)} S: {SampleSize} C: {SampleCount} ({new string(EntrySizes.Select(e=> e.ToString()).Join(", ").Take(50).ToArray())}...)";
 }

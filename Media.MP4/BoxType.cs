@@ -326,6 +326,21 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// samples-per-chunk.</para></summary>
     public static readonly BoxType SampleToChunk = new("stsc", 281);
     
+    /// <summary>  <para>The chunk offset table gives the index of each chunk into the containing file. There are two variants,
+    /// permitting the use of 32-bit or 64-bit offsets. The latter is useful when managing very large
+    /// presentations. At most one of these variants will occur in any single instance of a sample table.</para>
+    /// <para>When the referenced data reference entry is not DataEntryImdaBox or DataEntrySeqNumImdaBox, offsets
+    /// are file offsets, not the offset into any box within the file (e.g. <see cref="MediaDataBox"/> ). This permits referring
+    /// to media data in files without any box structure. It does also mean that care must be taken when
+    /// constructing a self-contained ISO file with its structure-data (<see cref="MovieBox"/>) at the front, as the size of the
+    /// MovieBox will affect the chunk offsets to the media data.</para>
+    /// <para>When the referenced data reference entry is DataEntryImdaBox or DataEntrySeqNumImdaBox, offsets
+    /// are relative to the first byte of the payload of the IdentifiedMediaDataBox corresponding to the data
+    /// reference entry. This permits reordering file-level boxes and receiving a subset of file-level boxes but
+    /// could require traversing the file-level boxes until the referenced IdentifiedMediaDataBox is found.</para></summary>
+    public static readonly BoxType ChunkOffset = new("stco", 282);
+
+
     /// <summary> <para>Audio tracks use the <see cref="SoundMediaHeaderBox"/>  in the MediaInformationBox as defined in 8.4.5. The sound
     /// media header contains general presentation information, independent of the coding, for audio media.
     /// This header is used for all tracks containing audio.</para> </summary>
@@ -423,10 +438,7 @@ public sealed class BoxType : SmartEnum<BoxType>
     public static readonly BoxType Sonm = new("sonm", 536); // Track Title Sort
     /// <summary> </summary>
     public static readonly BoxType Soal = new("soal", 537); // Album Title Sort
-
-    /// <summary> </summary>
-    public static readonly BoxType IsoChunkOffset = new("stco", 539);
-
+    
     /// <summary> </summary>
     public static readonly BoxType Subt = new("Subt", 541);
     /// <summary> </summary>
