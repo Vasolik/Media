@@ -306,6 +306,17 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// <summary> Url data box. Misspelled</summary>  
     public static readonly BoxType DataEntryUrlMisspelled = new("url ", 271);
     
+    /// <summary> <para>This box contains the sample count and a table giving the size in bytes of each sample. This allows the
+    /// media data itself to be unframed. The total number of samples in the media is always indicated in the
+    /// sample count.</para>
+    /// <para>There are two variants of the sample size box. The first variant has a fixed size 32-bit field for
+    /// representing the sample sizes; it permits defining a constant size for all samples in a track. The second
+    /// variant permits smaller size fields, to save space when the sizes are varying but small. One of these
+    /// boxes shall be present; the first version is preferred for maximum compatibility.</para>
+    /// <para>A sample size of zero is not prohibited in general, but it must be valid and defined for the coding
+    /// system, as defined by the sample entry, that the sample belongs to.</para></summary>
+    public static readonly BoxType SampleSize = new("stsz", 280);
+    
     /// <summary> <para>Samples within the media data are grouped into chunks. Chunks can be of different sizes, and the
     /// samples within a chunk can have different sizes. This table can be used to find the chunk that contains
     /// a sample, its position, and the associated sample description.</para>
@@ -313,7 +324,7 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// same characteristics. By subtracting one entry here from the previous one, it is possible to compute how
     /// many chunks are in this run. This can be converted to a sample count by multiplying by the appropriate
     /// samples-per-chunk.</para></summary>
-    public static readonly BoxType SampleToChunk = new("stsc", 280);
+    public static readonly BoxType SampleToChunk = new("stsc", 281);
     
     /// <summary> <para>Audio tracks use the <see cref="SoundMediaHeaderBox"/>  in the MediaInformationBox as defined in 8.4.5. The sound
     /// media header contains general presentation information, independent of the coding, for audio media.

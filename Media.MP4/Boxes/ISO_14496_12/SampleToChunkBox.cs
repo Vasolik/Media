@@ -70,13 +70,16 @@ public class SampleToChunkBox  : FullBoxWithData
         /// same samples-per-chunk and sample-description-index; the index of the first chunk in a track has
         /// the value 1 (the first_chunk field in the first record of this box has the value 1, identifying that the
         /// first sample maps to the first chunk). </summary>
+        // ReSharper disable once PropertyCanBeMadeInitOnly.Global
         public uint FirstChunk { get; set; }
         
         /// <summary>An integer that gives the number of samples in each of these chunks. .</summary>
+        // ReSharper disable once PropertyCanBeMadeInitOnly.Global
         public uint SamplesPerChunk { get; set; }
         
         /// <summary>is an integer that gives the index of the sample entry that describes the samples
         /// in this chunk. The index ranges from 1 to the number of sample entries in the <see cref="SampleDescriptionBox"/> . </summary>
+        // ReSharper disable once PropertyCanBeMadeInitOnly.Global
         public uint SampleDescriptionIndex { get; set; }
         
         /// <summary> Debug string use to print during debug. </summary>
@@ -85,7 +88,7 @@ public class SampleToChunkBox  : FullBoxWithData
             => $"F: {FirstChunk}, PC: {SamplesPerChunk}, SDI: {SampleDescriptionIndex}";
     }
 
-    /// <summary> Segment entries in the Edit List Box. </summary>
+    /// <summary> Segment entries in the SampleToChunkBox. </summary>
     // ReSharper disable once MemberCanBePrivate.Global
     public List<Entry> Entries { get;  } = new ();
     

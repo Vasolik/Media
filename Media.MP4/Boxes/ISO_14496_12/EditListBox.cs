@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Vipl.Base;
 using Vipl.Base.Extensions;
 
@@ -22,14 +23,14 @@ public class EditListBox  : FullBoxWithData, IBoxWithMovieHeaderScalableProperti
         get => RenderData(new ByteVectorBuilder((int)ActualDataSize)).Build();
         set
         {
-            int offset = 0;
             var count = value[..4].ToUInt();
             Entries.Clear();
+            int offset = 4;
             for (var i = 0U; i < count; i++)
             {
                 if (Version == 1)
                 {
-                    var entry = value.Mid(offset, offset + 24);
+                    var entry = value[offset..(offset + 24)];
                     Entries.Add(new Entry()
                     {
                         SegmentDuration = entry[..8].ToTimeSpan(Header.Timescale),
@@ -40,7 +41,7 @@ public class EditListBox  : FullBoxWithData, IBoxWithMovieHeaderScalableProperti
                 }
                 else
                 {
-                    var entry = value.Mid(offset, offset + 12);
+                    var entry = value[offset..(offset + 12)];
                     Entries.Add(new Entry()
                     {
                         SegmentDuration = entry[..4].ToTimeSpan(Header.Timescale),
@@ -50,6 +51,7 @@ public class EditListBox  : FullBoxWithData, IBoxWithMovieHeaderScalableProperti
                     offset = 12;
                 }
             }
+            Debug.Assert(Data == value);
         } 
     }
 
