@@ -2,6 +2,7 @@ using System.Reflection;
 using Vipl.Base;
 using Vipl.Media.Core;
 using Vipl.Media.MP4.Boxes;
+using Vipl.Media.MP4.Boxes.AppleAtom;
 using Vipl.Media.MP4.Boxes.ISO_14496_12.DataEntries;
 
 namespace Vipl.Media.MP4;

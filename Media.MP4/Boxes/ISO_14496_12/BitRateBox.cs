@@ -54,7 +54,7 @@ public class BitRateBox : BoxWithData
     }
     
     /// <inheritdoc />
-    public override ulong ActualDataSize => Header.HeaderSize + 12;
+    public override ulong ActualDataSize => 12;
     
     /// <inheritdoc />
     public override string DebugDisplay(int level)

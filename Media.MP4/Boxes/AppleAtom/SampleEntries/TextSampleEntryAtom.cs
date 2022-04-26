@@ -14,6 +14,7 @@ public class TextSampleEntryAtom : SampleEntryBox
     private TextSampleEntryAtom (BoxHeader header,  IsoHandlerBox? handler)
         : base (header, handler)
     {
+        UnknownData = null!;
     }
     /// <summary> Flags that describe how the text should be drawn. </summary>
     [Flags]
@@ -161,6 +162,9 @@ public class TextSampleEntryAtom : SampleEntryBox
     // ReSharper disable once MemberCanBePrivate.Global
     public Color FontColor { get; set; }
     
+    /// <summary> Unknown Data. </summary>
+    public ByteVector UnknownData { get; set; }
+    
     /// <inheritdoc />
     public override ByteVector Data 
     { 
@@ -170,7 +174,7 @@ public class TextSampleEntryAtom : SampleEntryBox
             DisplayFlags = (DisplayFlagsType)value[8..12].ToUInt();
             HorizontalAlignment = (HorizontalAlignmentType)value[12];
             VerticalAlignment = (VerticalAlignmentType)value[13];
-            BackgroundColor = Color.FromArgb( value[15], value[16], value[17], value[14]);
+            BackgroundColor = Color.FromArgb( value[17], value[14], value[15], value[16]);
             TopTextBox = value[18..20].ToUShort();
             LeftTextBox = value[20..22].ToUShort();
             BottomTextBox = value[22..24].ToUShort();
@@ -180,7 +184,8 @@ public class TextSampleEntryAtom : SampleEntryBox
             FontID = value[30..32].ToUShort();
             FontStyle = (FontStyleType)value[32];
             FontSize = value[33];
-            FontColor = Color.FromArgb( value[35], value[36], value[37], value[34]); 
+            FontColor = Color.FromArgb( value[37], value[34], value[35], value[36]); 
+            UnknownData = value[38..];
             base.Data = value;
             Debug.Assert(Data == value);
         } 
@@ -203,22 +208,16 @@ public class TextSampleEntryAtom : SampleEntryBox
             .Add(FontID)
             .Add((byte) FontStyle)
             .Add(FontSize)
-            .Add(FontColor.R).Add(FontColor.G).Add(FontColor.B).Add(FontColor.A);
+            .Add(FontColor.R).Add(FontColor.G).Add(FontColor.B).Add(FontColor.A)
+            .Add(UnknownData);
     }
     
     /// <summary> Actual size of the box in the file. This is the size of the header plus the size of the data.
     /// Compared to <see cref="Box.DataSize"/>, this value is calculated after every change of data. </summary>
     // ReSharper disable once MemberCanBeProtected.Global
-    public override ulong ActualDataSize => 38UL;
+    public override ulong ActualDataSize => 38UL + ( ulong)UnknownData.Count;
     
-    /// <inheritdoc />
-    public override ulong ChildrenPosition => DataPosition + 38UL;
-    
-    /// <inheritdoc />
-    public override ulong  ChildrenSize => Header.DataSize - 38UL;
-    
-    /// <inheritdoc />
-    public override ulong DataSize => 38UL;
+
     
     /// <inheritdoc />
     protected override string DebugDisplayMoreData() 

@@ -1,7 +1,7 @@
 using Vipl.Base;
 using Vipl.Base.Extensions;
 
-namespace Vipl.Media.MP4.Boxes.ISO_14496_12.DataEntries;
+namespace Vipl.Media.MP4.Boxes.AppleAtom;
 
 /// <summary> This class extends <see cref="Box" /> to provide an implementation of Apple QuickTime DataAtom.</summary>  
 [HasBoxFactory("data" ) ]
@@ -66,6 +66,7 @@ public abstract class DataAtom  : BoxWithData
         var result =(DataAtom) await ((DataAtom)(type switch
         {
             DataAtomTypes.Utf8 => new Utf8DataAtom(header, handlerBox, type),
+            DataAtomTypes.Jpeg => new JpegDataAtom(header, handlerBox, type),
             _ => new UnknownDataAtom(header, handlerBox, type)
         })).InitAsync(file);
         result.LocalIndicator = typeVector[4..8].ToUInt();

@@ -3,7 +3,7 @@ using System.Text;
 using Vipl.Base;
 using Vipl.Base.Extensions;
 
-namespace Vipl.Media.MP4.Boxes.ISO_14496_12.DataEntries;
+namespace Vipl.Media.MP4.Boxes.AppleAtom;
 
 /// <summary> This class extends <see cref="Box" /> to provide an implementation of Apple QuickTime DataAtom
 /// with data type of utf8 string.</summary>  

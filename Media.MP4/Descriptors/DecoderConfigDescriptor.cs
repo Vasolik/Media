@@ -66,9 +66,9 @@ public class DecoderConfigDescriptor : BaseDescriptor
             ObjectTypeIndication = (ObjectTypeIndicationType)value[0];
             StreamType = (StreamType)(value[1] & StreamTypeMask);
             IsUpStream = (value[1] & IsUpStreamMask) != 0;
-            BufferSize = value[2..4].ToUInt();
+            BufferSize = value[2..5].ToUInt();
             MaximumBitrate = value[5..9].ToUInt();
-            AverageBitrate = value[5..13].ToUInt();
+            AverageBitrate = value[9..13].ToUInt();
             var remainingSize = Header.Length - 13;
             var offset = 13;
             ProfileLevelIndication = new List<BaseDescriptor>();

@@ -401,8 +401,36 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// <summary>Data box can have multiply types of data, including text and images. </summary>
     public static readonly BoxType Data = new("data", 1101);
     
-    /// <summary> Title of the content.</summary>  
+    /// <summary> Title of the content metadata.</summary>  
     public static readonly BoxType ContentTitle = new("©nam", 1102);
+    
+    /// <summary> Artist metadata.</summary>  
+    public static readonly BoxType Artist = new("©ART", 1103);
+    
+    /// <summary> Album Artist metadata.</summary>  
+    public static readonly BoxType AlbumArtist = new("aART", 1104);
+    
+    /// <summary> Comment metadata.</summary>  
+    public static readonly BoxType Comment = new("©cmt", 1105);
+    
+    /// <summary> Copyright metadata.</summary>  
+    public static readonly BoxType Copyright = new("cprt", 1106);
+    
+    /// <summary> Covert metadata.</summary>  
+    public static readonly BoxType Covert = new("covr", 1107);
+    
+    /// <summary> Created Day metadata.</summary>  
+    public static readonly BoxType CreatedDay = new("©day", 1108);
+    
+    /// <summary> Custom metadata.</summary>  
+    public static readonly BoxType CustomMeta = new("----", 1109);
+    
+    /// <summary> Encoder metadata.</summary>  
+    public static readonly BoxType Encoder = new("©too", 1110);
+    
+    /// <summary> Genre metadata.</summary>  
+    public static readonly BoxType Genre = new("©gen", 1111);
+    
 
     /// <summary>  Adobe FLV ChapterBox.
     /// <para>The optional chpl box allows an F4V file to specify individual chapters along the main
@@ -410,37 +438,23 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// occurs within a moov box.</para></summary>
     public static readonly BoxType Chapters = new("chpl", 2000);
     
-    /// <summary> </summary>
-    public static readonly BoxType Aart = new("aART", 500);
-    /// <summary> </summary>
-    public static readonly BoxType Alb = new("alb", 501);
-    /// <summary> </summary>
-    public static readonly BoxType Art = new("ART", 502);
-    /// <summary> </summary>
-    public static readonly BoxType Cmt = new("cmt", 503);
+
+
     /// <summary> </summary>
     public static readonly BoxType Cond = new("cond", 504);
-    /// <summary> </summary>
-    public static readonly BoxType Covr = new("covr", 505);
     /// <summary> </summary>
     public static readonly BoxType IsoChunkLargeOffset = new("co64", 506);
     /// <summary> </summary>
     public static readonly BoxType Cpil = new("cpil", 507);
-    /// <summary> </summary>
-    public static readonly BoxType Cprt = new("cprt", 508);
 
-    /// <summary> </summary>
-    public static readonly BoxType Day = new("day", 510);
+    
     /// <summary> </summary>
     public static readonly BoxType Desc = new("desc", 511);
     /// <summary> </summary>
     public static readonly BoxType Disk = new("disk", 512);
     /// <summary> </summary>
     public static readonly BoxType Dtag = new("dtag", 513);
-
-
-    /// <summary> </summary>
-    public static readonly BoxType Gen = new("gen", 517);
+    
     /// <summary> </summary>
     public static readonly BoxType Gnre = new("gnre", 518);
     /// <summary> </summary>
@@ -485,8 +499,6 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// <summary> </summary>
     public static readonly BoxType Wrt = new("wrt", 549);
     /// <summary> </summary>
-    public static readonly BoxType Dash = new("----", 550);
-    /// <summary> </summary>
     // Handler types.
     public static readonly BoxType SoundIsoHandler = new("soun", 551);
     /// <summary> </summary>
@@ -526,7 +538,7 @@ public sealed class BoxType : SmartEnum<BoxType>
         if (type.Count != 4)
             throw new ArgumentException("Type must be four-character code.");
         
-        if(type.Any(c => c < 0x20 || c > 0x7E && c != 0xa9))
+        if(type.Any(c => c < 0x20 || c > 0x7E && c != 0xa9 && c != '-'))
             throw new ArgumentException("Every character in type must have value between 0x20 and 0x7E.");
 
         return !All.ContainsKey(type) 
