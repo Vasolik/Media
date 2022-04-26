@@ -9,7 +9,7 @@ namespace Vipl.Media.MP4.Boxes.ISO_14496_12;
 [HasBoxFactory("meta")]
 public class MetaBox : FullContainerBox
 {
-	private MetaBox (BoxHeader header, IsoHandlerBox? handler)
+	private MetaBox (BoxHeader header, HandlerBox? handler)
 		: base (header, handler)
 	{ }
 }

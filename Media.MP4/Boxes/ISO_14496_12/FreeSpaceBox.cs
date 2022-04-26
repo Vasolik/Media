@@ -11,7 +11,7 @@ namespace Vipl.Media.MP4.Boxes.ISO_14496_12;
 public class FreeSpaceBox : BoxWithData
 {
 	// ReSharper disable once UnusedMember.Local
-	private FreeSpaceBox (BoxHeader header,  IsoHandlerBox? handler)
+	private FreeSpaceBox (BoxHeader header,  HandlerBox? handler)
 		: base (header, handler)
 	{
 	}

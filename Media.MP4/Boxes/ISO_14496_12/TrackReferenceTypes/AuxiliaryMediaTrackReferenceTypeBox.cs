@@ -12,7 +12,7 @@ namespace Vipl.Media.MP4.Boxes.ISO_14496_12.TrackReferenceTypes;
 [HasBoxFactory("auxl", typeof(TrackReferenceBox))]
 public class AuxiliaryMediaTrackReferenceTypeBox : TrackReferenceTypeBox
 {
-    private AuxiliaryMediaTrackReferenceTypeBox (BoxHeader header,  IsoHandlerBox? handler)
+    private AuxiliaryMediaTrackReferenceTypeBox (BoxHeader header,  HandlerBox? handler)
         : base (header, handler)
     {
     }

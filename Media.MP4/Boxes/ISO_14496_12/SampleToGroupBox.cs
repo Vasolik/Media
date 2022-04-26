@@ -30,7 +30,7 @@ namespace Vipl.Media.MP4.Boxes.ISO_14496_12;
 [HasBoxFactory("sbgp")]
 public class SampleToGroupBox  : FullBoxWithData
 {
-    private SampleToGroupBox  (BoxHeader header, IsoHandlerBox? handler)
+    private SampleToGroupBox  (BoxHeader header, HandlerBox? handler)
         : base (header, handler)
     {
     }

@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Vipl.Base;
 using Vipl.Base.Extensions;
+using Vipl.Media.MP4.Boxes.ISO_14496_12;
 
 namespace Vipl.Media.MP4.Boxes.AppleAtom;
 
@@ -8,7 +9,7 @@ namespace Vipl.Media.MP4.Boxes.AppleAtom;
 /// with unknown data type.</summary>  
 public class UnknownDataAtom  : DataAtom
 {
-    internal UnknownDataAtom(BoxHeader header, IsoHandlerBox? handler, DataAtomTypes type)
+    internal UnknownDataAtom(BoxHeader header, HandlerBox? handler, DataAtomTypes type)
         : base(header, handler, type)
     {
         UnknownData = null!;
@@ -47,7 +48,7 @@ public class UnknownDataAtom  : DataAtom
 /// with jpeg image as data.</summary>  
 public class JpegDataAtom  : DataAtom
 {
-    internal JpegDataAtom(BoxHeader header, IsoHandlerBox? handler, DataAtomTypes type)
+    internal JpegDataAtom(BoxHeader header, HandlerBox? handler, DataAtomTypes type)
         : base(header, handler, type)
     {
         ImageData = null!;
@@ -86,7 +87,7 @@ public class JpegDataAtom  : DataAtom
 /// with png image as data.</summary>  
 public class PngDataAtom  : DataAtom
 {
-    internal PngDataAtom(BoxHeader header, IsoHandlerBox? handler, DataAtomTypes type)
+    internal PngDataAtom(BoxHeader header, HandlerBox? handler, DataAtomTypes type)
         : base(header, handler, type)
     {
         ImageData = null!;

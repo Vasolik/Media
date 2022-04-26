@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using Vipl.Base;
 using Vipl.Base.Extensions;
+using Vipl.Media.MP4.Boxes.ISO_14496_12;
 
 namespace Vipl.Media.MP4.Boxes;
 
@@ -11,9 +12,9 @@ public abstract class Box
     /// <summary> Constructs and initializes a new instance of <see cref="Box" />
     /// with a specified header and handler.</summary>
     /// <param name="header"> A <see cref="BoxHeader" /> object describing the new  instance. </param>
-    /// <param name="handler"> A <see cref="IsoHandlerBox" /> object containing the handler that applies
+    /// <param name="handler"> A <see cref="HandlerBox" /> object containing the handler that applies
     /// to the new instance, or <see langword="null" /> if no handler applies.</param>
-    protected Box(BoxHeader header, IsoHandlerBox? handler = null)
+    protected Box(BoxHeader header, HandlerBox? handler = null)
     {
         Header = header;
         Handler = handler;
@@ -31,7 +32,7 @@ public abstract class Box
     /// <param name="handler">Iso handler for better understanding of box.</param>
     /// <typeparam name="T">Type of the box</typeparam>
     /// <returns>Newly created box.</returns>
-    public static async Task<Box> CreateAsync<T>(BoxHeader header, MP4 file, IsoHandlerBox? handler)
+    public static async Task<Box> CreateAsync<T>(BoxHeader header, MP4 file, HandlerBox? handler)
         where T : Box
     {
         return await BoxActivator<T>.Create(  header, handler).InitAsync(file);
@@ -41,8 +42,8 @@ public abstract class Box
     {
         private static readonly ConstructorInfo Constructor = typeof(T)
             .GetConstructor(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public, null,
-                CallingConventions.Standard, new[] {typeof(BoxHeader), typeof(IsoHandlerBox)}, null)!;
-        public static Box Create(BoxHeader header, IsoHandlerBox? handler)
+                CallingConventions.Standard, new[] {typeof(BoxHeader), typeof(HandlerBox)}, null)!;
+        public static Box Create(BoxHeader header, HandlerBox? handler)
         {
             return (Constructor.Invoke(new object?[] {header, handler} ) as Box)!;
         }
@@ -56,10 +57,10 @@ public abstract class Box
     public ulong Size => Header.TotalBoxSize;
 
     /// <summary> Gets the handler box that applies to the current instance. </summary>
-    /// <value> A <see cref="IsoHandlerBox" /> object containing the handler that applies
+    /// <value> A <see cref="HandlerBox" /> object containing the handler that applies
     /// to the current instance, or <see langword="null" /> if no handler applies. </value>
     // ReSharper disable once MemberCanBeProtected.Global
-    public IsoHandlerBox? Handler { get; set; }
+    public HandlerBox? Handler { get; set; }
     
     /// <summary> Gets the size of the data contained in the current
     ///    instance, minus the size of any box specific headers. </summary>

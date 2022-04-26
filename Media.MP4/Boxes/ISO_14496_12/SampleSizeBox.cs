@@ -17,7 +17,7 @@ namespace Vipl.Media.MP4.Boxes.ISO_14496_12;
 [HasBoxFactory("stsz")]
 public class SampleSizeBox  : FullBoxWithData
 {
-    private SampleSizeBox  (BoxHeader header, IsoHandlerBox? handler)
+    private SampleSizeBox  (BoxHeader header, HandlerBox? handler)
         : base (header, handler)
     {
     }

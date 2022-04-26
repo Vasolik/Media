@@ -7,7 +7,7 @@ namespace Vipl.Media.MP4.Boxes.AppleAtom.TrackReferenceTypes;
 [HasBoxFactory("chap", typeof(TrackReferenceBox))]
 public class ChapterTrackReferenceTypeBox : TrackReferenceTypeBox
 {
-    private ChapterTrackReferenceTypeBox (BoxHeader header,  IsoHandlerBox? handler)
+    private ChapterTrackReferenceTypeBox (BoxHeader header,  HandlerBox? handler)
         : base (header, handler)
     {
     }

@@ -5,7 +5,7 @@ namespace Vipl.Media.MP4.Boxes.ISO_14496_12;
 [HasBoxFactory("dinf")]
 public class DataInformationBox :  ContainerBox
 {
-    private DataInformationBox (BoxHeader header, IsoHandlerBox? handler)
+    private DataInformationBox (BoxHeader header, HandlerBox? handler)
         : base (header, handler)
     {
     }

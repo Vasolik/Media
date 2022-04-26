@@ -16,7 +16,7 @@ namespace Vipl.Media.MP4.Boxes.ISO_14496_12.TrackReferenceTypes;
 [HasBoxFactory("hind",  typeof(TrackReferenceBox))]
 public class DecodingTrackReferenceTypeBox : TrackReferenceTypeBox
 {
-    private DecodingTrackReferenceTypeBox (BoxHeader header,  IsoHandlerBox? handler)
+    private DecodingTrackReferenceTypeBox (BoxHeader header,  HandlerBox? handler)
         : base (header, handler)
     {
     }

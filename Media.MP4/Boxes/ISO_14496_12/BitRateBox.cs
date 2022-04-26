@@ -10,7 +10,7 @@ namespace Vipl.Media.MP4.Boxes.ISO_14496_12;
 [HasBoxFactory("btrt")]
 public class BitRateBox : BoxWithData
 {
-    private BitRateBox (BoxHeader header,  IsoHandlerBox? handler)
+    private BitRateBox (BoxHeader header,  HandlerBox? handler)
         : base (header, handler)
     {
     }

@@ -3,6 +3,7 @@ using Vipl.Base;
 using Vipl.Media.Core;
 using Vipl.Media.MP4.Boxes;
 using Vipl.Media.MP4.Boxes.AppleAtom;
+using Vipl.Media.MP4.Boxes.ISO_14496_12;
 using Vipl.Media.MP4.Boxes.ISO_14496_12.DataEntries;
 
 namespace Vipl.Media.MP4;
@@ -46,8 +47,8 @@ public class HasBoxFactoryAttribute : Attribute
 public static class BoxFactory
 {
 
-	private static readonly IDictionary<(BoxType? Type, Type? Parent,  ByteVector? HandleType), Func<BoxHeader, MP4, IsoHandlerBox?, Task<Box>>>
-		ConcreteAsyncFactories = new Dictionary<( BoxType? Type, Type? Parent, ByteVector? HandleType), Func<BoxHeader, MP4, IsoHandlerBox?, Task<Box>>>();
+	private static readonly IDictionary<(BoxType? Type, Type? Parent,  ByteVector? HandleType), Func<BoxHeader, MP4, HandlerBox?, Task<Box>>>
+		ConcreteAsyncFactories = new Dictionary<( BoxType? Type, Type? Parent, ByteVector? HandleType), Func<BoxHeader, MP4, HandlerBox?, Task<Box>>>();
 	
 	static BoxFactory()
 	{
@@ -61,8 +62,8 @@ public static class BoxFactory
 			var method = type.GetMethod(nameof( DataAtom.CreateAsync), BindingFlags.Static | BindingFlags.Public) ??
 			             typeof(Box).GetMethod(nameof(Box.CreateAsync));
 
-			var factory = (Func<BoxHeader, MP4, IsoHandlerBox?, Task<Box>>) Delegate.CreateDelegate(
-				typeof(Func<BoxHeader, MP4, IsoHandlerBox?, Task<Box>>), null, method!.MakeGenericMethod(type));
+			var factory = (Func<BoxHeader, MP4, HandlerBox?, Task<Box>>) Delegate.CreateDelegate(
+				typeof(Func<BoxHeader, MP4, HandlerBox?, Task<Box>>), null, method!.MakeGenericMethod(type));
 			
 			foreach (var attribute in attributes)
 			{
@@ -72,7 +73,7 @@ public static class BoxFactory
 		}
 	}
 
-	private static Func<BoxHeader, MP4, IsoHandlerBox?, Task<Box>>  GetConcreteFactory(BoxType type, Type? parent, ByteVector? handlerType)
+	private static Func<BoxHeader, MP4, HandlerBox?, Task<Box>>  GetConcreteFactory(BoxType type, Type? parent, ByteVector? handlerType)
 	{
 		if (ConcreteAsyncFactories.TryGetValue((type,parent, handlerType), out var factory)) 
 			return factory;
@@ -92,13 +93,13 @@ public static class BoxFactory
 	/// <param name="file">A <see cref="MediaFile" /> object containing the file to read from. </param>
 	/// <param name="header">A <see cref="BoxHeader" /> object containing the header of the box to create. </param>
 	/// <param name="parent"> A <see cref="BoxHeader" /> object containing the header of the parent box. </param>
-	/// <param name="handler"> A <see cref="IsoHandlerBox" /> object containing the handler that applies to the new box. </param>
+	/// <param name="handler"> A <see cref="HandlerBox" /> object containing the handler that applies to the new box. </param>
 	/// <returns> A newly created subtype <see cref="Box" /> object. </returns>
 	static async Task<Box> CreateBoxAsync (
 		MP4 file,
 		BoxHeader header,
 		BoxHeader? parent,
-		IsoHandlerBox? handler)
+		HandlerBox? handler)
 	{
 		return await GetConcreteFactory(header.BoxType, parent?.Box?.GetType(), handler?.HandlerType)(header, file, handler);
 
@@ -108,9 +109,9 @@ public static class BoxFactory
 	/// <param name="file"> A <see cref="MediaFile" /> object containing the file to read from. </param>
 	/// <param name="position"> A <see cref="long" /> value specifying at what seek position in <paramref name="file" /> to start reading. </param>
 	/// <param name="parent"> A <see cref="BoxHeader" /> object containing the header of the parent box. </param>
-	/// <param name="handler"> A <see cref="IsoHandlerBox" /> object containing the handler that applies to the new box. </param>
+	/// <param name="handler"> A <see cref="HandlerBox" /> object containing the handler that applies to the new box. </param>
 	/// <returns> A newly created subtype <see cref="Box" /> object. </returns>
-	internal static async Task<Box> CreateBoxAsync(MP4 file, long position, BoxHeader? parent, IsoHandlerBox? handler)
+	internal static async Task<Box> CreateBoxAsync(MP4 file, long position, BoxHeader? parent, HandlerBox? handler)
 	{
 		return await CreateBoxAsync(file, await BoxHeader.CreateAsync(file, position), parent, handler);
 	}
@@ -118,10 +119,10 @@ public static class BoxFactory
 	/// <summary> Creates a box by reading it from a file given its position in the file and handler. </summary>
 	/// <param name="file"> A <see cref="MediaFile" /> object containing the file to read from. </param>
 	/// <param name="position"> A <see cref="long" /> value specifying at what seek position in <paramref name="file" /> to start reading. </param>
-	/// <param name="handler"> A <see cref="IsoHandlerBox" /> object containing the handler that applies to the new box. </param>
+	/// <param name="handler"> A <see cref="HandlerBox" /> object containing the handler that applies to the new box. </param>
 	/// <returns> A newly created subtype <see cref="Box" /> object. </returns>
 	// ReSharper disable once MemberCanBePrivate.Global
-	public static async Task<Box> CreateBoxAsync(MP4 file, long position, IsoHandlerBox? handler)
+	public static async Task<Box> CreateBoxAsync(MP4 file, long position, HandlerBox? handler)
 	{
 		return await CreateBoxAsync (file, position, null, handler);
 	}
@@ -138,9 +139,9 @@ public static class BoxFactory
 	/// <summary> Creates a box by reading it from a file given its header and handler. </summary>
 	/// <param name="file"> A <see cref="MP4" /> object containing the file to read from.</param>
 	/// <param name="header">A <see cref="BoxHeader" /> object containing the header of the box to create. </param>
-	/// <param name="handler"> A <see cref="IsoHandlerBox" /> object containing the handler that applies to the new box. </param>
+	/// <param name="handler"> A <see cref="HandlerBox" /> object containing the handler that applies to the new box. </param>
 	/// <returns> A newly created subtype <see cref="Box" /> object. </returns>
-	public static async Task<Box> CreateBoxAsync(MP4 file, BoxHeader header, IsoHandlerBox? handler)
+	public static async Task<Box> CreateBoxAsync(MP4 file, BoxHeader header, HandlerBox? handler)
 	{
 		return await CreateBoxAsync(file, header, null, handler);
 	}

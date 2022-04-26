@@ -13,7 +13,7 @@ namespace Vipl.Media.MP4.Boxes.ISO_14496_12.TrackReferenceTypes;
 [HasBoxFactory("thmb",  typeof(TrackReferenceBox))]
 public class ThumbnailTrackReferenceTypeBox : TrackReferenceTypeBox
 {
-    private ThumbnailTrackReferenceTypeBox (BoxHeader header,  IsoHandlerBox? handler)
+    private ThumbnailTrackReferenceTypeBox (BoxHeader header,  HandlerBox? handler)
         : base (header, handler)
     {
     }

@@ -12,7 +12,7 @@ namespace Vipl.Media.MP4.Boxes.ISO_14496_12;
 [HasBoxFactory("trak")]
 public class TrackBox : ContainerBox
 {
-    private TrackBox (BoxHeader header, IsoHandlerBox? handler)
+    private TrackBox (BoxHeader header, HandlerBox? handler)
         : base (header, handler)
     {
     }

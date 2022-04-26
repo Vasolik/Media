@@ -17,7 +17,7 @@ namespace Vipl.Media.MP4.Boxes.ISO_14496_12;
 // ReSharper disable once ClassNeverInstantiated.Global
 public class SampleDescriptionBox : FullContainerBox
 {
-    private SampleDescriptionBox (BoxHeader header, IsoHandlerBox? handler)
+    private SampleDescriptionBox (BoxHeader header, HandlerBox? handler)
         : base (header, handler)
     {
     }

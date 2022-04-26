@@ -13,7 +13,7 @@ namespace Vipl.Media.MP4.Boxes.ISO_14496_12.TrackReferenceTypes;
 [HasBoxFactory("subt",  typeof(TrackReferenceBox))]
 public class SubtitleTrackReferenceTypeBox : TrackReferenceTypeBox
 {
-    private SubtitleTrackReferenceTypeBox (BoxHeader header,  IsoHandlerBox? handler)
+    private SubtitleTrackReferenceTypeBox (BoxHeader header,  HandlerBox? handler)
         : base (header, handler)
     {
     }

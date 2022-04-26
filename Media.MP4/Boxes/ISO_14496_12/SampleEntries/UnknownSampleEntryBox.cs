@@ -7,7 +7,7 @@ namespace Vipl.Media.MP4.Boxes.ISO_14496_12.SampleEntries;
 [HasBoxFactory(null,  typeof(SampleDescriptionBox))]
 public class UnknownSampleEntryBox : SampleEntryBox
 {
-    private UnknownSampleEntryBox (BoxHeader header,  IsoHandlerBox? handler)
+    private UnknownSampleEntryBox (BoxHeader header,  HandlerBox? handler)
         : base (header, handler)
     {
         UnknownData = null!;

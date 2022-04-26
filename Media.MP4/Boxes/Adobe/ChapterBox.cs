@@ -15,7 +15,7 @@ namespace Vipl.Media.MP4.Boxes.Adobe;
 public class ChapterBox : FullBoxWithData
 {
     
-    private ChapterBox (BoxHeader header,  IsoHandlerBox? handler)
+    private ChapterBox (BoxHeader header,  HandlerBox? handler)
         : base (header, handler)
     {
     }

@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.Text;
 using Vipl.Base;
+using Vipl.Media.MP4.Boxes.ISO_14496_12;
 
 namespace Vipl.Media.MP4.Boxes.AppleAtom.Metadata;
 
@@ -11,7 +12,7 @@ namespace Vipl.Media.MP4.Boxes.AppleAtom.Metadata;
 [HasBoxFactory("mean")]
 public class MetadataSourceBox : FullBoxWithData
 {
-	private MetadataSourceBox (BoxHeader header, IsoHandlerBox? handler)
+	private MetadataSourceBox (BoxHeader header, HandlerBox? handler)
 		: base (header,  handler)
 	{
 		Text = null!;

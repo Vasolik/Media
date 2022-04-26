@@ -19,7 +19,7 @@ namespace Vipl.Media.MP4.Boxes.ISO_14496_12;
 [HasBoxFactory("stts")]
 public class TimeToSampleBox  : FullBoxWithData, IBoxWithMovieHeaderScalableProperties
 {
-    private TimeToSampleBox  (BoxHeader header, IsoHandlerBox? handler)
+    private TimeToSampleBox  (BoxHeader header, HandlerBox? handler)
         : base (header, handler)
     {
     }

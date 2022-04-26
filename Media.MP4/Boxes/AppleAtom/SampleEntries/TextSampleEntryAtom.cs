@@ -11,7 +11,7 @@ namespace Vipl.Media.MP4.Boxes.AppleAtom.SampleEntries;
 [HasBoxFactory("text",  typeof(SampleDescriptionBox))]
 public class TextSampleEntryAtom : SampleEntryBox
 {
-    private TextSampleEntryAtom (BoxHeader header,  IsoHandlerBox? handler)
+    private TextSampleEntryAtom (BoxHeader header,  HandlerBox? handler)
         : base (header, handler)
     {
         UnknownData = null!;

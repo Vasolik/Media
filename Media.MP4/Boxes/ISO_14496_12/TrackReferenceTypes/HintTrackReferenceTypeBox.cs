@@ -12,7 +12,7 @@ namespace Vipl.Media.MP4.Boxes.ISO_14496_12.TrackReferenceTypes;
 [HasBoxFactory("hint", typeof(TrackReferenceBox))]
 public class HintTrackReferenceTypeBox : TrackReferenceTypeBox
 {
-    private HintTrackReferenceTypeBox (BoxHeader header,  IsoHandlerBox? handler)
+    private HintTrackReferenceTypeBox (BoxHeader header,  HandlerBox? handler)
         : base (header, handler)
     {
     }

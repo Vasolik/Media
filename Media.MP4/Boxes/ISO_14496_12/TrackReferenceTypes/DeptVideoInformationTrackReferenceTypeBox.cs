@@ -12,7 +12,7 @@ namespace Vipl.Media.MP4.Boxes.ISO_14496_12.TrackReferenceTypes;
 [HasBoxFactory("vdep",  typeof(TrackReferenceBox))]
 public class DeptVideoInformationTrackReferenceTypeBox : TrackReferenceTypeBox
 {
-    private DeptVideoInformationTrackReferenceTypeBox (BoxHeader header,  IsoHandlerBox? handler)
+    private DeptVideoInformationTrackReferenceTypeBox (BoxHeader header,  HandlerBox? handler)
         : base (header, handler)
     {
     }

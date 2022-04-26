@@ -1,5 +1,6 @@
 using Vipl.Base;
 using Vipl.Base.Extensions;
+using Vipl.Media.MP4.Boxes.ISO_14496_12;
 
 namespace Vipl.Media.MP4.Boxes;
 
@@ -11,9 +12,9 @@ public abstract class FullBox : Box
 	/// with a provided header and handler by reading the contents from a specified file. </summary>
 	/// <param name="header"> A <see cref="BoxHeader" /> object containing the header to
 	/// use for the new instance. </param>
-	/// <param name="handler"> A <see cref="IsoHandlerBox" /> object containing the handler
+	/// <param name="handler"> A <see cref="HandlerBox" /> object containing the handler
 	/// that applies to the new instance. </param>
-	protected FullBox (BoxHeader header,  IsoHandlerBox? handler)
+	protected FullBox (BoxHeader header,  HandlerBox? handler)
 		: base (header, handler) { }
 
 	/// <inheritdoc />

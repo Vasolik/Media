@@ -1,3 +1,5 @@
+using Vipl.Media.MP4.Boxes.ISO_14496_12;
+
 namespace Vipl.Media.MP4.Boxes.AppleAtom;
 
 /// <summary> This class extends <see cref="Box" /> to provide an implementation of a Apple QuickTime UserDataBox.
@@ -7,7 +9,7 @@ namespace Vipl.Media.MP4.Boxes.AppleAtom;
 [HasBoxFactory("ilst")]
 public class MetadataItemListAtom : ContainerBox
 {
-    private MetadataItemListAtom (BoxHeader header, IsoHandlerBox? handler)
+    private MetadataItemListAtom (BoxHeader header, HandlerBox? handler)
         : base (header, handler)
     { }
 }

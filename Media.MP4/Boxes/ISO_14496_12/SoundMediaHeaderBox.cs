@@ -10,7 +10,7 @@ namespace Vipl.Media.MP4.Boxes.ISO_14496_12;
 [HasBoxFactory("smhd")]
 public class SoundMediaHeaderBox : FullBoxWithData
 {
-    private SoundMediaHeaderBox (BoxHeader header,  IsoHandlerBox? handler)
+    private SoundMediaHeaderBox (BoxHeader header,  HandlerBox? handler)
         : base (header, handler)
     {
     }

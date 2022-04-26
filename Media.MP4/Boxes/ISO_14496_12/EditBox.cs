@@ -9,7 +9,7 @@ namespace Vipl.Media.MP4.Boxes.ISO_14496_12;
 [HasBoxFactory("edts")]
 public class EditBox : ContainerBox
 {
-    private EditBox (BoxHeader header, IsoHandlerBox? handler)
+    private EditBox (BoxHeader header, HandlerBox? handler)
         : base (header, handler)
     {
     }

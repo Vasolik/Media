@@ -20,7 +20,7 @@ namespace Vipl.Media.MP4.Boxes.ISO_14496_12;
 [HasBoxFactory("stco")]
 public class ChunkOffsetBox  : FullBoxWithData
 {
-    private ChunkOffsetBox  (BoxHeader header, IsoHandlerBox? handler)
+    private ChunkOffsetBox  (BoxHeader header, HandlerBox? handler)
         : base (header, handler)
     {
     }

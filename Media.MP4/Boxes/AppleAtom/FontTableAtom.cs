@@ -2,6 +2,7 @@ using System.Diagnostics;
 using System.Text;
 using Vipl.Base;
 using Vipl.Base.Extensions;
+using Vipl.Media.MP4.Boxes.ISO_14496_12;
 
 namespace Vipl.Media.MP4.Boxes.AppleAtom;
 
@@ -10,7 +11,7 @@ namespace Vipl.Media.MP4.Boxes.AppleAtom;
 [HasBoxFactory("ftab")]
 public class FontTableAtom  : BoxWithData
 {
-    private FontTableAtom  (BoxHeader header, IsoHandlerBox? handler)
+    private FontTableAtom  (BoxHeader header, HandlerBox? handler)
         : base (header, handler)
     {
     }

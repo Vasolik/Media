@@ -9,7 +9,7 @@ namespace Vipl.Media.MP4.Boxes.ISO_14496_1.SampleEntries;
 [HasBoxFactory("mp4a",  typeof(SampleDescriptionBox))]
 public class MP4AudioSampleEntryBox : SampleEntryBox
 {
-    private MP4AudioSampleEntryBox (BoxHeader header,  IsoHandlerBox? handler)
+    private MP4AudioSampleEntryBox (BoxHeader header,  HandlerBox? handler)
         : base (header, handler)
     {
     }

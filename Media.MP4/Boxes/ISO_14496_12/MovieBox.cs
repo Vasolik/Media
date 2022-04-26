@@ -7,7 +7,7 @@ namespace Vipl.Media.MP4.Boxes.ISO_14496_12;
 [HasBoxFactory("moov")]
 public class MovieBox :  ContainerBox
 {
-    private MovieBox (BoxHeader header, IsoHandlerBox? handler)
+    private MovieBox (BoxHeader header, HandlerBox? handler)
         : base (header, handler)
     {
     }

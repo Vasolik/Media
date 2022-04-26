@@ -12,7 +12,7 @@ namespace Vipl.Media.MP4.Boxes.ISO_14496_12.TrackReferenceTypes;
 [HasBoxFactory("cdsc",  typeof(TrackReferenceBox))]
 public class MetadataTrackReferenceTypeBox : TrackReferenceTypeBox
 {
-    private MetadataTrackReferenceTypeBox (BoxHeader header,  IsoHandlerBox? handler)
+    private MetadataTrackReferenceTypeBox (BoxHeader header,  HandlerBox? handler)
         : base (header, handler)
     {
     }

@@ -11,7 +11,7 @@ namespace Vipl.Media.MP4.Boxes.ISO_14496_12;
 [HasBoxFactory("mdhd")]
 public class MediaHeaderBox : FullBoxWithData
 {
-    private MediaHeaderBox (BoxHeader header, IsoHandlerBox? handler)
+    private MediaHeaderBox (BoxHeader header, HandlerBox? handler)
         : base (header,  handler)
     {
 		

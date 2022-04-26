@@ -12,7 +12,7 @@ namespace Vipl.Media.MP4.Boxes.ISO_14496_12.TrackReferenceTypes;
 [HasBoxFactory("shsc",  typeof(TrackReferenceBox))]
 public class ShadowSyncTrackReferenceTypeBox : TrackReferenceTypeBox
 {
-    private ShadowSyncTrackReferenceTypeBox (BoxHeader header,  IsoHandlerBox? handler)
+    private ShadowSyncTrackReferenceTypeBox (BoxHeader header,  HandlerBox? handler)
         : base (header, handler)
     {
     }

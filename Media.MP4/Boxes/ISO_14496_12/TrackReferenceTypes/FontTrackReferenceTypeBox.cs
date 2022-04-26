@@ -12,7 +12,7 @@ namespace Vipl.Media.MP4.Boxes.ISO_14496_12.TrackReferenceTypes;
 [HasBoxFactory("font",  typeof(TrackReferenceBox))]
 public class FontTrackReferenceTypeBox : TrackReferenceTypeBox
 {
-    private FontTrackReferenceTypeBox (BoxHeader header,  IsoHandlerBox? handler)
+    private FontTrackReferenceTypeBox (BoxHeader header,  HandlerBox? handler)
         : base (header, handler)
     {
     }

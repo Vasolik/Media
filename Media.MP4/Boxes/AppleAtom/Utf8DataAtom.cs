@@ -2,6 +2,7 @@ using System.Diagnostics;
 using System.Text;
 using Vipl.Base;
 using Vipl.Base.Extensions;
+using Vipl.Media.MP4.Boxes.ISO_14496_12;
 
 namespace Vipl.Media.MP4.Boxes.AppleAtom;
 
@@ -9,7 +10,7 @@ namespace Vipl.Media.MP4.Boxes.AppleAtom;
 /// with data type of utf8 string.</summary>  
 public class Utf8DataAtom  : DataAtom
 {
-    internal Utf8DataAtom(BoxHeader header, IsoHandlerBox? handler, DataAtomTypes type)
+    internal Utf8DataAtom(BoxHeader header, HandlerBox? handler, DataAtomTypes type)
         : base(header, handler, type)
     {
     }

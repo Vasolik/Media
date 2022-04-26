@@ -6,7 +6,7 @@ namespace Vipl.Media.MP4.Boxes.ISO_14496_12;
 [HasBoxFactory("mdia")]
 public class MediaBox :  ContainerBox
 {
-    private MediaBox (BoxHeader header, IsoHandlerBox? handler)
+    private MediaBox (BoxHeader header, HandlerBox? handler)
         : base (header, handler)
     {
     }

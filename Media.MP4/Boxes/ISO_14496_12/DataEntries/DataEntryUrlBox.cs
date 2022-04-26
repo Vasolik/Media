@@ -9,7 +9,7 @@ namespace Vipl.Media.MP4.Boxes.ISO_14496_12.DataEntries;
 [HasBoxFactory("url"),HasBoxFactory("url ") ]
 public class DataEntryUrlBox : BoxWithData
 {
-	private DataEntryUrlBox(BoxHeader header, IsoHandlerBox? handler)
+	private DataEntryUrlBox(BoxHeader header, HandlerBox? handler)
 		: base(header, handler)
 	{
 	}

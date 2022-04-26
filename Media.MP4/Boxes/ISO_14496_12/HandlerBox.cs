@@ -2,13 +2,12 @@ using System.Diagnostics;
 using System.Text;
 using Vipl.Base;
 using Vipl.Base.Extensions;
-using Vipl.Media.MP4.Boxes.ISO_14496_12;
 
-namespace Vipl.Media.MP4.Boxes;
+namespace Vipl.Media.MP4.Boxes.ISO_14496_12;
 
 /// <summary>
 /// <para>This class extends <see cref="FullBox" /> to provide an
-/// implementation of a ISO/IEC 14496-12 FullBox.</para>
+/// implementation of a ISO/IEC 14496-12 HandlerBox.</para>
 /// 
 /// <para>This box within a <see cref="MediaBox"/> declares media type of the track, and thus the process by which the media-
 /// data in the track is presented. For example, a format for which the decoder delivers video would be
@@ -21,13 +20,13 @@ namespace Vipl.Media.MP4.Boxes;
 /// sample entry, as for video or audio, for example.</para>
 /// </summary>
 [HasBoxFactory("hdlr")]
-public class IsoHandlerBox : FullBoxWithData
+public class HandlerBox : FullBoxWithData
 {
-	/// <summary>  Constructs and initializes a new instance of <see  cref="IsoHandlerBox" />
+	/// <summary>  Constructs and initializes a new instance of <see  cref="HandlerBox" />
 	/// with a provided header and handler by reading the contents from a specified file. </summary>
 	/// <param name="header"> A <see cref="BoxHeader" /> object containing the header to use for the new instance. </param>
-	/// <param name="handler"> A <see cref="IsoHandlerBox" /> object containing the handler that applies to the new instance. </param>
-	private IsoHandlerBox (BoxHeader header, IsoHandlerBox? handler)
+	/// <param name="handler"> A <see cref="HandlerBox" /> object containing the handler that applies to the new instance. </param>
+	private HandlerBox (BoxHeader header, HandlerBox? handler)
 		: base (header, handler)
 	{
 		HandlerType = null!;

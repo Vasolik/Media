@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Vipl.Base;
+using Vipl.Media.MP4.Boxes.ISO_14496_12;
 
 namespace Vipl.Media.MP4.Boxes;
 
@@ -9,10 +10,10 @@ public abstract class FullBoxWithData : FullBox
     /// <summary> Constructs and initializes a new instance of <see cref="FullBoxWithData" />
     /// with a specified header and handler.</summary>
     /// <param name="header"> A <see cref="BoxHeader" /> object describing the new  instance. </param>
-    /// <param name="handler"> A <see cref="IsoHandlerBox" /> object containing the handler that applies
+    /// <param name="handler"> A <see cref="HandlerBox" /> object containing the handler that applies
     /// to the new instance, or <see langword="null" /> if no handler applies.</param>
 #pragma warning disable CS8618 
-    protected FullBoxWithData(BoxHeader header, IsoHandlerBox? handler = null)
+    protected FullBoxWithData(BoxHeader header, HandlerBox? handler = null)
         : base(header, handler)
     {
         

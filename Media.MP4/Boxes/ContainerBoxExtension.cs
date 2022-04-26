@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Vipl.Media.Core;
+using Vipl.Media.MP4.Boxes.ISO_14496_12;
 
 namespace Vipl.Media.MP4.Boxes;
 
@@ -29,7 +30,7 @@ public static class ContainerBoxExtension
                 break;
 
             containerBox.Children.Add(child);
-            if (child is IsoHandlerBox isoHandlerBox)
+            if (child is HandlerBox isoHandlerBox)
                 basicBox.Handler = isoHandlerBox;
             position += (long)child.Size;
         }

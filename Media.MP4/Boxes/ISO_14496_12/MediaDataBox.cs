@@ -10,7 +10,7 @@ namespace Vipl.Media.MP4.Boxes.ISO_14496_12;
 public class MediaDataBox : Box
 {
 
-    private MediaDataBox (BoxHeader header, IsoHandlerBox? handler)
+    private MediaDataBox (BoxHeader header, HandlerBox? handler)
         : base (header, handler)
     {
     }

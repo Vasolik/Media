@@ -11,7 +11,7 @@ namespace Vipl.Media.MP4.Boxes.ISO_14496_12;
 // ReSharper disable once ClassNeverInstantiated.Global
 public class MovieHeaderBox : FullBoxWithData
 {
-	private MovieHeaderBox (BoxHeader header, IsoHandlerBox? handler)
+	private MovieHeaderBox (BoxHeader header, HandlerBox? handler)
 		: base (header,  handler)
 	{
 		

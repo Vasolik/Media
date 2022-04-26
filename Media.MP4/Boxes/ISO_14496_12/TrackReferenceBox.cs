@@ -11,7 +11,7 @@ namespace Vipl.Media.MP4.Boxes.ISO_14496_12;
 [HasBoxFactory("tref")]
 public class TrackReferenceBox  : ContainerBox
 {
-    private TrackReferenceBox  (BoxHeader header, IsoHandlerBox? handler)
+    private TrackReferenceBox  (BoxHeader header, HandlerBox? handler)
         : base (header, handler)
     {
     }

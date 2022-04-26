@@ -12,7 +12,7 @@ namespace Vipl.Media.MP4.Boxes.ISO_14496_12.TrackReferenceTypes;
 [HasBoxFactory("vplx",  typeof(TrackReferenceBox))]
 public class ParallaxVideoInformationTrackReferenceTypeBox : TrackReferenceTypeBox
 {
-    private ParallaxVideoInformationTrackReferenceTypeBox (BoxHeader header,  IsoHandlerBox? handler)
+    private ParallaxVideoInformationTrackReferenceTypeBox (BoxHeader header,  HandlerBox? handler)
         : base (header, handler)
     {
     }

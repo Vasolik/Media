@@ -1,5 +1,6 @@
 using Vipl.Base;
 using Vipl.Base.Extensions;
+using Vipl.Media.MP4.Boxes.ISO_14496_12;
 
 namespace Vipl.Media.MP4.Boxes.AppleAtom;
 
@@ -8,7 +9,7 @@ namespace Vipl.Media.MP4.Boxes.AppleAtom;
 public abstract class DataAtom  : BoxWithData
 {
     /// <inheritdoc />
-    protected DataAtom(BoxHeader header, IsoHandlerBox? handler, DataAtomTypes type)
+    protected DataAtom(BoxHeader header, HandlerBox? handler, DataAtomTypes type)
         : base(header, handler)
     {
         DataType = type;
@@ -56,7 +57,7 @@ public abstract class DataAtom  : BoxWithData
     /// <param name="handlerBox">Iso handler for better understanding of box.</param>
     /// <typeparam name="T">Type of the box</typeparam>
     /// <returns>Newly created box.</returns>
-    public new static async Task<Box> CreateAsync<T>(BoxHeader header, MP4 file, IsoHandlerBox? handlerBox)
+    public new static async Task<Box> CreateAsync<T>(BoxHeader header, MP4 file, HandlerBox? handlerBox)
         where T : Box
     {
         file.Seek((long)header.DataPosition, SeekOrigin.Begin);

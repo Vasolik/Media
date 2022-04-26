@@ -8,7 +8,7 @@ namespace Vipl.Media.MP4.Boxes.ISO_14496_12;
 [HasBoxFactory("udta")]
 public class UserDataBox : ContainerBox
 {
-    private UserDataBox (BoxHeader header, IsoHandlerBox? handler)
+    private UserDataBox (BoxHeader header, HandlerBox? handler)
         : base (header, handler)
     { }
 }

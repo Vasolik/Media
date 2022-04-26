@@ -25,7 +25,7 @@ namespace Vipl.Media.MP4.Boxes.ISO_14496_12;
 [HasBoxFactory("tkhd")]
 public class TrackHeaderBox : FullBoxWithData, IBoxWithMovieHeaderScalableProperties
 {
-    private TrackHeaderBox (BoxHeader header, IsoHandlerBox? handler)
+    private TrackHeaderBox (BoxHeader header, HandlerBox? handler)
         : base (header, handler)
     {
     }

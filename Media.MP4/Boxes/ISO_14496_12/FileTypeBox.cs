@@ -12,7 +12,7 @@ namespace Vipl.Media.MP4.Boxes.ISO_14496_12;
 [HasBoxFactory("ftyp")]
 public class FileTypeBox : BoxWithData
 {
-    private FileTypeBox (BoxHeader header,  IsoHandlerBox? handler)
+    private FileTypeBox (BoxHeader header,  HandlerBox? handler)
         : base (header, handler)
     {
     }

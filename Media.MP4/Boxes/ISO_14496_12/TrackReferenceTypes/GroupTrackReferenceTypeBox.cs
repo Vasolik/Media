@@ -12,7 +12,7 @@ namespace Vipl.Media.MP4.Boxes.ISO_14496_12.TrackReferenceTypes;
 [HasBoxFactory("cdtg",  typeof(TrackReferenceBox))]
 public class GroupTrackReferenceTypeBox : TrackReferenceTypeBox
 {
-    private GroupTrackReferenceTypeBox (BoxHeader header,  IsoHandlerBox? handler)
+    private GroupTrackReferenceTypeBox (BoxHeader header,  HandlerBox? handler)
         : base (header, handler)
     {
     }

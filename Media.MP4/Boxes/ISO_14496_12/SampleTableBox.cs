@@ -9,7 +9,7 @@ namespace Vipl.Media.MP4.Boxes.ISO_14496_12;
 [HasBoxFactory("stbl")]
 public class SampleTableBox : ContainerBox
 {
-    private SampleTableBox (BoxHeader header, IsoHandlerBox? handler)
+    private SampleTableBox (BoxHeader header, HandlerBox? handler)
         : base (header, handler)
     { }
 

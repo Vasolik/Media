@@ -15,7 +15,7 @@ namespace Vipl.Media.MP4.Boxes.ISO_14496_12;
 [HasBoxFactory("stsc")]
 public class SampleToChunkBox  : FullBoxWithData
 {
-    private SampleToChunkBox  (BoxHeader header, IsoHandlerBox? handler)
+    private SampleToChunkBox  (BoxHeader header, HandlerBox? handler)
         : base (header, handler)
     {
     }

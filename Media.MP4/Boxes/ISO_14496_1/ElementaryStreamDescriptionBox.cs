@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Vipl.Base;
+using Vipl.Media.MP4.Boxes.ISO_14496_12;
 using Vipl.Media.MP4.Descriptors;
 
 namespace Vipl.Media.MP4.Boxes.ISO_14496_1;
@@ -10,7 +11,7 @@ namespace Vipl.Media.MP4.Boxes.ISO_14496_1;
 [HasBoxFactory("esds")]
 public class ElementaryStreamDescriptionBox : FullBoxWithData
 {
-    private ElementaryStreamDescriptionBox (BoxHeader header,  IsoHandlerBox? handler)
+    private ElementaryStreamDescriptionBox (BoxHeader header,  HandlerBox? handler)
         : base (header, handler)
     {
     }

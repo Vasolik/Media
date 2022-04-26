@@ -13,7 +13,7 @@ namespace Vipl.Media.MP4.Boxes.ISO_14496_12;
 [HasBoxFactory("elst")]
 public class EditListBox  : FullBoxWithData, IBoxWithMovieHeaderScalableProperties
 {
-    private EditListBox  (BoxHeader header, IsoHandlerBox? handler)
+    private EditListBox  (BoxHeader header, HandlerBox? handler)
         : base (header, handler)
     {
     }
