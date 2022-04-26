@@ -431,6 +431,11 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// <summary> Genre metadata.</summary>  
     public static readonly BoxType Genre = new("©gen", 1111);
     
+    /// <summary> Source of custom metadata.</summary>  
+    public static readonly BoxType MetadataSource = new("mean", 1112);
+    
+    /// <summary> Name of custom metadata. </summary>
+    public new static readonly BoxType Name = new("name", 1112);
 
     /// <summary>  Adobe FLV ChapterBox.
     /// <para>The optional chpl box allows an F4V file to specify individual chapters along the main
@@ -438,7 +443,6 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// occurs within a moov box.</para></summary>
     public static readonly BoxType Chapters = new("chpl", 2000);
     
-
 
     /// <summary> </summary>
     public static readonly BoxType Cond = new("cond", 504);
@@ -463,15 +467,11 @@ public sealed class BoxType : SmartEnum<BoxType>
     /// <summary> </summary>
     public static readonly BoxType Lyr = new("lyr", 521);
     
-
-
-    /// <summary> </summary>
-    public static readonly BoxType Mean = new("mean", 525);
+    
 
     
 
-    /// <summary> </summary>
-    public new static readonly BoxType Name = new("name", 530);
+
     /// <summary> </summary>
     public static readonly BoxType Role = new("role", 531);
     /// <summary> </summary>
