@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Vipl.Media.Core;
 
 namespace Vipl.Media.MP4.Boxes;
@@ -32,5 +33,37 @@ public static class ContainerBoxExtension
                 basicBox.Handler = isoHandlerBox;
             position += (long)child.Size;
         }
+
+        CheckChildren(containerBox, file);
     }
+
+    [Conditional("DEBUG")]
+    private static void CheckChildren(IContainerBox containerBox, MP4 file)
+    {
+        if(containerBox is not Box box)
+            throw new ArgumentException("ContainerBox must be a Box");
+        
+        foreach (var childBox in containerBox.Children)
+        {
+            file.Seek(childBox.Header.Position, SeekOrigin.Begin);
+            var childData = file.ReadBlockAsync((uint) childBox.Header.TotalBoxSize).GetAwaiter().GetResult();
+            var childrenLoadedData = childBox.Render().Build();
+            for(var i = 0; i < childData.Count; i++)
+            {
+                Debug.Assert(childData[i] == childrenLoadedData[i]);
+            }
+            Debug.Assert(childData == childrenLoadedData);
+        }
+        var position = box.Header.Position;
+        var size = (long) box.Header.TotalBoxSize;
+        file.Seek(position, SeekOrigin.Begin);
+        var data = file.ReadBlockAsync((uint)size).GetAwaiter().GetResult();
+        var loadedData = box.Render().Build();
+        for(var i = 0; i < size; i++)
+        {
+            Debug.Assert(data[i] == loadedData[i]);
+        }
+        Debug.Assert(data == loadedData);
+
+    }   
 }

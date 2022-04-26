@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Vipl.Base.Extensions;
 using Vipl.Media.Abstraction;
 using Vipl.Media.Core;
@@ -39,6 +40,27 @@ public class MP4 : MediaFile
         {
             box = await BoxFactory.CreateBoxAsync(this, position);
             Boxes.Add(box);
+        }
+
+        CheckChildren(this);
+
+    }
+    
+    [Conditional("DEBUG")]
+    private static void CheckChildren(MP4 file)
+    {
+        foreach (var childBox in file.Boxes)
+        {
+            if (childBox is MediaDataBox)
+                continue;
+            file.Seek(childBox.Header.Position, SeekOrigin.Begin);
+            var childData = file.ReadBlockAsync((uint) childBox.Header.TotalBoxSize).GetAwaiter().GetResult();
+            var childrenLoadedData = childBox.Render().Build();
+            for(var i = 0; i < childData.Count; i++)
+            {
+                Debug.Assert(childData[i] == childrenLoadedData[i]);
+            }
+            Debug.Assert(childData == childrenLoadedData);
         }
 
     }

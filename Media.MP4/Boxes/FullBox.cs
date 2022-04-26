@@ -63,8 +63,7 @@ public abstract class FullBox : Box
 	{
 		return base.Render(builder)
 			.Add(Version)
-			.Add(Flags.ToByteVector().Mid (1, 3))
-			.Skip(4);
+			.Add(Flags.ToByteVector().Mid (1, 3));
 	}
 	/// <inheritdoc />
 	public override ulong DataSize => base.DataSize - 4;

@@ -70,7 +70,6 @@ public abstract class SampleEntryBox : BoxWithData, IContainerBox
 	public override IByteVectorBuilder Render(IByteVectorBuilder builder)
 	{
 		base.Render(builder);
-		RenderData(builder);
 		Children.ForEach(c => c.Render(builder));
 		return builder;
 	}

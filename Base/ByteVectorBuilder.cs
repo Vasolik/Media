@@ -152,7 +152,6 @@ public class ByteVectorBuilder: IEnumerable<byte>, IByteVectorBuilder
     /// <inheritdoc />
     public IByteVectorBuilder Add(ByteVector value)
     {
-        
         ResizeIfNeeded(_position + value.Count);
         value.Data.CopyTo(_byteVector.Data.Slice( _position, value.Count));
         _position += value.Count;

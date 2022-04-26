@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Text;
 using Vipl.Base;
 using Vipl.Base.Extensions;
@@ -47,15 +48,16 @@ public class IsoHandlerBox : FullBoxWithData
 		set
 		{
 			HandlerType = value[4..8].ToByteVector();
-			Name = value[20..].ToString(Encoding.UTF8);
+			Name = value[8..].ToString(Encoding.UTF8);
+			Debug.Assert(Data == value);
 		}
 	}
 	/// <inheritdoc/>
 	public override IByteVectorBuilder RenderData(IByteVectorBuilder builder)
 	{
-		return builder.Skip(4)
+		return builder
+			.Clear(4)
 			.Add(HandlerType)
-			.Clear(12)
 			.Add(Name);
 	}
 
@@ -71,7 +73,7 @@ public class IsoHandlerBox : FullBoxWithData
 	public string Name { get; private set; }
 
 	/// <inheritdoc/>
-	public override ulong ActualDataSize => (ulong)(20 + Encoding.UTF8.GetByteCount(Name));
+	public override ulong ActualDataSize => (ulong)(8 + Encoding.UTF8.GetByteCount(Name));
 	
 	/// <inheritdoc />
 	public override string DebugDisplay(int level)

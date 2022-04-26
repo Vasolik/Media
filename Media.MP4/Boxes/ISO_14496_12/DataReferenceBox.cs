@@ -25,7 +25,7 @@ public class DataReferenceBox : FullContainerBox
     /// <inheritdoc />
     protected override async Task<Box> InitAsync(MP4 file)
     {
-        file.Seek((long)DataPosition , SeekOrigin.Begin);
+        file.Seek((long)base.DataPosition , SeekOrigin.Begin);
         EntryCount = (await file.ReadBlockAsync (4)).ToUInt();
         await this.LoadChildrenAsync (file);
         return this;
@@ -39,7 +39,6 @@ public class DataReferenceBox : FullContainerBox
         Header.Render(builder)
             .Add(Version)
             .Add(Flags.ToByteVector().Mid (1, 3))
-            .Skip(4)
             .Add(EntryCount);
 		
         Children.ForEach(c => c.Render(builder));

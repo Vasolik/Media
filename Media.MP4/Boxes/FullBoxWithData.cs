@@ -27,8 +27,10 @@ public abstract class FullBoxWithData : FullBox
     {
         await base.InitAsync(file);
         file.Seek((long)DataPosition, SeekOrigin.Begin);
-        Data = await file.ReadBlockAsync((uint) DataSize);
+        var data = await file.ReadBlockAsync((uint) DataSize);
+        Data = data;
         Debug.Assert(Size == ActualSize);
+        Debug.Assert(Data == data);
         return this;
     }
     
