@@ -7,46 +7,68 @@ namespace Vipl.Base;
 /// <summary> This class represents and performs operations on variable length list of <see cref="byte"/> elements. </summary>
 public sealed partial class ByteVector: IEquatable<ByteVector>, IComparable<ByteVector>
 {
-    private readonly List<byte> _data = new();
+    private byte[]? _bytes;
+    private int _capacity;
+    private int _size;
+    
+    private Memory<byte>?_memory = null;
+    /// <summary>
+    /// 
+    /// </summary>
+    public Memory<byte> Memory => _bytes ?? (_memory ?? Memory<byte>.Empty);
 
     /// <summary> Gets the data stored in the current instance as Span of bytes. </summary>
     /// <value> A <see cref="Span{Byte}"/> containing the data stored in the current instance. </value>
-    public Span<byte> Data => ((Span<byte>)_data.GetInternalArray())[..Count];
-    
-    /// <summary> Gets the data stored in the current instance. </summary>
-    /// <value> A <see cref="T:byte[]" /> containing the data stored in the  current instance. </value>
-    public byte[] DataArray => _data.GetInternalArray();
+    public Span<byte> Data => Memory.Span[.._size];
   
 
     /// <summary> Adds the contents of another <see cref="ByteVector" /> object to the end of the current instance. </summary>
     /// <param name="data"> A <see cref="ByteVector" /> object containing data to add to the end of the current instance. </param>
     public void Add(ByteVector data)
     {
-        Add(data._data.GetInternalArray());
+        Add(data.Memory.Span);
     }
 
     /// <summary> Adds the contents of an array to the end of the current instance. </summary>
     /// <param name="data"> A <see cref="T:byte[]" /> containing data to add to the end of the current instance. </param>
-    public void Add(byte[] data)
+    public void Add(Span<byte> data)
     {
         var count = Count;
-        _data.ResizeWithJunkInternal(count + data.Length);
-        new Span<byte>(data).CopyTo(Data.Slice(count, data.Length));
+        ResizeInternalWithJunk(count + data.Length);
+        data.CopyTo(Data.Slice(count, data.Length));
     }
     
     /// <inheritdoc cref="List{T}.InsertRange"/>
     public void Insert(int index, ByteVector collection)
     {
-        _data.InsertRange(index, collection._data);
+        Insert(index, collection.Data);
     }
 
     /// <inheritdoc cref="List{T}.InsertRange"/>
-    public void Insert(int index, byte[] data)
+    public void Insert(int index, Span<byte> data)
     {
         if (IsReadOnly)
             throw new NotSupportedException("Cannot edit readonly objects.");
+        var isSameVector = data == Data;
+        var count = data.Length;
+        if (count <= 0)
+            return;
+        ResizeInternalWithJunk(count + _size );
+        if (index < _size)
+        {
+            Data[index..(index + count)].CopyTo(Data[(index + count)..]);
+        }
 
-        _data.InsertRange(index, data);
+        // If we're inserting a List into itself, we want to be able to deal with that.
+        if (isSameVector)
+        {
+            Data[..index].CopyTo(Data[index..]);
+            Data[(index * 2 + count)..].CopyTo(Data[(index * 2)..]);
+        }
+        else
+        {
+            data.CopyTo(Data[index..]);
+        }
     }
 
     /// <summary> Resizes the current instance. </summary>
@@ -55,18 +77,18 @@ public sealed partial class ByteVector: IEquatable<ByteVector>, IComparable<Byte
     /// <returns> The current instance. </returns>
     public ByteVector Resize(int size, byte? padding = 0)
     {
-        var oldSize = _data.Count;
-        _data.ResizeWithJunkInternal(size);
+        var oldSize = _size;
+        ResizeInternalWithJunk(size);
 
         if (oldSize >= size || padding is null) 
             return this;
         if (padding == 0)
         {
-            Array.Clear(_data.GetInternalArray(), oldSize, size - oldSize);
+            Memory.Span[oldSize..].Clear();
         }
         else
         {
-            Array.Fill(_data.GetInternalArray(), padding.Value, oldSize, size - oldSize);
+            Memory.Span[oldSize..].Fill((byte)padding);
         }
         return this;
     }
@@ -79,14 +101,15 @@ public sealed partial class ByteVector: IEquatable<ByteVector>, IComparable<Byte
         if (IsReadOnly)
             throw new NotSupportedException("Cannot edit readonly objects.");
 
-        _data.RemoveRange(index, count);
+        Memory.Span[(index + count)..].CopyTo(Data[index..]);
+        ResizeInternalWithJunk(_size - count);
     }
     
     /// <summary> Gets whether or not the current instance is empty. </summary>
     /// <value> A <see cref="bool" /> value indicating whether or not the current instance is empty. </value>
     public bool IsEmpty => Data.Length == 0;
     /// <summary> Number of bytes in <see cref="ByteVector"/> </summary>
-    public int Count => _data.Count;
+    public int Count => _size;
     
     /// <summary> Get part of <see cref="ByteVector"/> starting from <paramref name="index"/> to end.  </summary>
     /// <param name="index">Index from where part was taken.</param>
@@ -367,4 +390,73 @@ public sealed partial class ByteVector: IEquatable<ByteVector>, IComparable<Byte
     /// <returns><see cref="Span{Byte}"/> with bytes from original vector. This instance point to same bytes as original</returns>
     public Span<byte> this[Range index] => Mid(index);
 
+    
+    private void ResizeInternalWithJunk(int newSize)
+    {
+        const int defaultCapacity = 4 * sizeof(long);
+        var newCapacity = _capacity == 0 ? defaultCapacity : _capacity * 2;
+        var oldSize = _size;
+        if (_capacity > newSize)
+        {
+            _size = newSize;
+            if (newSize * 4 < _capacity)
+            {
+                newCapacity = newSize * 2;
+                if (newCapacity < defaultCapacity)
+                {
+                    newCapacity = defaultCapacity;
+                }
+            }
+            else
+            {
+                return;
+            }
+        }
+
+
+
+        if (newCapacity < newSize)
+        {
+            newCapacity = (int)(newSize * 1.5);
+        }
+        if (newCapacity == _capacity)
+        {
+            return;
+        }
+        if (_bytes == null)
+        {
+            _bytes = new byte[newCapacity];
+            if (_memory is not null)
+            {
+                _memory.Value.Span[..oldSize].CopyTo(_bytes);
+            }
+            _memory = null;
+        }
+        else
+        {
+            Array.Resize(ref _bytes, newCapacity);
+        }
+
+        _capacity = newCapacity;
+        _size = newSize;
+    }
+    private void ChangeCapacity(int newCapacity)
+    {
+        if(newCapacity < 0 || _size > newCapacity)
+            throw new ArgumentOutOfRangeException(nameof(newCapacity));
+        if (_bytes == null)
+        {
+            _bytes = new byte[newCapacity];
+            if (_memory is not null)
+            {
+                _memory.Value.Span[.._size].CopyTo(_bytes);
+            }
+
+            _memory = null;
+        }
+        else
+        {
+            Array.Resize(ref _bytes, newCapacity);
+        }
+    }
 }

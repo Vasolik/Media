@@ -133,7 +133,7 @@ public class LocalFile : IFile
         try
         {
             await SetModeAsync(AccessMode.ReadWrite);
-            await WriteStream.WriteAsync(data.DataArray.AsMemory(0, data.Count));
+            await WriteStream.WriteAsync(data.Memory[..data.Count]);
         }
         finally
         {
@@ -263,7 +263,7 @@ public class LocalFile : IFile
         if (data is not null)
         {
             WriteStream.Position = writePosition;
-            await WriteStream.WriteAsync(data.DataArray.AsMemory(0, (int) Math.Min(data.Count, size)));
+            await WriteStream.WriteAsync(data.Memory[..(int) Math.Min(data.Count, size)]);
             await WriteBlockAsync(data);
         }
         else if (start + size > WriteStream.Length)
@@ -304,7 +304,8 @@ public class LocalFile : IFile
         WriteStream.Position = start;
         if (data is not null)
         {
-            await WriteStream.WriteAsync(data.DataArray.AsMemory(0, (int) Math.Min(data.Count, size)));
+
+            await WriteStream.WriteAsync(data.Memory[..(int) Math.Min(data.Count, size)]);
         }
 
         await RemoveBlockAsync(start + size, replace - size);
@@ -315,7 +316,7 @@ public class LocalFile : IFile
         WriteStream.Position = start;
         if (data is not null)
         {
-            await WriteStream.WriteAsync(data.DataArray.AsMemory(0, (int) Math.Min(data.Count, size)));
+            await WriteStream.WriteAsync(data.Memory[..(int) Math.Min(data.Count, size)]);
         }
     }
 }

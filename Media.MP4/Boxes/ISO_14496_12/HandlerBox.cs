@@ -29,6 +29,7 @@ public class HandlerBox : FullBoxWithData
 	private HandlerBox (BoxHeader header, HandlerBox? handler)
 		: base (header, handler)
 	{
+		Predefined = new ByteVector(4);
 		HandlerType = null!;
 		Name = null!;
 	}
@@ -46,6 +47,7 @@ public class HandlerBox : FullBoxWithData
 		get => RenderData(new ByteVectorBuilder((int) ActualSize)).Build();
 		set
 		{
+			Predefined = value[..4].ToByteVector();
 			HandlerType = value[4..8].ToByteVector();
 			Name = value[8..].ToString(Encoding.UTF8);
 			Debug.Assert(Data == value);
@@ -55,7 +57,7 @@ public class HandlerBox : FullBoxWithData
 	public override IByteVectorBuilder RenderData(IByteVectorBuilder builder)
 	{
 		return builder
-			.Clear(4)
+			.Add(Predefined)
 			.Add(HandlerType)
 			.Add(Name);
 	}
@@ -70,6 +72,11 @@ public class HandlerBox : FullBoxWithData
 
 	/// <summary> Human-readable name for the track type (for debugging and inspection purposes). </summary>
 	public string Name { get; private set; }
+
+	/// <summary>
+	/// 4 bytes that should be zero, but they might be defined differently in some implementations.
+	/// </summary>
+	public ByteVector Predefined { get; private set; }
 
 	/// <inheritdoc/>
 	public override ulong ActualDataSize => (ulong)(8 + Encoding.UTF8.GetByteCount(Name));

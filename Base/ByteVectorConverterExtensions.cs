@@ -190,7 +190,7 @@ public static class ByteVectorConverterExtensions
         
         var takeCount = (int)Math.Min(count, stream.Length - stream.Position);
         vector.Resize( takeCount, null);
-        var bytesRead = await stream.ReadAsync(vector.DataArray.AsMemory(0, takeCount)).ConfigureAwait(false);
+        var bytesRead = await stream.ReadAsync(vector.Memory).ConfigureAwait(false);
         if (bytesRead < takeCount)
         {
             vector.Resize(bytesRead);

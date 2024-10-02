@@ -12,13 +12,6 @@ public sealed partial class ByteVector
     {
         return new ByteVector(value);
     }
-    /// <summary> Converts a <see cref="ByteVector" /> to a <see cref="T:byte[]" /> object. </summary>
-    /// <param name="value"> A <see cref="ByteVector" /> to convert. </param>
-    /// <returns> A instance of <see cref="T:byte[]" /> containing the contents of <paramref name="value"/>. </returns>
-    public static implicit operator byte[](ByteVector value)
-    {
-        return value._data.GetInternalArray();
-    }
     
     /// <summary> Converts a <see cref="Span{Byte}" /> to a new <see cref="ByteVector" /> object. </summary>
     /// <param name="value"> A <see cref="Span{Byte}" /> to convert. </param>

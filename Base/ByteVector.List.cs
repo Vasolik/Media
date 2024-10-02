@@ -8,45 +8,52 @@ public sealed partial class ByteVector : IList<byte>
     /// <inheritdoc />
     public void Clear()
     {
-        Array.Clear(_data.GetInternalArray(), 0, Count);
-        _data.ResizeWithJunkInternal(0);
+        ResizeInternalWithJunk(0);
+        Data.Clear();
     }
 
     /// <inheritdoc />
     public void Add(byte item)
     {
-        _data.Add(item);
+        Insert(Count, item);
     }
 
     /// <inheritdoc />
     public bool Remove(byte item)
     {
-        return _data.Remove(item);
+        var firstIndex = Data.IndexOf(item);
+        if (firstIndex == -1)
+            return false;
+        RemoveAt(firstIndex);
+        
+        return true;
     }
 
     /// <inheritdoc />
     public void CopyTo(byte[] array, int arrayIndex)
     {
-        _data.CopyTo(array, arrayIndex);
+        
+        Data.CopyTo(new Span<byte>(array)[arrayIndex..]);
     }
     
     /// <inheritdoc />
     public void RemoveAt(int index)
     {
-        _data.RemoveAt(index);
+        Data[(index + 1)..].CopyTo(Data[index..]);
     }
 
     /// <inheritdoc />
     public void Insert(int index, byte item)
     {
-
-        _data.Insert(index, item);
+        ResizeInternalWithJunk(_size + 1);
+        Data[index..].CopyTo(Data[(index + 1)..]);
+        Data[index] = item;
     }
 
     /// <inheritdoc />
     public int IndexOf(byte item)
     {
-        return _data.IndexOf(item);
+        return Data.IndexOf(item);
     }
 
     /// <inheritdoc />
@@ -55,8 +62,8 @@ public sealed partial class ByteVector : IList<byte>
     /// <inheritdoc />
     public byte this[int index]
     {
-        get => _data[index];
-        set => _data[index] = value;
+        get => Data[index];
+        set => Data[index] = value;
     }
     /// <summary>
     /// Gets or sets the total number of elements the internal data structure can hold without resizing.
@@ -66,12 +73,15 @@ public sealed partial class ByteVector : IList<byte>
     /// <exception cref="OutOfMemoryException">There is not enough memory available on the system</exception>
     public int Capacity
     {
-        get => _data.Capacity;
-        set => _data.Capacity = value;
+        get => _capacity;
+        set => ChangeCapacity(value);
     }
+
+    
     /// <inheritdoc />
     public IEnumerator<byte> GetEnumerator()
     {
-        return _data.GetEnumerator();
+        for(var i = 0; i < Count; i++)
+            yield return Data[i];
     }
 }

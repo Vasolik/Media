@@ -37,8 +37,8 @@ public sealed partial class ByteVector
         if (length < 0)
             throw new ArgumentOutOfRangeException(nameof(length), "Length is less than zero.");
 
-        Resize(length);
-        Buffer.BlockCopy(data, 0, _data.GetInternalArray(), 0, length);
+        ResizeInternalWithJunk(length);
+        new Span<byte>(data).CopyTo(Data);
     }
 
     /// <summary> Constructs and initializes a new instance of <see cref="ByteVector"/> of specified size containing bytes of a specified value. </summary>
@@ -62,7 +62,7 @@ public sealed partial class ByteVector
     /// <param name="vector"> A <see cref="Span{Byte}"/> containing the bytes to be stored in the new instance.</param>
     public ByteVector(Span<byte> vector)
     {
-        Resize(vector.Length);
+        ResizeInternalWithJunk(vector.Length);
         vector.CopyTo(Data);
     }
 }

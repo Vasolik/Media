@@ -68,7 +68,7 @@ public class MP4 : MediaFile
     /// <summary> Boxes that are contained in MP4 file. </summary>
     public IList<Box> Boxes { get; } = new List<Box>();
 
-    private MovieHeaderBox? _movieHeaderBox = null;
+    private MovieHeaderBox? _movieHeaderBox;
 
     /// <summary>Exposed <see cref="MovieHeaderBox"/>. THis box contain Important data for handling MP4 file. </summary>
     public MovieHeaderBox? MovieHeaderBox
