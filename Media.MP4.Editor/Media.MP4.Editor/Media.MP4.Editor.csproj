@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <LangVersion>preview</LangVersion>
+        <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+        <RootNamespace>Vipl.Media.MP4.Editor</RootNamespace>
+        <PackageId>Vipl.Media.MP4.Editor</PackageId>
+        <Authors>Vaso Li</Authors>
+        <Company>Vipl</Company>
+        <Copyright>AGPL 3.0</Copyright>
+        <PackageLicenseUrl>https://github.com/Vasolik/Media?tab=AGPL-3.0-1-ov-file#readme</PackageLicenseUrl>
+        <RepositoryUrl>https://github.com/Vasolik/Media</RepositoryUrl>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <AvaloniaResource Include="Assets\**"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)"/>
+        <PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)"/>
+        <PackageReference Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)"/>
+        <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+        <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="$(AvaloniaVersion)"/>
+        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1"/>
+    </ItemGroup>
+</Project>

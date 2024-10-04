@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WebAssembly">
+    <PropertyGroup>
+        <TargetFramework>net9.0-browser</TargetFramework>
+        <OutputType>Exe</OutputType>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <Copyright>AGPL 3.0</Copyright>
+        <PackageLicenseUrl>https://github.com/Vasolik/Media?tab=AGPL-3.0-1-ov-file#readme</PackageLicenseUrl>
+        <RepositoryUrl>https://github.com/Vasolik/Media</RepositoryUrl>
+        <Authors>Vaso Li</Authors>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Avalonia.Browser" Version="$(AvaloniaVersion)"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Media.MP4.Editor\Media.MP4.Editor.csproj"/>
+    </ItemGroup>
+</Project>

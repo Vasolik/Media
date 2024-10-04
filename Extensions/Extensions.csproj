@@ -12,7 +12,9 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Copyright>AGPL 3.0</Copyright>
     <Company>Vipl</Company>
-    <Authors>Vaso Peras-Likodrić</Authors>
+    <Authors>Vaso Li</Authors>
     <ImplicitUsings>enable</ImplicitUsings>
+    <PackageLicenseUrl>https://github.com/Vasolik/Media?tab=AGPL-3.0-1-ov-file#readme</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/Vasolik/Media</RepositoryUrl>
   </PropertyGroup>
 </Project>
